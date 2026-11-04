@@ -311,23 +311,35 @@ th{background:rgba(255,215,0,.15)}
   <div class="nav" style="margin-bottom:0"><button class="btn b" onclick="show('v-start')">На главную</button></div>
 </div></section>
 
-<!-- Оверлеи правил и нарушений -->
+<!-- Оверлеи правил и нарушений (ВОССТАНОВЛЕНЫ) -->
 <div class="overlay" id="rules"><div class="card">
   <h2 style="font-size:22px">Правила тестирования</h2>
-  <ul class="rl"><li>Тест проходит в полноэкранном режиме.</li><li>Нельзя переключаться на другие вкладки.</li><li>При нарушении результат аннулируется.</li></ul>
+  <ul class="rl">
+    <li>Тест проходит в полноэкранном режиме.</li>
+    <li>Нельзя переключаться на другие вкладки, окна и приложения.</li>
+    <li>Нельзя копировать вопросы и ответы, открывать контекстное меню, печатать страницу.</li>
+    <li>Нельзя открывать консоль разработчика (F12, Ctrl+Shift+I/J/C, Ctrl+U).</li>
+  </ul>
+  <p style="font-size:14px;font-weight:700;color:var(--bad);margin-bottom:18px">При любом нарушении тест будет немедленно закрыт, а результат аннулирован.</p>
   <div class="nav" style="margin:0"><button class="btn o" onclick="$('rules').classList.remove('on')">Отмена</button><button class="btn y" onclick="beginTest()">Согласен, начать</button></div>
 </div></div>
 
 <div class="overlay" id="rules-prac"><div class="card">
   <h2 style="font-size:22px">Правила практики</h2>
-  <ul class="rl"><li>Время на выполнение — 45 минут.</li><li>Нельзя переключаться на другие вкладки.</li><li>При нарушении результат аннулируется.</li></ul>
+  <ul class="rl">
+    <li>Время на выполнение — 45 минут.</li>
+    <li>Нельзя переключаться на другие вкладки, окна и приложения.</li>
+    <li>Нельзя открывать консоль разработчика.</li>
+  </ul>
+  <p style="font-size:14px;font-weight:700;color:var(--bad);margin-bottom:18px">При любом нарушении результат будет аннулирован.</p>
   <div class="nav" style="margin:0"><button class="btn o" onclick="$('rules-prac').classList.remove('on')">Отмена</button><button class="btn y" onclick="beginPrac()">Согласен, начать</button></div>
 </div></div>
 
 <div class="overlay" id="viol"><div class="card" style="text-align:center;border-top-color:var(--bad)">
   <div class="ico" style="font-size:56px">⛔</div>
   <h2 style="font-size:22px;color:var(--bad)">Нарушение правил</h2>
-  <p style="line-height:1.6;margin:12px 0">Тестирование прекращено автоматически.<br>Обнаружено: <b id="viol-r"></b>.</p>
+  <p style="line-height:1.6;margin:12px 0">Прохождение прекращено автоматически.<br>Обнаружено: <b id="viol-r"></b>.</p>
+  <p style="font-weight:700;margin-bottom:20px">Ваш результат аннулирован.</p>
   <button class="btn b" onclick="$('viol').classList.remove('on')">Понятно</button>
 </div></div>
 
@@ -507,7 +519,7 @@ async function finishTest(isAuto = false) {
   $('res-score').textContent = currentLang === 'ru' ? 'Ваш результат отправлен!' : 'Сіздің нәтижеңіз жіберілді!';
   $('res-note').textContent = currentLang === 'ru' ? 'Ожидайте результатов от организаторов.' : 'Ұйымдастырушылардың нәтижелерін күтіңіз.';
   
-  fetch(API_TEST, { // <--- ИСПОЛЬЗУЕМ API ТЕСТА
+  fetch(API_TEST, {
     method: 'POST',
     headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
     body: JSON.stringify({
@@ -615,7 +627,6 @@ async function submitPractice(isAuto = false) {
   mem.prac = { score: result.totalScore };
   saveProgress();
   
-  // Формируем объект данных
   let dataToSend = {
     id: PID,
     name: user.name,
@@ -627,15 +638,13 @@ async function submitPractice(isAuto = false) {
     total_score: result.totalScore
   };
 
-  // Проходимся по всем деталям ответов и формируем колонки s1_q1_ans, s1_q1_pts и т.д.
   result.details.forEach((detail) => {
-      // detail.taskId имеет вид "s1-q1". Меняем дефис на подчеркивание: "s1_q1"
       const colName = detail.taskId.replace('-', '_'); 
       dataToSend[colName + '_ans'] = detail.userAnswer || '';
       dataToSend[colName + '_pts'] = detail.pointsEarned;
   });
   
-  fetch(API_PRACTICE, { // <--- ИСПОЛЬЗУЕМ API ПРАКТИКИ
+  fetch(API_PRACTICE, {
     method: 'POST',
     headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
     body: JSON.stringify({ data: [dataToSend] })
@@ -666,7 +675,6 @@ async function loadAdmin() {
   $('a-tbl').innerHTML = '';
   
   try {
-    // Загружаем данные с обоих API (или листов)
     const [resTests, resPracs] = await Promise.all([
       fetch(API_TEST).then(r => r.json()).catch(() => []),
       fetch(API_PRACTICE).then(r => r.json()).catch(() => [])
@@ -677,7 +685,6 @@ async function loadAdmin() {
     const tests = resTests || [];
     const pracs = resPracs || [];
     
-    // Статистика
     const avgTest = tests.length ? Math.round(tests.reduce((acc, r) => acc + parseInt(r.score_points || 0), 0) / tests.length) : 0;
     const avgPrac = pracs.length ? Math.round(pracs.reduce((acc, r) => acc + parseInt(r.total_score || 0), 0) / pracs.length) : 0;
     
@@ -688,7 +695,6 @@ async function loadAdmin() {
       <div class="stat"><b>${avgPrac}</b><span>Ср. балл (Практика)</span></div>
     `;
 
-    // Вкладки
     $('a-tabs').innerHTML = '';
     const btnTest = document.createElement('button');
     btnTest.className = 'st ' + (currentAdminTab === 'test' ? 'cur' : '');
@@ -702,7 +708,6 @@ async function loadAdmin() {
     
     $('a-tabs').append(btnTest, btnPrac);
 
-    // Таблица
     const tbody = $('a-tbl');
     const thead = document.createElement('thead');
     const hRow = document.createElement('tr');
@@ -714,7 +719,6 @@ async function loadAdmin() {
       headers = ['ID', 'ФИО', 'Вариант', 'Результат', 'Баллы', 'Прав.', 'Неправ.', 'Время', 'Статус'];
       dataToShow = tests.sort((a, b) => (parseInt(b.score_points) || 0) - (parseInt(a.score_points) || 0));
     } else {
-      // Заголовки для практики (сокращенные для таблицы)
       headers = ['ID', 'ФИО', 'Яз', 'Эт1(1)', 'Эт1(2)', 'Эт2(1)', 'Эт2(2)', 'Эт2(3)', 'Эт3(1)', 'Эт3(2)', 'Эт3(3)', 'Эт3(4)', 'Эт4(1)', 'Эт4(2)', 'Эт4(3)', 'Эт4(4)', 'Эт5(1)', 'Эт5(2)', 'Эт5(3)', 'Эт5(4)', 'Эт5(5)', 'ИТОГ', 'Статус', 'Ошибка'];
       dataToShow = pracs.sort((a, b) => (parseInt(b.total_score) || 0) - (parseInt(a.total_score) || 0));
     }
@@ -736,32 +740,14 @@ async function loadAdmin() {
         }
         cells = [r.id, r.name, variantName, r.score, r.score_points, r.correct, r.incorrect, r.time, r.status];
       } else {
-        // Формируем строку вида "Ответ (Балл)" для каждой задачи
         cells = [
-          r.id, 
-          r.name, 
-          r.language || '-',
-          `${r.s1_q1_ans || '-'} (${r.s1_q1_pts || 0})`,
-          `${r.s1_q2_ans || '-'} (${r.s1_q2_pts || 0})`,
-          `${r.s2_q1_ans || '-'} (${r.s2_q1_pts || 0})`,
-          `${r.s2_q2_ans || '-'} (${r.s2_q2_pts || 0})`,
-          `${r.s2_q3_ans || '-'} (${r.s2_q3_pts || 0})`,
-          `${r.s3_q1_ans || '-'} (${r.s3_q1_pts || 0})`,
-          `${r.s3_q2_ans || '-'} (${r.s3_q2_pts || 0})`,
-          `${r.s3_q3_ans || '-'} (${r.s3_q3_pts || 0})`,
-          `${r.s3_q4_ans || '-'} (${r.s3_q4_pts || 0})`,
-          `${r.s4_q1_ans || '-'} (${r.s4_q1_pts || 0})`,
-          `${r.s4_q2_ans || '-'} (${r.s4_q2_pts || 0})`,
-          `${r.s4_q3_ans || '-'} (${r.s4_q3_pts || 0})`,
-          `${r.s4_q4_ans || '-'} (${r.s4_q4_pts || 0})`,
-          `${r.s5_q1_ans || '-'} (${r.s5_q1_pts || 0})`,
-          `${r.s5_q2_ans || '-'} (${r.s5_q2_pts || 0})`,
-          `${r.s5_q3_ans || '-'} (${r.s5_q3_pts || 0})`,
-          `${r.s5_q4_ans || '-'} (${r.s5_q4_pts || 0})`,
-          `${r.s5_q5_ans || '-'} (${r.s5_q5_pts || 0})`,
-          r.total_score || '0', 
-          r.status,
-          r.error || '-'
+          r.id, r.name, r.language || '-',
+          `${r.s1_q1_ans || '-'} (${r.s1_q1_pts || 0})`, `${r.s1_q2_ans || '-'} (${r.s1_q2_pts || 0})`,
+          `${r.s2_q1_ans || '-'} (${r.s2_q1_pts || 0})`, `${r.s2_q2_ans || '-'} (${r.s2_q2_pts || 0})`, `${r.s2_q3_ans || '-'} (${r.s2_q3_pts || 0})`,
+          `${r.s3_q1_ans || '-'} (${r.s3_q1_pts || 0})`, `${r.s3_q2_ans || '-'} (${r.s3_q2_pts || 0})`, `${r.s3_q3_ans || '-'} (${r.s3_q3_pts || 0})`, `${r.s3_q4_ans || '-'} (${r.s3_q4_pts || 0})`,
+          `${r.s4_q1_ans || '-'} (${r.s4_q1_pts || 0})`, `${r.s4_q2_ans || '-'} (${r.s4_q2_pts || 0})`, `${r.s4_q3_ans || '-'} (${r.s4_q3_pts || 0})`, `${r.s4_q4_ans || '-'} (${r.s4_q4_pts || 0})`,
+          `${r.s5_q1_ans || '-'} (${r.s5_q1_pts || 0})`, `${r.s5_q2_ans || '-'} (${r.s5_q2_pts || 0})`, `${r.s5_q3_ans || '-'} (${r.s5_q3_pts || 0})`, `${r.s5_q4_ans || '-'} (${r.s5_q4_pts || 0})`, `${r.s5_q5_ans || '-'} (${r.s5_q5_pts || 0})`,
+          r.total_score || '0', r.status, r.error || '-'
         ];
       }
 
@@ -769,19 +755,16 @@ async function loadAdmin() {
         const td = document.createElement('td');
         td.textContent = val;
         
-        // Подсветка статуса
         if ((currentAdminTab === 'test' && i === 8 && (val === 'Аннулировано' || val === 'Время вышло')) || 
             (currentAdminTab === 'prac' && i === 22 && (val === 'Аннулировано' || val === 'Время вышло'))) {
             td.style.color = 'var(--bad)';
             td.style.fontWeight = 'bold';
         }
         
-        // Подсветка колонки с ошибкой
         if (currentAdminTab === 'prac' && i === 23 && val !== '-') {
             td.style.color = 'var(--bad)';
         }
 
-        // Выделяем итоговый балл жирным
         if ((currentAdminTab === 'test' && i === 4) || (currentAdminTab === 'prac' && i === 21)) {
             td.style.fontWeight = 'bold';
             td.style.color = 'var(--accent)';
@@ -811,7 +794,10 @@ function violation(reason) {
       headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
       body: JSON.stringify({ data: [{ id: PID, name: user.name, variant: activeVariantName, score: 'Аннулировано', score_points: 0, correct: 0, incorrect: 0, time: '-', status: reason }] })
     }).catch(e => console.log(e));
-    alert("Тест аннулирован: " + reason);
+    
+    // Показываем красивый экран ошибки
+    $('viol-r').textContent = reason;
+    $('viol').classList.add('on');
     show('v-menu'); refreshMenu();
   }
   
@@ -825,19 +811,15 @@ function violation(reason) {
       headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
       body: JSON.stringify({ 
         data: [{ 
-          id: PID, 
-          name: user.name, 
-          language: currentLang.toUpperCase(),
+          id: PID, name: user.name, language: currentLang.toUpperCase(),
           s1_q1_ans: 0, s1_q1_pts: 0, s1_q2_ans: 0, s1_q2_pts: 0, s2_q1_ans: 0, s2_q1_pts: 0, s2_q2_ans: 0, s2_q2_pts: 0, s2_q3_ans: 0, s2_q3_pts: 0, s3_q1_ans: 0, s3_q1_pts: 0, s3_q2_ans: 0, s3_q2_pts: 0, s3_q3_ans: 0, s3_q3_pts: 0, s3_q4_ans: 0, s3_q4_pts: 0, s4_q1_ans: 0, s4_q1_pts: 0, s4_q2_ans: 0, s4_q2_pts: 0, s4_q3_ans: 0, s4_q3_pts: 0, s4_q4_ans: 0, s4_q4_pts: 0, s5_q1_ans: 0, s5_q1_pts: 0, s5_q2_ans: 0, s5_q2_pts: 0, s5_q3_ans: 0, s5_q3_pts: 0, s5_q4_ans: 0, s5_q4_pts: 0, s5_q5_ans: 0, s5_q5_pts: 0,
-          total_score: 0, 
-          status: 'Аннулировано', 
-          error: reason, 
-          time: '-',
-          date: new Date().toLocaleDateString('ru-RU')
+          total_score: 0, status: 'Аннулировано', error: reason, time: '-', date: new Date().toLocaleDateString('ru-RU')
         }] 
       })
     }).catch(e => console.log(e));
-    alert("Практика аннулирована: " + reason);
+    
+    $('viol-r').textContent = reason;
+    $('viol').classList.add('on');
     show('v-menu'); refreshMenu();
   }
 }
