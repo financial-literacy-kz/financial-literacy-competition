@@ -344,9 +344,10 @@ th{background:rgba(255,215,0,.15)}
 
 <script>
 // ================= НАСТРОЙКИ =================
-const SHEETDB_URL = 'https://sheetdb.io/api/v1/qn0l3w36mohfb'; // ВАША ССЫЛКА
-const DUR_TEST = 30 * 60; // 30 минут
-const DUR_PRAC = 45 * 60; // 45 минут
+const API_PRACTICE = 'https://sheetdb.io/api/v1/30xavlcdm4804';
+const API_TEST = 'https://sheetdb.io/api/v1/l3v0pyfbw8j44';
+const DUR_TEST = 30 * 60;
+const DUR_PRAC = 45 * 60;
 const L = ['A', 'B', 'C', 'D', 'E'];
 const $ = id => document.getElementById(id);
 const S = { get(k, d) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d } catch (e) { return d } }, set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)) } catch (e) { } }, del(k) { try { localStorage.removeItem(k) } catch (e) { } } };
@@ -506,7 +507,7 @@ async function finishTest(isAuto = false) {
   $('res-score').textContent = currentLang === 'ru' ? 'Ваш результат отправлен!' : 'Сіздің нәтижеңіз жіберілді!';
   $('res-note').textContent = currentLang === 'ru' ? 'Ожидайте результатов от организаторов.' : 'Ұйымдастырушылардың нәтижелерін күтіңіз.';
   
-  fetch(SHEETDB_URL + '?sheet=Results', {
+  fetch(API_TEST, { // <--- ИСПОЛЬЗУЕМ API ТЕСТА
     method: 'POST',
     headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
     body: JSON.stringify({
@@ -614,26 +615,30 @@ async function submitPractice(isAuto = false) {
   mem.prac = { score: result.totalScore };
   saveProgress();
   
-  fetch(SHEETDB_URL + '?sheet=Practice_Results', {
+  // Формируем объект данных
+  let dataToSend = {
+    id: PID,
+    name: user.name,
+    language: currentLang.toUpperCase(),
+    status: isAuto ? 'Время вышло' : 'Завершено',
+    error: '', 
+    time: new Date().toLocaleTimeString('ru-RU'),
+    date: new Date().toLocaleDateString('ru-RU'),
+    total_score: result.totalScore
+  };
+
+  // Проходимся по всем деталям ответов и формируем колонки s1_q1_ans, s1_q1_pts и т.д.
+  result.details.forEach((detail) => {
+      // detail.taskId имеет вид "s1-q1". Меняем дефис на подчеркивание: "s1_q1"
+      const colName = detail.taskId.replace('-', '_'); 
+      dataToSend[colName + '_ans'] = detail.userAnswer || '';
+      dataToSend[colName + '_pts'] = detail.pointsEarned;
+  });
+  
+  fetch(API_PRACTICE, { // <--- ИСПОЛЬЗУЕМ API ПРАКТИКИ
     method: 'POST',
     headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      data: [{
-        id: PID,
-        name: user.name,
-        language: currentLang.toUpperCase(),
-        stage1: result.stageScores ? result.stageScores[1] : 0,
-        stage2: result.stageScores ? result.stageScores[2] : 0,
-        stage3: result.stageScores ? result.stageScores[3] : 0,
-        stage4: result.stageScores ? result.stageScores[4] : 0,
-        stage5: result.stageScores ? result.stageScores[5] : 0,
-        total_score: result.totalScore,
-        status: isAuto ? 'Время вышло' : 'Завершено',
-        error: '', 
-        time: new Date().toLocaleTimeString('ru-RU'),
-        date: new Date().toLocaleDateString('ru-RU')
-      }]
-    })
+    body: JSON.stringify({ data: [dataToSend] })
   }).catch(err => console.error(err));
 
   $('res-score').textContent = currentLang === 'ru' ? 'Ваш результат отправлен!' : 'Сіздің нәтижеңіз жіберілді!';
@@ -661,10 +666,10 @@ async function loadAdmin() {
   $('a-tbl').innerHTML = '';
   
   try {
-    // Загружаем данные с обоих листов
+    // Загружаем данные с обоих API (или листов)
     const [resTests, resPracs] = await Promise.all([
-      fetch(SHEETDB_URL + '?sheet=Results').then(r => r.json()).catch(() => []),
-      fetch(SHEETDB_URL + '?sheet=Practice_Results').then(r => r.json()).catch(() => [])
+      fetch(API_TEST).then(r => r.json()).catch(() => []),
+      fetch(API_PRACTICE).then(r => r.json()).catch(() => [])
     ]);
     
     $('a-msg').textContent = 'Обновлено: ' + new Date().toLocaleTimeString();
@@ -709,7 +714,8 @@ async function loadAdmin() {
       headers = ['ID', 'ФИО', 'Вариант', 'Результат', 'Баллы', 'Прав.', 'Неправ.', 'Время', 'Статус'];
       dataToShow = tests.sort((a, b) => (parseInt(b.score_points) || 0) - (parseInt(a.score_points) || 0));
     } else {
-      headers = ['ID', 'ФИО', 'Язык', 'Эт.1 (15)', 'Эт.2 (15)', 'Эт.3 (20)', 'Эт.4 (25)', 'Эт.5 (25)', 'ИТОГО', 'Статус', 'Ошибка'];
+      // Заголовки для практики (сокращенные для таблицы)
+      headers = ['ID', 'ФИО', 'Яз', 'Эт1(1)', 'Эт1(2)', 'Эт2(1)', 'Эт2(2)', 'Эт2(3)', 'Эт3(1)', 'Эт3(2)', 'Эт3(3)', 'Эт3(4)', 'Эт4(1)', 'Эт4(2)', 'Эт4(3)', 'Эт4(4)', 'Эт5(1)', 'Эт5(2)', 'Эт5(3)', 'Эт5(4)', 'Эт5(5)', 'ИТОГ', 'Статус', 'Ошибка'];
       dataToShow = pracs.sort((a, b) => (parseInt(b.total_score) || 0) - (parseInt(a.total_score) || 0));
     }
 
@@ -730,15 +736,29 @@ async function loadAdmin() {
         }
         cells = [r.id, r.name, variantName, r.score, r.score_points, r.correct, r.incorrect, r.time, r.status];
       } else {
+        // Формируем строку вида "Ответ (Балл)" для каждой задачи
         cells = [
           r.id, 
           r.name, 
-          r.language || '-', 
-          r.stage1 || '0', 
-          r.stage2 || '0', 
-          r.stage3 || '0', 
-          r.stage4 || '0', 
-          r.stage5 || '0', 
+          r.language || '-',
+          `${r.s1_q1_ans || '-'} (${r.s1_q1_pts || 0})`,
+          `${r.s1_q2_ans || '-'} (${r.s1_q2_pts || 0})`,
+          `${r.s2_q1_ans || '-'} (${r.s2_q1_pts || 0})`,
+          `${r.s2_q2_ans || '-'} (${r.s2_q2_pts || 0})`,
+          `${r.s2_q3_ans || '-'} (${r.s2_q3_pts || 0})`,
+          `${r.s3_q1_ans || '-'} (${r.s3_q1_pts || 0})`,
+          `${r.s3_q2_ans || '-'} (${r.s3_q2_pts || 0})`,
+          `${r.s3_q3_ans || '-'} (${r.s3_q3_pts || 0})`,
+          `${r.s3_q4_ans || '-'} (${r.s3_q4_pts || 0})`,
+          `${r.s4_q1_ans || '-'} (${r.s4_q1_pts || 0})`,
+          `${r.s4_q2_ans || '-'} (${r.s4_q2_pts || 0})`,
+          `${r.s4_q3_ans || '-'} (${r.s4_q3_pts || 0})`,
+          `${r.s4_q4_ans || '-'} (${r.s4_q4_pts || 0})`,
+          `${r.s5_q1_ans || '-'} (${r.s5_q1_pts || 0})`,
+          `${r.s5_q2_ans || '-'} (${r.s5_q2_pts || 0})`,
+          `${r.s5_q3_ans || '-'} (${r.s5_q3_pts || 0})`,
+          `${r.s5_q4_ans || '-'} (${r.s5_q4_pts || 0})`,
+          `${r.s5_q5_ans || '-'} (${r.s5_q5_pts || 0})`,
           r.total_score || '0', 
           r.status,
           r.error || '-'
@@ -751,18 +771,18 @@ async function loadAdmin() {
         
         // Подсветка статуса
         if ((currentAdminTab === 'test' && i === 8 && (val === 'Аннулировано' || val === 'Время вышло')) || 
-            (currentAdminTab === 'prac' && i === 9 && (val === 'Аннулировано' || val === 'Время вышло'))) {
+            (currentAdminTab === 'prac' && i === 22 && (val === 'Аннулировано' || val === 'Время вышло'))) {
             td.style.color = 'var(--bad)';
             td.style.fontWeight = 'bold';
         }
         
         // Подсветка колонки с ошибкой
-        if (currentAdminTab === 'prac' && i === 10 && val !== '-') {
+        if (currentAdminTab === 'prac' && i === 23 && val !== '-') {
             td.style.color = 'var(--bad)';
         }
 
         // Выделяем итоговый балл жирным
-        if ((currentAdminTab === 'test' && i === 4) || (currentAdminTab === 'prac' && i === 8)) {
+        if ((currentAdminTab === 'test' && i === 4) || (currentAdminTab === 'prac' && i === 21)) {
             td.style.fontWeight = 'bold';
             td.style.color = 'var(--accent)';
         }
@@ -786,7 +806,7 @@ function violation(reason) {
     armed = false; clearInterval(tick);
     try { document.fullscreenElement && document.exitFullscreen() } catch (e) { }
     mem.test = { score: 0, annulled: true, reason: reason }; saveProgress();
-    fetch(SHEETDB_URL + '?sheet=Results', {
+    fetch(API_TEST, {
       method: 'POST',
       headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
       body: JSON.stringify({ data: [{ id: PID, name: user.name, variant: activeVariantName, score: 'Аннулировано', score_points: 0, correct: 0, incorrect: 0, time: '-', status: reason }] })
@@ -800,7 +820,7 @@ function violation(reason) {
     pracArmed = false; clearInterval(pracTimer);
     try { document.fullscreenElement && document.exitFullscreen() } catch (e) { }
     mem.prac = { score: 0, annulled: true }; saveProgress();
-    fetch(SHEETDB_URL + '?sheet=Practice_Results', {
+    fetch(API_PRACTICE, {
       method: 'POST',
       headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
       body: JSON.stringify({ 
@@ -808,7 +828,7 @@ function violation(reason) {
           id: PID, 
           name: user.name, 
           language: currentLang.toUpperCase(),
-          stage1: 0, stage2: 0, stage3: 0, stage4: 0, stage5: 0,
+          s1_q1_ans: 0, s1_q1_pts: 0, s1_q2_ans: 0, s1_q2_pts: 0, s2_q1_ans: 0, s2_q1_pts: 0, s2_q2_ans: 0, s2_q2_pts: 0, s2_q3_ans: 0, s2_q3_pts: 0, s3_q1_ans: 0, s3_q1_pts: 0, s3_q2_ans: 0, s3_q2_pts: 0, s3_q3_ans: 0, s3_q3_pts: 0, s3_q4_ans: 0, s3_q4_pts: 0, s4_q1_ans: 0, s4_q1_pts: 0, s4_q2_ans: 0, s4_q2_pts: 0, s4_q3_ans: 0, s4_q3_pts: 0, s4_q4_ans: 0, s4_q4_pts: 0, s5_q1_ans: 0, s5_q1_pts: 0, s5_q2_ans: 0, s5_q2_pts: 0, s5_q3_ans: 0, s5_q3_pts: 0, s5_q4_ans: 0, s5_q4_pts: 0, s5_q5_ans: 0, s5_q5_pts: 0,
           total_score: 0, 
           status: 'Аннулировано', 
           error: reason, 
