@@ -20,7 +20,7 @@ body{font-family:'Montserrat',system-ui,sans-serif;background:var(--bg);color:va
 .view{display:none;min-height:100vh;padding:24px 16px;align-items:center;justify-content:center;flex-direction:column}
 .view.on{display:flex}
 .card{background:var(--card);border-radius:20px;padding:36px;width:100%;max-width:520px;border-top:8px solid var(--yellow);box-shadow:0 12px 40px rgba(10,27,77,.14);animation:rise .4s ease}
-.card.wide{max-width:900px}
+.card.wide{max-width:1180px}
 @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 .logo{display:flex;justify-content:center;gap:4px;font-size:56px;font-weight:800;color:var(--accent);line-height:1}
 .logo span{color:var(--yellow)}
@@ -89,7 +89,7 @@ textarea{min-height:150px;resize:vertical}
 #v-test,#v-test *{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 @media print{#v-test{display:none!important}}
 #viol{z-index:100}
-/* ===== анимации и новый дизайн (кроме теста и практики) ===== */
+/* ===== анимации ===== */
 .view{position:relative;z-index:1}
 #bg{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:0}
 body[data-v="v-test"] #bg,body[data-v="v-prac"] #bg{display:none}
@@ -116,9 +116,6 @@ body[data-v="v-test"] #bg,body[data-v="v-prac"] #bg{display:none}
 .ring{width:132px;height:132px;margin:0 auto 18px;border-radius:50%;padding:5px;background:conic-gradient(#ffd700,#ff8a00,#3d5afe,#ffd700);animation:spin 6s linear infinite;box-shadow:0 10px 40px rgba(255,200,0,.5)}
 .ring>div{width:100%;height:100%;border-radius:50%;background:var(--card);display:grid;place-items:center;font-size:50px;font-weight:800;color:var(--accent);animation:unspin 6s linear infinite}
 .chips{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:20px 0 26px}.chips span{padding:8px 14px;border-radius:99px;background:rgba(255,215,0,.22);font-weight:700;font-size:12px}
-.view:not(#v-test):not(#v-prac) .btn.y,.view:not(#v-test):not(#v-prac) .btn.b{position:relative;overflow:hidden}
-.view:not(#v-test):not(#v-prac) .btn.y::after,.view:not(#v-test):not(#v-prac) .btn.b::after{content:'';position:absolute;top:0;left:-80%;width:50%;height:100%;background:linear-gradient(120deg,transparent,rgba(255,255,255,.55),transparent);transform:skewX(-20deg);animation:sweep 3.5s infinite}
-.hero .stack .btn{padding:17px;font-size:16px}
 .act{overflow:hidden;border-radius:24px;padding:38px 26px;border:1px solid var(--line);transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s}
 .act::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,215,0,.25),transparent 55%);opacity:0;transition:.35s}
 .act:hover{transform:translateY(-10px) scale(1.02);box-shadow:0 26px 54px rgba(10,27,77,.24)}.act:hover::before{opacity:1}
@@ -162,6 +159,7 @@ body[data-v="v-test"] #bg,body[data-v="v-prac"] #bg{display:none}
 .ov{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid var(--line);font-size:14px}
 .task{margin-top:18px}.task label{display:flex;gap:10px;font-weight:600;font-size:14px;line-height:1.5;margin-bottom:8px}
 .task label b{flex:0 0 26px;height:26px;border-radius:50%;background:var(--yellow);color:var(--on-yellow);display:grid;place-items:center;font-size:13px}
+.task input{min-height:40px; font-size:16px;}
 .task textarea{min-height:90px}
 .tw{overflow-x:auto}
 .pt{margin:14px 0;border:1px solid var(--line);border-radius:12px;overflow:hidden}
@@ -198,20 +196,41 @@ th{background:rgba(255,215,0,.15)}
 @media(max-width:560px){.card{padding:26px 20px}.q p{font-size:16px}}
 #v-admin .card{max-width:1180px}
 .at{margin:8px 0}.at th{white-space:nowrap}.at td.lg{min-width:260px;max-width:460px;white-space:pre-wrap;font-size:13px}.at td.bad{color:var(--bad);font-weight:700}
+/* Переключатель языка */
+.lang-switch { display: flex; gap: 10px; justify-content: flex-end; width: 100%; max-width: 940px; margin-bottom: 15px; }
+.lang-switch button { background: var(--card); border: 2px solid var(--line); color: var(--text); padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: bold; }
+.lang-switch button.active { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
 </style>
 </head>
 <body>
 
 <div id="bg"><i class="bl a"></i><i class="bl b"></i><i class="bl c"></i></div>
+
 <!-- Старт -->
 <section id="v-start" class="view on"><div class="hero glass stg">
   <div class="ring"><div>5<span style="color:var(--yellow)">0</span></div></div>
   <h1>Республиканский конкурс</h1><h2 class="shine" style="font-size:34px">Финансовая грамотность</h2>
   <div class="sub" style="margin-bottom:0">— Ключ к успеху —<br>среди обучающихся колледжей</div>
-  <div class="chips"><span>📝 20 вопросов</span><span>⏱ 35 минут</span><span>💼 5 этапов практики</span></div>
+  <div class="chips"><span>📝 20 вопросов</span><span>⏱ 30 минут</span><span>💼 5 этапов практики</span></div>
   <div class="stack">
-    <button class="btn y" onclick="enterParticipant()">Я участник</button>
+    <button class="btn y" onclick="show('v-register')">Я участник</button>
     <button class="btn o" onclick="show('v-alogin')">Я администратор</button>
+  </div>
+</div></section>
+
+<!-- РЕГИСТРАЦИЯ УЧАСТНИКА -->
+<section id="v-register" class="view"><div class="card">
+  <div class="ico">👤</div>
+  <h2>Вход для участника</h2>
+  <div class="sub">Пожалуйста, представьтесь перед началом конкурса</div>
+  <div class="stack">
+    <div>
+      <label class="f">ФИО (полностью)</label>
+      <input id="reg-name" type="text" placeholder="Иванов Иван Иванович" onkeydown="if(event.key==='Enter')registerParticipant()">
+    </div>
+    <div class="err" id="reg-err"></div>
+    <button class="btn y" onclick="registerParticipant()">Продолжить</button>
+    <button class="back" onclick="show('v-start')">← Назад</button>
   </div>
 </div></section>
 
@@ -220,41 +239,61 @@ th{background:rgba(255,215,0,.15)}
   <div style="text-align:center;margin-bottom:20px"><h2 class="shine" style="font-size:36px">Добро пожаловать!</h2><div class="sub" style="margin:6px 0 0">Выберите этап конкурса для прохождения</div></div>
   <div class="mpw"><div class="mp"><i id="m-bar"></i></div><span id="m-lbl">Выполнено: 0 из 2</span></div>
   <div class="cards">
-    <div class="act" id="a-test" onclick="startTest()"><div class="ic">📝</div><h3>Тестирование</h3><p>20 вопросов по теории. Ограничение по времени — 35 минут. Прогресс сохраняется.</p><div class="go">Начать →</div></div>
-    <div class="act" id="a-prac" onclick="openPrac()"><div class="ic">💼</div><h3>Практическое задание</h3><p>5 этапов: доходы, расходы, анализ бюджета и финансовый план семьи.</p><div class="go">Открыть →</div></div>
+    <div class="act" id="a-test" onclick="startTest()"><div class="ic">📝</div><h3>Тестирование</h3><p>20 вопросов по теории. Ограничение по времени — 30 минут. Прогресс сохраняется.</p><div class="go">Начать →</div></div>
+    <div class="act" id="a-prac" onclick="startPrac()"><div class="ic">💼</div><h3>Практическое задание</h3><p>5 этапов: доходы, расходы, анализ бюджета и финансовый план семьи.</p><div class="go">Открыть →</div></div>
   </div>
   <button class="back" onclick="finishAll()">Завершить и выйти</button>
 </section>
 
-<!-- Тест -->
-<section id="v-test" class="view"><div class="pz">
-  <div class="pz-top"><div><h2>Тестирование · Финансовая грамотность</h2><div style="font-size:13px;color:var(--muted);font-weight:600;margin-top:4px">Вопрос <span id="t-pos">1</span> из <span id="t-total">20</span></div></div><div class="qt" id="t-timer">35:00</div></div>
-  <div class="prog"><i id="t-bar"></i></div>
-  <div class="qnav" id="t-grid"></div>
-  <div class="pc">
-    <span class="lv lv1" id="q-n"></span>
-    <h3 class="qq" id="q-t"></h3>
-    <div id="q-o"></div>
-    <div class="res">Выберите один правильный ответ. К любому вопросу можно вернуться через номер вверху.</div>
+<!-- ТЕСТ -->
+<section id="v-test" class="view">
+  <div class="lang-switch">
+    <button id="btn-lang-ru-test" onclick="setLang('ru')" class="active">RU</button>
+    <button id="btn-lang-kz-test" onclick="setLang('kz')">KZ</button>
   </div>
-  <div class="nav"><button class="btn o" onclick="go(-1)">← Назад</button><button class="btn y" id="t-next" onclick="go(1)">Далее →</button></div>
-</div></section>
+  <div class="pz">
+    <div class="pz-top">
+      <div>
+        <h2 id="test-main-title">Тестирование · Финансовая грамотность</h2>
+        <div style="font-size:13px;color:var(--muted);font-weight:600;margin-top:4px">
+           <span id="test-user-name" style="color:var(--accent); font-weight:800;"></span><br>
+           Вопрос <span id="t-pos">1</span> из <span id="t-total">20</span>
+        </div>
+      </div>
+      <div class="qt" id="t-timer">30:00</div>
+    </div>
+    <div class="prog"><i id="t-bar"></i></div>
+    <div class="qnav" id="t-grid"></div>
+    <div class="pc">
+      <span class="lv lv1" id="q-n"></span>
+      <h3 class="qq" id="q-t"></h3>
+      <div id="q-o"></div>
+    </div>
+    <div class="nav"><button class="btn o" onclick="go(-1)">← Назад</button><button class="btn y" id="t-next" onclick="go(1)">Далее →</button></div>
+  </div>
+</section>
 
-<!-- Результат теста -->
+<!-- РЕЗУЛЬТАТ (СКРЫТ) -->
 <section id="v-res" class="view"><div class="card" style="text-align:center">
-  <h2 id="res-h">Тест завершён</h2><div class="big" id="res-score"></div><div class="sub" id="res-note"></div>
-  <button class="btn y" onclick="show('v-menu');refreshMenu()">К заданиям</button>
+  <h2 id="res-h" style="color:var(--accent);">Спасибо!</h2>
+  <div class="big" id="res-score" style="font-size: 24px; color: var(--ok);">Ваш результат отправлен</div>
+  <div class="sub" id="res-note">Рахмет! Сіздің нәтижеңіз жіберілді</div>
+  <button class="btn y" onclick="show('v-menu');refreshMenu()">К заданиям / Тапсырмаларға</button>
 </div></section>
 
-<!-- Практика -->
-<section id="v-prac" class="view" style="justify-content:flex-start"><div class="pz" id="pz"></div>
-  <textarea id="p-ans" hidden></textarea>
+<!-- ПРАКТИКА -->
+<section id="v-prac" class="view" style="justify-content:flex-start">
+  <div class="lang-switch">
+    <button id="btn-lang-ru-prac" onclick="setLang('ru')" class="active">RU</button>
+    <button id="btn-lang-kz-prac" onclick="setLang('kz')">KZ</button>
+  </div>
+  <div class="pz" id="pz"></div>
   <div class="calc"><div class="cp" id="cp"><input id="cin" placeholder="520000+480000" oninput="calc()" autocomplete="off"><div id="cout">= …</div></div><button class="btn y" onclick="$('cp').classList.toggle('on')" title="Калькулятор">🧮</button></div>
 </section>
 
 <!-- Вход админа -->
 <section id="v-alogin" class="view"><div class="card">
-  <div class="ico">🔐</div><h2>Администратор</h2><div class="sub">Введите пароль (демо: admin123)</div>
+  <div class="ico">🔐</div><h2>Администратор</h2><div class="sub">Введите пароль</div>
   <div class="stack"><input id="a-pass" type="password" placeholder="Пароль" onkeydown="if(event.key==='Enter')adminLogin()">
   <div class="err" id="a-err"></div>
   <button class="btn b" onclick="adminLogin()">Войти</button>
@@ -264,26 +303,31 @@ th{background:rgba(255,215,0,.15)}
 <!-- Админка -->
 <section id="v-admin" class="view"><div class="card wide" style="border-top-color:var(--accent)">
   <h2>Панель администратора</h2>
-  <div class="sub" id="a-src" style="margin-bottom:0">Демо-режим: данные хранятся только в этом браузере</div>
+  <div class="sub" id="a-src" style="margin-bottom:0">Данные из Google Таблиц</div>
   <div class="stats" id="a-stats"></div>
   <div class="steps" id="a-tabs"></div>
   <div class="err" id="a-msg" style="min-height:0;margin:6px 0"></div>
   <div class="tw"><table class="at" id="a-tbl"></table></div>
-  <div class="nav" style="margin-bottom:0"><button class="btn o" onclick="clearAll()">Очистить данные</button><button class="btn b" onclick="show('v-start')">На главную</button></div>
+  <div class="nav" style="margin-bottom:0"><button class="btn b" onclick="show('v-start')">На главную</button></div>
 </div></section>
 
+<!-- Оверлеи правил и нарушений -->
 <div class="overlay" id="rules"><div class="card">
   <h2 style="font-size:22px">Правила тестирования</h2>
-  <ul class="rl"><li>Тест проходит в полноэкранном режиме.</li><li>Нельзя переключаться на другие вкладки, окна и приложения.</li><li>Нельзя копировать вопросы и ответы, открывать контекстное меню, печатать страницу.</li><li>Нельзя открывать консоль разработчика (F12, Ctrl+Shift+I/J/C, Ctrl+U).</li></ul>
-  <p style="font-size:14px;font-weight:700;color:var(--bad);margin-bottom:18px">При любом нарушении тест будет немедленно закрыт, а результат аннулирован.</p>
+  <ul class="rl"><li>Тест проходит в полноэкранном режиме.</li><li>Нельзя переключаться на другие вкладки.</li><li>При нарушении результат аннулируется.</li></ul>
   <div class="nav" style="margin:0"><button class="btn o" onclick="$('rules').classList.remove('on')">Отмена</button><button class="btn y" onclick="beginTest()">Согласен, начать</button></div>
+</div></div>
+
+<div class="overlay" id="rules-prac"><div class="card">
+  <h2 style="font-size:22px">Правила практики</h2>
+  <ul class="rl"><li>Время на выполнение — 45 минут.</li><li>Нельзя переключаться на другие вкладки.</li><li>При нарушении результат аннулируется.</li></ul>
+  <div class="nav" style="margin:0"><button class="btn o" onclick="$('rules-prac').classList.remove('on')">Отмена</button><button class="btn y" onclick="beginPrac()">Согласен, начать</button></div>
 </div></div>
 
 <div class="overlay" id="viol"><div class="card" style="text-align:center;border-top-color:var(--bad)">
   <div class="ico" style="font-size:56px">⛔</div>
-  <h2 style="font-size:22px;color:var(--bad)">Нарушение правил тестирования</h2>
+  <h2 style="font-size:22px;color:var(--bad)">Нарушение правил</h2>
   <p style="line-height:1.6;margin:12px 0">Тестирование прекращено автоматически.<br>Обнаружено: <b id="viol-r"></b>.</p>
-  <p style="font-weight:700;margin-bottom:20px">Ваш результат аннулирован.</p>
   <button class="btn b" onclick="$('viol').classList.remove('on')">Понятно</button>
 </div></div>
 
@@ -292,256 +336,495 @@ th{background:rgba(255,215,0,.15)}
   <div class="nav" style="margin-bottom:0"><button class="btn o" onclick="ov.classList.remove('on')">Вернуться</button><button class="btn y" onclick="finishTest()">Завершить</button></div>
 </div></div>
 
-<script>
-// ================= НАСТРОЙКИ SHEETDB =================
-const SHEETDB_URL = 'https://sheetdb.io/api/v1/qn0l3w36mohfb';
+<!-- ПОДКЛЮЧЕНИЕ ФАЙЛОВ -->
+<script src="questions_ru.js"></script>
+<script src="questions_kz.js"></script>
+<script src="practice_ru.js"></script>
+<script src="practice_kz.js"></script>
 
-const DUR = 35 * 60;
-const L = ['A', 'B', 'C', 'D'];
+<script>
+// ================= НАСТРОЙКИ =================
+const SHEETDB_URL = 'https://sheetdb.io/api/v1/qn0l3w36mohfb'; // ВАША ССЫЛКА
+const DUR_TEST = 30 * 60; // 30 минут
+const DUR_PRAC = 45 * 60; // 45 минут
+const L = ['A', 'B', 'C', 'D', 'E'];
 const $ = id => document.getElementById(id);
 const S = { get(k, d) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d } catch (e) { return d } }, set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)) } catch (e) { } }, del(k) { try { localStorage.removeItem(k) } catch (e) { } } };
 
-let Q = []; // Вопросы
+let currentLang = 'ru'; 
+let Q = []; 
+let activeVariantName = ""; 
 let user = null, cur = 0, ans = {}, end = 0, tick = null, mem = { test: null, prac: null };
 let PID = null;
+let armed = false, grace = 0; 
 
-// 1. Загрузка вопросов из Google Таблицы (SheetDB)
-async function loadQuestionsFromSheet() {
-  try {
-    const res = await fetch(SHEETDB_URL + '?sheet=Questions');
-    const data = await res.json();
-    
-    if(!data || data.length === 0) {
-      alert("В таблице Questions нет вопросов!");
-      return [];
-    }
-
-    // Перемешиваем и преобразуем
-    let mapped = data.map(row => {
-      let options = [row.option_a, row.option_b, row.option_c, row.option_d];
-      let correctLetter = String(row.correct_option).trim().toUpperCase();
-      let correctText = options[L.indexOf(correctLetter)];
-      
-      // Перемешиваем варианты ответов
-      options.sort(() => Math.random() - 0.5);
-      let newCorrectIdx = options.indexOf(correctText);
-      
-      return { q: row.question, o: options, a: newCorrectIdx };
-    });
-    
-    // Оставляем максимум 20 вопросов и перемешиваем
-    return mapped.sort(() => Math.random() - 0.5).slice(0, 20);
-  } catch (err) {
-    console.error("Ошибка загрузки вопросов:", err);
-    alert("Не удалось загрузить вопросы. Проверьте настройки SheetDB.");
-    return [];
+// ================= ПЕРЕКЛЮЧАТЕЛЬ ЯЗЫКА =================
+function setLang(lang) {
+  currentLang = lang;
+  if(lang === 'ru') {
+    $('btn-lang-ru-test').classList.add('active'); $('btn-lang-kz-test').classList.remove('active');
+    $('btn-lang-ru-prac').classList.add('active'); $('btn-lang-kz-prac').classList.remove('active');
+    $('test-main-title').textContent = "Тестирование · Финансовая грамотность";
+  } else {
+    $('btn-lang-kz-test').classList.add('active'); $('btn-lang-ru-test').classList.remove('active');
+    $('btn-lang-kz-prac').classList.add('active'); $('btn-lang-ru-prac').classList.remove('active');
+    $('test-main-title').textContent = "Тестілеу · Қаржылық сауаттылық";
   }
+  
+  if (Q.length > 0 && $('v-test').classList.contains('on')) {
+    let rawData = [];
+    if (lang === 'ru') rawData = ALL_VARIANTS.find(v => v.name === activeVariantName)?.data || ALL_VARIANTS[0].data;
+    else rawData = ALL_VARIANTS_KZ.find(v => v.name === activeVariantName)?.data || ALL_VARIANTS_KZ[0].data;
+    prepareQuestions(rawData);
+    renderQ();
+  }
+  
+  if ($('v-prac').classList.contains('on')) renderPrac();
+}
+
+// ================= ПОДГОТОВКА ВОПРОСОВ =================
+function prepareQuestions(questionsArray) {
+  let temp = JSON.parse(JSON.stringify(questionsArray));
+  temp.forEach(q => {
+    const correctText = q.o[q.a];
+    q.o.sort(() => Math.random() - 0.5); 
+    q.a = q.o.indexOf(correctText);      
+  });
+  Q = temp.sort(() => Math.random() - 0.5); 
 }
 
 function generateID() {
   return 'PART-' + Math.floor(Math.random() * 9000 + 1000);
 }
 
-function show(id) { document.querySelectorAll('.view').forEach(v => v.classList.remove('on')); $(id).classList.add('on'); document.body.dataset.v = id; window.scrollTo(0, 0); if (id === 'v-res' && mem.test && !mem.test.annulled && mem.test.score / Q.length >= .5) confetti() }
+function show(id) { 
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('on')); 
+  $(id).classList.add('on'); 
+  document.body.dataset.v = id; 
+  window.scrollTo(0, 0); 
+}
 
-function enterParticipant() {
-  PID = generateID();
-  P = null; user = { name: 'Участник' }; mem = { test: null, prac: null }; ans = {};
+// ================= РЕГИСТРАЦИЯ =================
+function registerParticipant() {
+  const name = $('reg-name').value.trim();
+  if (name.length < 3) {
+    $('reg-err').textContent = 'Пожалуйста, введите ваше ФИО / Аты-жөніңізді енгізіңіз.';
+    return;
+  }
+  
+  const savedUser = S.get('contest_user', null);
+  if (savedUser && savedUser.name === name) {
+    user = savedUser;
+    PID = savedUser.id;
+    mem = savedUser.mem || { test: null, prac: null };
+    alert("Вы уже зарегистрированы. Прогресс восстановлен.");
+  } else {
+    user = { name: name };
+    PID = generateID();
+    mem = { test: null, prac: null };
+    
+    let variants = currentLang === 'ru' ? ALL_VARIANTS : ALL_VARIANTS_KZ;
+    const randomIndex = Math.floor(Math.random() * variants.length);
+    const selectedVariant = variants[randomIndex];
+    activeVariantName = selectedVariant.name;
+    
+    prepareQuestions(selectedVariant.data);
+    S.set('contest_user', { name: name, id: PID, mem: mem, variant: activeVariantName, lang: currentLang });
+  }
+
+  ans = {};
+  $('reg-err').textContent = '';
+  $('reg-name').value = '';
+  $('test-user-name').textContent = user.name; 
   refreshMenu(); show('v-menu');
 }
 
-function refreshMenu() { $('a-test').classList.toggle('done', !!mem.test); $('a-prac').classList.toggle('done', !!mem.prac); const n = (mem.test ? 1 : 0) + (mem.prac ? 1 : 0); $('m-bar').style.width = n * 50 + '%'; $('m-lbl').textContent = 'Выполнено: ' + n + ' из 2' }
+function saveProgress() { S.set('contest_user', { name: user.name, id: PID, mem: mem, variant: activeVariantName, lang: currentLang }); }
+function refreshMenu() { $('a-test').classList.toggle('done', !!mem.test); $('a-prac').classList.toggle('done', !!mem.prac); const n = (mem.test ? 1 : 0) + (mem.prac ? 1 : 0); $('m-bar').style.width = n * 50 + '%'; $('m-lbl').textContent = 'Выполнено: ' + n + ' из 2'; }
 
+// ================= ТЕСТ =================
 async function startTest() {
-  if (mem.test) { show('v-res'); return }
-  $('rules').classList.add('on')
+  if (mem.test) { alert("Вы уже прошли тест!"); return; }
+  $('rules').classList.add('on');
 }
 
 async function beginTest() {
   $('rules').classList.remove('on');
-  
-  // Загружаем вопросы
-  if (Q.length === 0) {
-    Q = await loadQuestionsFromSheet();
-    if(Q.length === 0) return; 
-    $('t-total').textContent = Q.length;
-  }
-
+  $('t-total').textContent = Q.length;
   try { const r = document.documentElement.requestFullscreen && document.documentElement.requestFullscreen(); if (r && r.catch) r.catch(() => { }) } catch (e) { }
-  const saved = S.get('progress:' + PID, null);
-  if (saved) { ans = saved.ans; end = saved.end; cur = 0 } else { ans = {}; end = Date.now() + DUR * 1000; S.set('progress:' + PID, { ans, end }) }
-  show('v-test'); renderQ(); clearInterval(tick); tick = setInterval(tock, 500); tock(); grace = Date.now() + 2000; armed = true
+  
+  const saved = S.get('progress_test_' + PID, null);
+  if (saved) { ans = saved.ans; end = saved.end; cur = 0 } else { ans = {}; end = Date.now() + DUR_TEST * 1000; S.set('progress_test_' + PID, { ans, end }) }
+  
+  show('v-test'); renderQ(); 
+  clearInterval(tick); tick = setInterval(tock, 500); tock(); 
+  grace = Date.now() + 3000; armed = true;
 }
 
 function tock() {
   const left = Math.max(0, Math.round((end - Date.now()) / 1000));
   $('t-timer').textContent = String(Math.floor(left / 60)).padStart(2, '0') + ':' + String(left % 60).padStart(2, '0');
   $('t-timer').classList.toggle('low', left < 300);
-  if (left <= 0) { finishTest() }
+  if (left <= 0) { finishTest(true) }
 }
 
 function renderQ() {
   if(Q.length === 0) return;
   const q = Q[cur];
-  $('q-n').textContent = 'Вопрос ' + (cur + 1); $('q-t').textContent = q.q;
+  $('q-n').textContent = (currentLang === 'ru' ? 'Вопрос ' : 'Сұрақ ') + (cur + 1); 
+  $('q-t').textContent = q.q;
   $('t-pos').textContent = cur + 1; $('t-bar').style.width = Object.keys(ans).length / Q.length * 100 + '%';
-  $('t-next').textContent = cur === Q.length - 1 ? 'Завершить ✓' : 'Далее ›';
+  $('t-next').textContent = cur === Q.length - 1 ? (currentLang === 'ru' ? 'Завершить ✓' : 'Аяқтау ✓') : (currentLang === 'ru' ? 'Далее ›' : 'Келесі ›');
+  
   const box = $('q-o'); box.innerHTML = '';
   q.o.forEach((t, i) => {
     const b = document.createElement('button'); b.className = 'qo' + (ans[cur] === i ? ' sel' : '');
     const l = document.createElement('span'); l.className = 'l'; l.textContent = L[i];
     const s = document.createElement('span'); s.textContent = t;
-    b.append(l, s); b.onclick = () => { ans[cur] = i; S.set('progress:' + PID, { ans, end }); renderQ() }; box.appendChild(b)
+    b.append(l, s); b.onclick = () => { ans[cur] = i; S.set('progress_test_' + PID, { ans, end }); renderQ() }; box.appendChild(b)
   });
   const g = $('t-grid'); g.innerHTML = '';
   Q.forEach((_, i) => { const b = document.createElement('button'); b.className = 'qg' + (ans[i] !== undefined ? ' ans' : '') + (i === cur ? ' cur' : ''); b.textContent = i + 1; b.onclick = () => { cur = i; renderQ() }; g.appendChild(b) })
 }
 
 function go(d) {
-  if (d > 0 && cur === Q.length - 1) { const left = Q.length - Object.keys(ans).length; $('ov-t').textContent = left ? ('Остались без ответа: ' + left) : 'Вы ответили на все вопросы.'; $('ov').classList.add('on'); return }
+  if (d > 0 && cur === Q.length - 1) { $('ov').classList.add('on'); return }
   cur = Math.min(Q.length - 1, Math.max(0, cur + d)); renderQ()
 }
 
-// 2. ОТПРАВКА РЕЗУЛЬТАТОВ В SHEETDB
-async function finishTest() {
-  $('ov').classList.remove('on'); clearInterval(tick); armed = false; try { document.fullscreenElement && document.exitFullscreen() } catch (e) { }
-  $('res-score').style.fontSize = ''; $('res-h').textContent = 'Тест завершён';
-  let sc = 0; Q.forEach((q, i) => { if (ans[i] === q.a) sc++ });
-  const spent = DUR - Math.max(0, Math.round((end - Date.now()) / 1000));
-  mem.test = { score: sc, spent: spent, time: new Date().toLocaleTimeString('ru-RU') };
-  S.del('progress:' + PID);
-
-  $('res-score').textContent = sc + ' / ' + Q.length;
-  const p = sc / Q.length; $('res-note').textContent = p >= .8 ? 'Отличный результат!' : p >= .5 ? 'Хороший результат, но есть над чем поработать.' : 'Рекомендуем повторить основы финансовой грамотности.';
-  $('res-note').textContent += ' Потраченное время: ' + fmtT(mem.test.spent) + '.';
+async function finishTest(isAuto = false) {
+  $('ov').classList.remove('on'); clearInterval(tick); armed = false; 
+  try { document.fullscreenElement && document.exitFullscreen() } catch (e) { }
   
-  // Отправка данных
-  fetch(SHEETDB_URL, {
+  let sc = 0; Q.forEach((q, i) => { if (ans[i] === q.a) sc++ });
+  const spentSec = DUR_TEST - Math.max(0, Math.round((end - Date.now()) / 1000));
+  const scorePoints = sc * 5; 
+  
+  mem.test = { score: sc, spent: spentSec, points: scorePoints };
+  saveProgress(); S.del('progress_test_' + PID);
+
+  $('res-score').textContent = currentLang === 'ru' ? 'Ваш результат отправлен!' : 'Сіздің нәтижеңіз жіберілді!';
+  $('res-note').textContent = currentLang === 'ru' ? 'Ожидайте результатов от организаторов.' : 'Ұйымдастырушылардың нәтижелерін күтіңіз.';
+  
+  fetch(SHEETDB_URL + '?sheet=Results', {
     method: 'POST',
     headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
     body: JSON.stringify({
       data: [{
         id: PID,
         name: user.name,
-        score: Math.round(p * 100) + '%',
+        variant: activeVariantName,
+        score: Math.round((sc / Q.length) * 100) + '%',
+        score_points: scorePoints,
         correct: sc,
         incorrect: Q.length - sc,
-        time: spent + ' сек',
-        status: 'Завершено'
+        time: spentSec + ' сек',
+        status: isAuto ? 'Время вышло' : 'Завершено'
       }]
     })
-  }).catch(err => console.error('Ошибка отправки в SheetDB:', err));
+  }).catch(err => console.error('Ошибка:', err));
 
-  refreshMenu(); show('v-res')
+  refreshMenu(); show('v-res');
 }
 
-function fmtT(s) { s = s || 0; return Math.floor(s / 60) + ' мин ' + String(s % 60).padStart(2, '0') + ' с' }
-function confetti() { const c = ['#ffd700', '#ff8a00', '#3d5afe', '#00c853', '#ff4081']; for (let i = 0; i < 60; i++) { const p = document.createElement('i'); p.className = 'cf'; p.style.cssText = 'left:' + Math.random() * 100 + 'vw;background:' + c[i % 5] + ';animation-delay:' + Math.random() * .6 + 's;animation-duration:' + (2 + Math.random() * 2) + 's'; document.body.appendChild(p); setTimeout(() => p.remove(), 5000) } }
+// ================= ПРАКТИКА =================
+let pracTimer = null, pracEnd = 0, pracArmed = false, pracGrace = 0;
 
-// ================= ПРАКТИКА (Упрощенная версия) =================
-const PS = [
-  { t: 'Определение общего дохода семьи', lv: 0, tasks: ['Рассчитайте общий ежемесячный доход семьи.'] },
-  { t: 'Расчёт расходов и остатка бюджета', lv: 0, tasks: ['Рассчитайте общую сумму ежемесячных расходов.'] },
-  { t: 'Анализ структуры семейного бюджета', lv: 1, tasks: ['Рассчитайте, какой процент составляет расходы.'] },
-  { t: 'Решение финансовой ситуации', lv: 1, tasks: ['Рассчитайте остаток на депозите.'] },
-  { t: 'Разработка финансового плана семьи', lv: 2, tasks: ['Составьте обновлённый бюджет.'] }
-];
-let P = null, ps = 0;
-const el = (t, c, x) => { const e = document.createElement(t); if (c) e.className = c; if (x != null) e.textContent = x; return e };
+function startPrac() {
+  if (mem.prac) { alert("Вы уже прошли практику!"); return; }
+  $('rules-prac').classList.add('on');
+}
 
-function openPrac() { if (!P) P = { f: {} }; ps = 0; renderPrac(); show('v-prac') }
-function done(k) { return Object.keys(P.f).some(x => x.startsWith('s' + k + '-') && P.f[x].trim()) }
+function beginPrac() {
+  $('rules-prac').classList.remove('on');
+  try { const r = document.documentElement.requestFullscreen && document.documentElement.requestFullscreen(); if (r && r.catch) r.catch(() => { }) } catch (e) { }
+  
+  pracEnd = Date.now() + DUR_PRAC * 1000;
+  show('v-prac'); renderPrac();
+  
+  clearInterval(pracTimer);
+  pracTimer = setInterval(() => {
+    const left = Math.max(0, Math.round((pracEnd - Date.now()) / 1000));
+    if (left <= 0) { clearInterval(pracTimer); submitPractice(true); }
+  }, 1000);
+  
+  pracGrace = Date.now() + 3000; pracArmed = true;
+}
 
 function renderPrac() {
   const root = $('pz'); root.innerHTML = '';
-  const top = el('div', 'pz-top'); top.append(el('h2', null, 'Практическое задание'));
-  const bk = el('button', 'btn o', '← В меню'); bk.onclick = () => show('v-menu'); top.append(bk); root.append(top);
-  const c = el('div', 'pc');
-  const s = PS[ps], k = ps + 1;
-  c.append(el('h3', null, 'Этап ' + k + '. ' + s.t));
-  s.tasks.forEach((tx, j) => {
-    const key = 's' + k + '-t' + j, d = el('div', 'task'), lb = el('label');
-    lb.append(el('b', null, j + 1), el('span', null, tx));
-    const ta = el('textarea'); ta.placeholder = 'Ваш ответ...'; ta.value = P.f[key] || '';
-    ta.oninput = () => { P.f[key] = ta.value; }; d.append(lb, ta); c.append(d)
-  });
+  const pracData = currentLang === 'ru' ? PRACTICE_DATA_RU : PRACTICE_DATA_KZ;
+  
+  const top = document.createElement('div'); top.className = 'pz-top';
+  const title = document.createElement('h2'); title.textContent = currentLang === 'ru' ? 'Практическое задание' : 'Практикалық тапсырма';
+  const back = document.createElement('button'); back.className = 'btn o'; back.textContent = '← В меню / Мәзірге'; back.onclick = () => show('v-menu');
+  top.append(title, back); root.append(top);
+
+  const c = document.createElement('div'); c.className = 'pc';
+  
+  for (let stage = 1; stage <= 5; stage++) {
+    const sData = pracData['stage' + stage];
+    if(!sData) continue;
+    
+    const h3 = document.createElement('h3'); h3.textContent = (currentLang === 'ru' ? 'Этап ' : 'Кезең ') + stage;
+    c.append(h3);
+    
+    sData.tasks.forEach((task, idx) => {
+      const d = document.createElement('div'); d.className = 'task';
+      const lb = document.createElement('label');
+      const b = document.createElement('b'); b.textContent = idx + 1;
+      const span = document.createElement('span'); span.textContent = task.text;
+      lb.append(b, span);
+      
+      const input = document.createElement('input');
+      input.type = 'number';
+      input.id = task.id;
+      input.placeholder = currentLang === 'ru' ? 'Введите число...' : 'Санды енгізіңіз...';
+      input.className = 'prac-input';
+      
+      d.append(lb, input);
+      c.append(d);
+    });
+  }
+
+  const btn = document.createElement('button');
+  btn.className = 'btn y'; btn.style.width = '100%'; btn.style.marginTop = '20px';
+  btn.textContent = currentLang === 'ru' ? 'Отправить ответы' : 'Жауаптарды жіберу';
+  btn.onclick = () => submitPractice(false);
+  c.append(btn);
+  
   root.append(c);
-  const nav = el('div', 'nav'), pv = el('button', 'btn o', '← Назад'), nx = el('button', 'btn y', ps === 4 ? 'Отправить ✓' : 'Далее →');
-  pv.disabled = ps === 0; pv.onclick = () => { ps--; renderPrac() }; nx.onclick = () => { if (ps === 4) { mem.prac = { text: 'done' }; refreshMenu(); show('v-menu'); } else { ps++; renderPrac() } };
-  nav.append(pv, nx); root.append(nav);
+}
+
+async function submitPractice(isAuto = false) {
+  if (!isAuto && !confirm(currentLang === 'ru' ? 'Отправить ответы?' : 'Жауаптарды жіберу?')) return;
+  
+  clearInterval(pracTimer); pracArmed = false;
+  try { document.fullscreenElement && document.exitFullscreen() } catch (e) { }
+  
+  const answers = {};
+  document.querySelectorAll('.prac-input').forEach(inp => {
+    answers[inp.id] = inp.value;
+  });
+  
+  const pracData = currentLang === 'ru' ? PRACTICE_DATA_RU : PRACTICE_DATA_KZ;
+  const calcFn = currentLang === 'ru' ? calculatePracticeScoreRU : calculatePracticeScoreKZ;
+  const result = calcFn(answers);
+  
+  mem.prac = { score: result.totalScore };
+  saveProgress();
+  
+  fetch(SHEETDB_URL + '?sheet=Practice_Results', {
+    method: 'POST',
+    headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      data: [{
+        id: PID,
+        name: user.name,
+        language: currentLang.toUpperCase(),
+        stage1: result.stageScores ? result.stageScores[1] : 0,
+        stage2: result.stageScores ? result.stageScores[2] : 0,
+        stage3: result.stageScores ? result.stageScores[3] : 0,
+        stage4: result.stageScores ? result.stageScores[4] : 0,
+        stage5: result.stageScores ? result.stageScores[5] : 0,
+        total_score: result.totalScore,
+        status: isAuto ? 'Время вышло' : 'Завершено',
+        error: '', 
+        time: new Date().toLocaleTimeString('ru-RU'),
+        date: new Date().toLocaleDateString('ru-RU')
+      }]
+    })
+  }).catch(err => console.error(err));
+
+  $('res-score').textContent = currentLang === 'ru' ? 'Ваш результат отправлен!' : 'Сіздің нәтижеңіз жіберілді!';
+  $('res-note').textContent = currentLang === 'ru' ? 'Ожидайте результатов от организаторов.' : 'Ұйымдастырушылардың нәтижелерін күтіңіз.';
+  
+  refreshMenu(); show('v-res');
 }
 
 function finishAll() { show('v-start') }
 
-// ================= АДМИНКА (ПРОСМОТР ЧЕРЕЗ SHEETDB) =================
+// ================= АДМИНКА =================
+let adminData = []; 
+let currentAdminTab = 'test'; 
+
 async function adminLogin() {
   const p = $('a-pass').value;
   if (p !== 'admin123') { $('a-err').textContent = 'Неверный пароль'; return; }
-  $('a-pass').value = ''; $('a-err').textContent = ''; show('v-admin'); loadAdmin();
+  $('a-pass').value = ''; $('a-err').textContent = ''; 
+  show('v-admin'); 
+  loadAdmin();
 }
 
 async function loadAdmin() {
-  $('a-msg').textContent = 'Загрузка данных...';
-  const tbody = $('a-tbl'); tbody.innerHTML = '';
+  $('a-msg').textContent = 'Загрузка данных из Google Таблиц...';
+  $('a-tbl').innerHTML = '';
   
   try {
-    const res = await fetch(SHEETDB_URL + '?sheet=Results');
-    const data = await res.json();
+    // Загружаем данные с обоих листов
+    const [resTests, resPracs] = await Promise.all([
+      fetch(SHEETDB_URL + '?sheet=Results').then(r => r.json()).catch(() => []),
+      fetch(SHEETDB_URL + '?sheet=Practice_Results').then(r => r.json()).catch(() => [])
+    ]);
     
-    $('a-msg').textContent = 'Данные из Google Таблиц (обновлено ' + new Date().toLocaleTimeString() + ')';
-    $('a-stats').innerHTML = `<div class="stat"><b>${data.length}</b><span>Участников</span></div>`;
+    $('a-msg').textContent = 'Обновлено: ' + new Date().toLocaleTimeString();
     
-    const h = el('tr'); ['ID', 'ФИО', 'Результат', 'Правильных', 'Неправильных', 'Время'].forEach(x => h.append(el('th', null, x))); tbody.append(h);
+    const tests = resTests || [];
+    const pracs = resPracs || [];
     
-    data.forEach(r => {
-      const tr = el('tr');
-      tr.append(el('td', null, r.id || '-'), el('td', null, r.name || '-'), el('td', null, r.score || '-'), el('td', null, r.correct || '-'), el('td', null, r.incorrect || '-'), el('td', null, r.time || '-'));
-      tbody.append(tr);
+    // Статистика
+    const avgTest = tests.length ? Math.round(tests.reduce((acc, r) => acc + parseInt(r.score_points || 0), 0) / tests.length) : 0;
+    const avgPrac = pracs.length ? Math.round(pracs.reduce((acc, r) => acc + parseInt(r.total_score || 0), 0) / pracs.length) : 0;
+    
+    $('a-stats').innerHTML = `
+      <div class="stat"><b>${tests.length}</b><span>Тестов сдано</span></div>
+      <div class="stat"><b>${pracs.length}</b><span>Практик сдано</span></div>
+      <div class="stat"><b>${avgTest}</b><span>Ср. балл (Тест)</span></div>
+      <div class="stat"><b>${avgPrac}</b><span>Ср. балл (Практика)</span></div>
+    `;
+
+    // Вкладки
+    $('a-tabs').innerHTML = '';
+    const btnTest = document.createElement('button');
+    btnTest.className = 'st ' + (currentAdminTab === 'test' ? 'cur' : '');
+    btnTest.textContent = `Тесты (${tests.length})`;
+    btnTest.onclick = () => { currentAdminTab = 'test'; loadAdmin(); };
+    
+    const btnPrac = document.createElement('button');
+    btnPrac.className = 'st ' + (currentAdminTab === 'prac' ? 'cur' : '');
+    btnPrac.textContent = `Практика (${pracs.length})`;
+    btnPrac.onclick = () => { currentAdminTab = 'prac'; loadAdmin(); };
+    
+    $('a-tabs').append(btnTest, btnPrac);
+
+    // Таблица
+    const tbody = $('a-tbl');
+    const thead = document.createElement('thead');
+    const hRow = document.createElement('tr');
+    
+    let headers = [];
+    let dataToShow = [];
+    
+    if (currentAdminTab === 'test') {
+      headers = ['ID', 'ФИО', 'Вариант', 'Результат', 'Баллы', 'Прав.', 'Неправ.', 'Время', 'Статус'];
+      dataToShow = tests.sort((a, b) => (parseInt(b.score_points) || 0) - (parseInt(a.score_points) || 0));
+    } else {
+      headers = ['ID', 'ФИО', 'Язык', 'Эт.1 (15)', 'Эт.2 (15)', 'Эт.3 (20)', 'Эт.4 (25)', 'Эт.5 (25)', 'ИТОГО', 'Статус', 'Ошибка'];
+      dataToShow = pracs.sort((a, b) => (parseInt(b.total_score) || 0) - (parseInt(a.total_score) || 0));
+    }
+
+    headers.forEach(h => {
+      const th = document.createElement('th'); th.textContent = h; hRow.append(th);
     });
+    thead.append(hRow); tbody.append(thead);
+
+    const tb = document.createElement('tbody');
+    dataToShow.forEach(r => {
+      const tr = document.createElement('tr');
+      let cells = [];
+      
+      if (currentAdminTab === 'test') {
+        let variantName = r.variant || '-';
+        if(variantName.includes('Направление')) {
+            variantName = variantName.replace('Направление ', 'Напр. ').replace(' - Вариант', ' (в.)');
+        }
+        cells = [r.id, r.name, variantName, r.score, r.score_points, r.correct, r.incorrect, r.time, r.status];
+      } else {
+        cells = [
+          r.id, 
+          r.name, 
+          r.language || '-', 
+          r.stage1 || '0', 
+          r.stage2 || '0', 
+          r.stage3 || '0', 
+          r.stage4 || '0', 
+          r.stage5 || '0', 
+          r.total_score || '0', 
+          r.status,
+          r.error || '-'
+        ];
+      }
+
+      cells.forEach((val, i) => {
+        const td = document.createElement('td');
+        td.textContent = val;
+        
+        // Подсветка статуса
+        if ((currentAdminTab === 'test' && i === 8 && (val === 'Аннулировано' || val === 'Время вышло')) || 
+            (currentAdminTab === 'prac' && i === 9 && (val === 'Аннулировано' || val === 'Время вышло'))) {
+            td.style.color = 'var(--bad)';
+            td.style.fontWeight = 'bold';
+        }
+        
+        // Подсветка колонки с ошибкой
+        if (currentAdminTab === 'prac' && i === 10 && val !== '-') {
+            td.style.color = 'var(--bad)';
+        }
+
+        // Выделяем итоговый балл жирным
+        if ((currentAdminTab === 'test' && i === 4) || (currentAdminTab === 'prac' && i === 8)) {
+            td.style.fontWeight = 'bold';
+            td.style.color = 'var(--accent)';
+        }
+        
+        tr.append(td);
+      });
+      tb.append(tr);
+    });
+    tbody.append(tb);
+
   } catch (e) {
     $('a-msg').textContent = 'Ошибка загрузки. Проверьте подключение к SheetDB.';
+    console.error(e);
   }
 }
 
-function clearAll() { alert('Данные удаляются только вручную в Google Таблице.'); }
-
-// ================= АНТИЧИТ =================
-let armed = false, grace = 0;
+// ================= ПРОКТОРИНГ (ОБЩИЙ) =================
 function violation(reason) {
-  if (!armed || Date.now() < grace) return;
-  armed = false; clearInterval(tick);
-  try { document.fullscreenElement && document.exitFullscreen() } catch (e) { }
-  S.del('progress:' + PID);
-  mem.test = { score: 0, annulled: true, reason: reason }; 
+  // Для теста
+  if (armed && Date.now() > grace) {
+    armed = false; clearInterval(tick);
+    try { document.fullscreenElement && document.exitFullscreen() } catch (e) { }
+    mem.test = { score: 0, annulled: true, reason: reason }; saveProgress();
+    fetch(SHEETDB_URL + '?sheet=Results', {
+      method: 'POST',
+      headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+      body: JSON.stringify({ data: [{ id: PID, name: user.name, variant: activeVariantName, score: 'Аннулировано', score_points: 0, correct: 0, incorrect: 0, time: '-', status: reason }] })
+    }).catch(e => console.log(e));
+    alert("Тест аннулирован: " + reason);
+    show('v-menu'); refreshMenu();
+  }
   
-  fetch(SHEETDB_URL, {
-    method: 'POST',
-    headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
-    body: JSON.stringify({ data: [{ id: PID, name: user.name, score: 'Аннулировано', correct: 0, incorrect: 0, time: '-', status: reason }] })
-  }).catch(e => console.log(e));
-
-  $('res-h').textContent = 'Результат аннулирован'; $('res-score').style.fontSize = '34px'; $('res-score').textContent = 'Аннулировано'; $('res-note').textContent = 'Нарушение правил: ' + reason;
-  $('viol-r').textContent = reason;
-  refreshMenu(); show('v-menu'); $('viol').classList.add('on')
+  // Для практики
+  if (pracArmed && Date.now() > pracGrace) {
+    pracArmed = false; clearInterval(pracTimer);
+    try { document.fullscreenElement && document.exitFullscreen() } catch (e) { }
+    mem.prac = { score: 0, annulled: true }; saveProgress();
+    fetch(SHEETDB_URL + '?sheet=Practice_Results', {
+      method: 'POST',
+      headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+      body: JSON.stringify({ 
+        data: [{ 
+          id: PID, 
+          name: user.name, 
+          language: currentLang.toUpperCase(),
+          stage1: 0, stage2: 0, stage3: 0, stage4: 0, stage5: 0,
+          total_score: 0, 
+          status: 'Аннулировано', 
+          error: reason, 
+          time: '-',
+          date: new Date().toLocaleDateString('ru-RU')
+        }] 
+      })
+    }).catch(e => console.log(e));
+    alert("Практика аннулирована: " + reason);
+    show('v-menu'); refreshMenu();
+  }
 }
 
-document.addEventListener('visibilitychange', () => { if (document.hidden) violation('переключение на другую вкладку или окно') });
-window.addEventListener('blur', () => violation('потеря фокуса окна тестирования (другое окно или приложение)'));
-document.addEventListener('fullscreenchange', () => { if (!document.fullscreenElement) violation('выход из полноэкранного режима') });
-['copy', 'cut', 'paste'].forEach(t => document.addEventListener(t, e => { if (armed) { e.preventDefault(); violation('попытка копирования') } }));
-document.addEventListener('contextmenu', e => { if (armed) { e.preventDefault(); violation('попытка открыть контекстное меню') } });
-['selectstart', 'dragstart'].forEach(t => document.addEventListener(t, e => { if (armed) e.preventDefault() }));
-document.addEventListener('keydown', e => {
-  if (!armed) return;
-  const c = e.ctrlKey || e.metaKey, k = e.code;
-  if (e.key === 'F12' || (c && e.shiftKey && ['KeyI', 'KeyJ', 'KeyC', 'KeyK'].includes(k)) || (c && k === 'KeyU') || (e.metaKey && e.altKey && ['KeyI', 'KeyJ', 'KeyC'].includes(k))) { e.preventDefault(); violation('попытка открыть консоль разработчика') }
-  else if (c && ['KeyC', 'KeyX', 'KeyA', 'KeyS', 'KeyP', 'KeyV'].includes(k)) { e.preventDefault(); violation('попытка копирования / печати') }
-});
-document.addEventListener('keyup', e => { if (armed && e.key === 'PrintScreen') { try { navigator.clipboard.writeText('') } catch (x) { } violation('попытка сделать снимок экрана') } });
-setInterval(() => {
-  if (!armed || window.top !== window.self || /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent)) return;
-  if (window.outerWidth - window.innerWidth > 200 || window.outerHeight - window.innerHeight > 200) violation('открыта консоль разработчика (DevTools)')
-}, 1000);
+document.addEventListener('visibilitychange', () => { if (document.hidden) violation('переключение на другую вкладку'); });
+window.addEventListener('blur', () => violation('потеря фокуса'));
+document.addEventListener('fullscreenchange', () => { if (!document.fullscreenElement) violation('выход из полноэкранного режима'); });
 
 // Инициализация фоновых монет
 (function () { const bg = $('bg'); for (let i = 0; i < 12; i++) { const c = document.createElement('div'), s = 24 + Math.random() * 28; c.className = 'coin'; c.textContent = '₸'; c.style.cssText = 'left:' + Math.random() * 96 + '%;width:' + s + 'px;height:' + s + 'px;font-size:' + s * .5 + 'px;animation-duration:' + (14 + Math.random() * 14) + 's;animation-delay:-' + Math.random() * 20 + 's'; bg.appendChild(c) } })();
