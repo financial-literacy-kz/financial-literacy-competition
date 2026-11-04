@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Республиканский конкурс — Финансовая грамотность</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --yellow:#ffd700;--yellow-h:#e6c200;--blue:#0a1b4d;
+  --bg:#f4f7fc;--card:#fff;--text:#1d2340;--muted:#667;--line:#e3e8f2;--ok:#00a650;--bad:#d93a3a;--on-yellow:#0a1b4d;--accent:#0a1b4d;--on-accent:#fff;
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#171a2e;--card:#232744;--text:#f1f3fb;--muted:#a3a8c3;--line:#363b60;--accent:#ffd700;--on-accent:#0a1b4d;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#171a2e;--card:#232744;--text:#f1f3fb;--muted:#a3a8c3;--line:#363b60;--accent:#ffd700;--on-accent:#0a1b4d;color-scheme:dark}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{font-family:'Montserrat',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;
+  background-image:radial-gradient(circle at 8% 10%,rgba(255,215,0,.18),transparent 35%),radial-gradient(circle at 92% 90%,rgba(60,90,220,.15),transparent 35%);background-attachment:fixed}
+.view{display:none;min-height:100vh;padding:24px 16px;align-items:center;justify-content:center;flex-direction:column}
+.view.on{display:flex}
+.card{background:var(--card);border-radius:20px;padding:36px;width:100%;max-width:520px;border-top:8px solid var(--yellow);box-shadow:0 12px 40px rgba(10,27,77,.14);animation:rise .4s ease}
+.card.wide{max-width:900px}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.logo{display:flex;justify-content:center;gap:4px;font-size:56px;font-weight:800;color:var(--accent);line-height:1}
+.logo span{color:var(--yellow)}
+h1{font-size:20px;text-transform:uppercase;letter-spacing:1px;text-align:center;margin:8px 0 4px}
+h2{font-size:26px;text-align:center;font-weight:800;color:var(--accent);margin-bottom:6px}
+.sub{text-align:center;color:var(--muted);font-size:14px;font-weight:600;margin-bottom:26px}
+.stack{display:flex;flex-direction:column;gap:12px}
+.btn{padding:14px 24px;border:0;border-radius:10px;font:700 15px 'Montserrat',sans-serif;cursor:pointer;transition:.2s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,.18)}
+.btn:disabled{opacity:.5;cursor:default;transform:none;box-shadow:none}
+.y{background:var(--yellow);color:var(--on-yellow)}.b{background:var(--accent);color:var(--on-accent)}
+.o{background:transparent;border:2px solid var(--accent);color:var(--accent)}
+label.f{display:block;font-size:13px;font-weight:600;color:var(--muted);margin-bottom:6px}
+input,select,textarea{width:100%;padding:13px 14px;border-radius:10px;border:1.5px solid var(--line);background:var(--bg);color:var(--text);font:500 15px 'Montserrat',sans-serif}
+input:focus,textarea:focus,select:focus{outline:2px solid var(--yellow);border-color:var(--yellow)}
+textarea{min-height:150px;resize:vertical}
+.err{color:var(--bad);font-size:13px;font-weight:600;min-height:18px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;width:100%;max-width:760px}
+.act{background:var(--card);border-radius:18px;padding:34px 24px;text-align:center;cursor:pointer;border-bottom:6px solid transparent;box-shadow:0 6px 22px rgba(0,0,0,.08);transition:.25s;position:relative}
+.act:hover{transform:translateY(-6px);border-bottom-color:var(--yellow)}
+.act .ic{font-size:46px;margin-bottom:12px}.act h3{color:var(--accent);margin-bottom:8px}.act p{font-size:14px;color:var(--muted);line-height:1.5}
+.act.done{opacity:.7}.act.done::after{content:"✓ Выполнено";position:absolute;top:12px;right:14px;font-size:12px;font-weight:700;color:var(--ok)}
+/* тест */
+.test{width:100%;max-width:900px;align-self:flex-start;margin:0 auto}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}
+.top b{font-size:15px}.top small{color:var(--muted)}
+.timer{font-weight:800;font-size:18px;padding:8px 16px;border-radius:999px;background:var(--card);border:3px solid var(--ok);min-width:92px;text-align:center}
+.timer.low{border-color:var(--bad);color:var(--bad)}
+.bar{height:8px;border-radius:99px;background:var(--line);overflow:hidden;margin-bottom:18px}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--yellow),#ffb300);transition:width .3s}
+.q{background:var(--card);border-radius:16px;padding:26px;box-shadow:0 6px 22px rgba(0,0,0,.08)}
+.q h3{font-size:13px;color:var(--muted);margin-bottom:10px;text-transform:uppercase;letter-spacing:1px}
+.q p{font-size:18px;font-weight:600;line-height:1.5;margin-bottom:20px}
+.opt{display:flex;gap:14px;align-items:center;width:100%;text-align:left;padding:14px 16px;margin-bottom:10px;border-radius:12px;border:2px solid var(--line);background:var(--bg);color:var(--text);font:500 15px 'Montserrat',sans-serif;cursor:pointer;transition:.15s}
+.opt:hover{border-color:var(--yellow)}
+.opt .l{flex:0 0 30px;height:30px;border-radius:50%;background:var(--line);display:grid;place-items:center;font-weight:700;font-size:13px}
+.opt.sel{border-color:var(--yellow);background:rgba(255,215,0,.15)}
+.opt.sel .l{background:var(--yellow);color:var(--on-yellow)}
+.nav{display:flex;justify-content:space-between;gap:12px;margin:18px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(42px,1fr));gap:8px}
+.g{aspect-ratio:1;border-radius:8px;border:2px solid transparent;background:var(--card);color:var(--muted);font-weight:700;cursor:pointer}
+.g.ans{background:var(--ok);color:#fff}.g.cur{border-color:var(--accent)}
+/* тест — тёмный экран */
+#v-test{background:#2b2e4a;color:#fff;font-family:'Inter',sans-serif;flex-direction:row;align-items:flex-start;justify-content:center;gap:20px;padding:20px}
+.dt-main{flex:1;max-width:calc(100% - 320px);display:flex;flex-direction:column;gap:20px;min-width:0}
+.dt-head{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 0}
+.dt-head h1{font-size:20px;font-weight:600;text-transform:none;letter-spacing:0;text-align:left;margin:0 0 4px}
+.dt-head p{font-size:12px;color:#a0a4b8}
+.dt-time{display:flex;align-items:center;gap:15px;font-size:14px;white-space:nowrap}
+#v-test .timer{width:50px;height:50px;min-width:0;padding:0;border-radius:50%;border:3px solid #00c853;background:transparent;display:grid;place-items:center;font-size:13px;font-weight:600;color:#fff}
+#v-test .timer.low{border-color:#ff5252;color:#ff5252}
+#v-test .q{background:#1e2235;border-radius:8px;padding:25px;box-shadow:0 4px 6px rgba(0,0,0,.1)}
+#v-test .q h3{font-size:16px;font-weight:600;color:#e2e8f0;text-transform:none;letter-spacing:0;margin-bottom:15px}
+#v-test .q p{font-size:15px;font-weight:400;line-height:1.6;color:#cbd5e1;margin-bottom:20px}
+.note{font-size:13px;color:#a0a4b8}.note::before{content:'• '}
+#q-o{display:flex;flex-direction:column;gap:10px}
+#v-test .opt{background:#383c5a;border:1px solid transparent;border-radius:6px;padding:15px 20px;margin:0;color:#e2e8f0;font:400 14px 'Inter',sans-serif}
+#v-test .opt:hover{border-color:#4a4e69}
+#v-test .opt .l{flex:0 0 28px;width:28px;height:28px;background:#1e2235;color:#a0a4b8;font-size:14px;font-weight:600}
+#v-test .opt.sel{border-color:#007bff;background:rgba(0,123,255,.1)}
+#v-test .opt.sel .l{background:#007bff;color:#fff}
+#v-test .nav{justify-content:center;margin:0}
+#v-test .btn{font:500 14px 'Inter',sans-serif;padding:10px 30px;border-radius:6px}
+#v-test .btn:hover{transform:none;box-shadow:none;opacity:.8}
+.dp{background:#007bff;color:#fff}.ds{background:transparent;color:#fff;border:1px solid #4a4e69}
+.dt-side{width:300px;flex:none;background:#1e2235;border-radius:8px;padding:20px}
+.dt-sh{margin-bottom:20px;font-size:14px}
+#v-test,#v-test *{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+@media print{#v-test{display:none!important}}
+#viol{z-index:100}
+.rl{margin:14px 0 16px 18px;line-height:1.7;font-size:14px;text-align:left}
+#v-test .grid{grid-template-columns:repeat(5,1fr);gap:8px}
+#v-test .g{background:#383c5a;color:#a0a4b8;border:2px solid transparent;border-radius:4px;font-size:13px;font-weight:600}
+#v-test .g.ans{background:#00c853;color:#fff}
+#v-test .g.cur{border-color:#fff;color:#fff}
+@media(max-width:820px){#v-test{flex-direction:column;align-items:stretch}.dt-main{max-width:100%}.dt-side{width:100%}.dt-head{flex-direction:column;align-items:flex-start}}
+/* результат */
+.big{font-size:64px;font-weight:800;color:var(--accent);text-align:center}
+.tw{overflow-x:auto}
+table{width:100%;border-collapse:collapse;margin:16px 0;font-size:14px}
+th,td{padding:12px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:rgba(255,215,0,.15)}
+.tag{display:inline-block;padding:3px 10px;border-radius:99px;font-size:12px;font-weight:700}
+.tag.g1{background:rgba(0,166,80,.15);color:var(--ok)}.tag.g0{background:rgba(217,58,58,.15);color:var(--bad)}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;place-items:center;padding:16px;z-index:50}
+.overlay.on{display:grid}
+.back{background:none;border:0;color:var(--muted);font:600 13px 'Montserrat';cursor:pointer;margin-top:16px;text-align:center}
+@media(max-width:560px){.card{padding:26px 20px}.q p{font-size:16px}}
+</style>
+</head>
+<body>
+
+<!-- Старт -->
+<section id="v-start" class="view on"><div class="card">
+  <div class="logo">5<span>0</span></div>
+  <h1>Республиканский конкурс</h1><h2>Финансовая грамотность</h2>
+  <div class="sub">— Ключ к успеху —<br>среди обучающихся колледжей</div>
+  <div class="stack">
+    <button class="btn y" onclick="enterParticipant()">Я участник</button>
+    <button class="btn o" onclick="show('v-alogin')">Я администратор</button>
+  </div>
+</div></section>
+
+<!-- Меню участника -->
+<section id="v-menu" class="view">
+  <div style="text-align:center;margin-bottom:30px"><h2 style="font-size:32px">Добро пожаловать!</h2><div class="sub" style="margin:0">Выберите этап конкурса для прохождения</div></div>
+  <div class="cards">
+    <div class="act" id="a-test" onclick="startTest()"><div class="ic">📝</div><h3>Тестирование</h3><p>30 вопросов по теории. Ограничение по времени — 35 минут. Прогресс сохраняется.</p></div>
+    <div class="act" id="a-prac" onclick="show('v-prac')"><div class="ic">💼</div><h3>Практическое задание</h3><p>Решите финансовую задачу и дайте развёрнутый ответ.</p></div>
+  </div>
+  <button class="back" onclick="finishAll()">Завершить и выйти</button>
+</section>
+
+<!-- Тест -->
+<section id="v-test" class="view">
+  <div class="dt-main">
+    <div class="dt-head"><div><h1>Финансовая грамотность</h1><p>Республиканский конкурс среди обучающихся колледжей</p></div><div class="dt-time"><span>Осталось времени:</span><div class="timer" id="t-timer">35:00</div></div></div>
+    <div class="q"><h3 id="q-n"></h3><p id="q-t"></p><div class="note">Выберите один правильный ответ.</div></div>
+    <div class="q" id="q-o"></div>
+    <div class="nav"><button class="btn ds" onclick="go(-1)">‹ Назад</button><button class="btn dp" id="t-next" onclick="go(1)">Далее ›</button></div>
+  </div>
+  <aside class="dt-side"><div class="dt-sh">Вопрос <span id="t-pos">1</span>/30</div><div class="grid" id="t-grid"></div></aside>
+</section>
+
+<!-- Результат теста -->
+<section id="v-res" class="view"><div class="card" style="text-align:center">
+  <h2 id="res-h">Тест завершён</h2><div class="big" id="res-score"></div><div class="sub" id="res-note"></div>
+  <button class="btn y" onclick="show('v-menu');refreshMenu()">К заданиям</button>
+</div></section>
+
+<!-- Практика -->
+<section id="v-prac" class="view"><div class="card wide">
+  <h2>Практическое задание</h2>
+  <p style="line-height:1.7;margin:14px 0">Семья Петровых имеет ежемесячный доход 150 000 тенге. Расходы: коммунальные услуги — 20 000 ₸, питание — 60 000 ₸, транспорт — 15 000 ₸. Ежемесячный платёж по кредиту — 30 000 ₸.<br><br><b>Вопрос:</b> сколько семья может ежемесячно откладывать в накопления? Какую долю дохода это составляет и что бы вы посоветовали семье? Напишите ответ с обоснованием.</p>
+  <textarea id="p-ans" placeholder="Введите ваш ответ здесь…"></textarea>
+  <div class="err" id="p-err"></div>
+  <div class="nav"><button class="btn o" onclick="show('v-menu')">Назад</button><button class="btn y" onclick="submitPractice()">Отправить ответ</button></div>
+</div></section>
+
+<!-- Вход админа -->
+<section id="v-alogin" class="view"><div class="card">
+  <h2>Администратор</h2><div class="sub">Введите пароль (демо: admin123)</div>
+  <div class="stack"><input id="a-pass" type="password" placeholder="Пароль" onkeydown="if(event.key==='Enter')adminLogin()">
+  <div class="err" id="a-err"></div>
+  <button class="btn b" onclick="adminLogin()">Войти</button>
+  <button class="back" onclick="show('v-start')">← Назад</button></div>
+</div></section>
+
+<!-- Админка -->
+<section id="v-admin" class="view"><div class="card wide" style="border-top-color:var(--accent)">
+  <h2>Панель администратора</h2>
+  <div class="sub" style="margin-bottom:0">Демо-режим: данные хранятся только в этом браузере</div>
+  <div class="tw"><table><thead><tr><th>Участник</th><th>Тест</th><th>Практика</th><th>Время</th></tr></thead><tbody id="a-body"></tbody></table></div>
+  <div class="nav" style="margin-bottom:0"><button class="btn o" onclick="clearAll()">Очистить данные</button><button class="btn b" onclick="show('v-start')">На главную</button></div>
+</div></section>
+
+<div class="overlay" id="rules"><div class="card">
+  <h2 style="font-size:22px">Правила тестирования</h2>
+  <ul class="rl"><li>Тест проходит в полноэкранном режиме.</li><li>Нельзя переключаться на другие вкладки, окна и приложения.</li><li>Нельзя копировать вопросы и ответы, открывать контекстное меню, печатать страницу.</li><li>Нельзя открывать консоль разработчика (F12, Ctrl+Shift+I/J/C, Ctrl+U).</li></ul>
+  <p style="font-size:14px;font-weight:700;color:var(--bad);margin-bottom:18px">При любом нарушении тест будет немедленно закрыт, а результат аннулирован.</p>
+  <div class="nav" style="margin:0"><button class="btn o" onclick="$('rules').classList.remove('on')">Отмена</button><button class="btn y" onclick="beginTest()">Согласен, начать</button></div>
+</div></div>
+
+<div class="overlay" id="viol"><div class="card" style="text-align:center;border-top-color:var(--bad)">
+  <div style="font-size:56px">⛔</div>
+  <h2 style="font-size:22px;color:var(--bad)">Нарушение правил тестирования</h2>
+  <p style="line-height:1.6;margin:12px 0">Тестирование прекращено автоматически.<br>Обнаружено: <b id="viol-r"></b>.</p>
+  <p style="font-weight:700;margin-bottom:20px">Ваш результат аннулирован.</p>
+  <button class="btn b" onclick="$('viol').classList.remove('on')">Понятно</button>
+</div></div>
+
+<div class="overlay" id="ov"><div class="card" style="text-align:center">
+  <h2 style="font-size:22px">Завершить тест?</h2><div class="sub" id="ov-t"></div>
+  <div class="nav" style="margin-bottom:0"><button class="btn o" onclick="ov.classList.remove('on')">Вернуться</button><button class="btn y" onclick="finishTest()">Завершить</button></div>
+</div></div>
+
+<script>
+const Q=[
+ {q:"Что такое инфляция?",o:["Рост курса национальной валюты","Устойчивый рост общего уровня цен","Снижение процентных ставок","Рост доходов населения"],a:1},
+ {q:"Что из перечисленного относится к обязательным расходам семьи?",o:["Подписка на онлайн-кинотеатр","Поездка на курорт","Коммунальные платежи","Покупка новой одежды по акции"],a:2},
+ {q:"Вклад 100 000 ₸ под 10% годовых с простыми процентами. Сколько будет через 2 года?",o:["110 000 ₸","120 000 ₸","121 000 ₸","200 000 ₸"],a:1},
+ {q:"Что такое диверсификация?",o:["Вложение всех денег в один актив","Распределение средств между разными активами","Досрочное закрытие вклада","Получение кредита на инвестиции"],a:1},
+ {q:"Какой показатель важнее всего сравнивать при выборе кредита?",o:["Название банка","Годовая эффективная ставка вознаграждения","Цвет карты","Размер офиса банка"],a:1},
+ {q:"Что нельзя сообщать посторонним, даже сотруднику «банка» по телефону?",o:["Название банка","Код из СМС и CVV-код карты","Свой город","Дату открытия счёта"],a:1},
+ {q:"Что такое «финансовая подушка безопасности»?",o:["Кредитный лимит","Резерв на 3–6 месяцев расходов","Страховка автомобиля","Доход от инвестиций"],a:1},
+ {q:"Как называется налог, который удерживается с заработной платы?",o:["НДС","Индивидуальный подоходный налог","Акциз","Таможенная пошлина"],a:1},
+ {q:"Что произойдёт с долгом при просрочке платежа по кредиту?",o:["Ничего","Начислятся штрафы и пени, ухудшится кредитная история","Долг спишется","Ставка снизится"],a:1},
+ {q:"Какое правило бюджета делит доход на 50% нужды, 30% желания, 20% накопления?",o:["Правило 72","Правило 50/30/20","Правило 100 минус возраст","Правило Парето"],a:1},
+ {q:"Что такое кредитная история?",o:["Список всех покупок человека","Информация о том, как человек погашает свои кредиты","Размер заработной платы","Перечень банковских вкладов"],a:1},
+ {q:"Реальная доходность вложения — это доходность…",o:["без учёта налогов","с учётом инфляции","максимально возможная","за один месяц"],a:1},
+ {q:"Какой из вариантов обычно считается наименее рискованным?",o:["Акции стартапа","Срочный вклад в банке","Криптовалюта","Фьючерсные контракты"],a:1},
+ {q:"Что такое сложный процент?",o:["Проценты только на первоначальную сумму","Проценты на сумму вместе с ранее начисленными процентами","Фиксированная комиссия банка","Штраф за досрочное снятие"],a:1},
+ {q:"Что такое личный бюджет?",o:["План доходов и расходов","Только сумма всех расходов","Банковский счёт","Вид налога"],a:0},
+ {q:"Для чего нужно страхование?",o:["Для защиты от финансовых потерь за плату (премию)","Для получения кредита","Для уплаты налогов","Для открытия вклада"],a:0},
+ {q:"Что такое фишинг?",o:["Мошенничество с помощью поддельных сайтов и сообщений для кражи данных","Способ экономии на покупках","Банковская услуга","Вид вклада"],a:0},
+ {q:"Что такое аннуитетный платёж?",o:["Платёж, уменьшающийся каждый месяц","Равные ежемесячные платежи в течение всего срока кредита","Единый платёж в конце срока","Платёж только по процентам"],a:1},
+ {q:"Что из перечисленного является пассивным доходом?",o:["Зарплата по основному месту работы","Доход от сдачи квартиры в аренду","Премия за проект","Оплата сверхурочных"],a:1},
+ {q:"Что такое ликвидность актива?",o:["Скорость превращения актива в деньги","Размер дохода от актива","Уровень риска","Срок кредита"],a:0},
+ {q:"Цена товара выросла с 1000 до 1200 ₸. На сколько процентов?",o:["2%","12%","20%","120%"],a:2},
+ {q:"Что относится к активам семьи?",o:["Кредит на телефон","Квартира, сдаваемая в аренду","Счета за электричество","Долг перед другом"],a:1},
+ {q:"Что такое кредитный лимит по карте?",o:["Минимальный платёж","Максимальная сумма заёмных средств, доступная держателю","Годовая комиссия","Срок действия карты"],a:1},
+ {q:"Одна из ключевых задач Национального банка РК —",o:["выдача кредитов населению","обеспечение стабильности цен","сбор налогов","управление школами"],a:1},
+ {q:"Что такое базовая ставка?",o:["Налоговая ставка","Основная ставка Нацбанка — ориентир для ставок в экономике","Комиссия за снятие наличных","Ставка по ипотеке в конкретном банке"],a:1},
+ {q:"Что такое дивиденды?",o:["Часть прибыли компании, выплачиваемая акционерам","Налог на акции","Комиссия брокера","Проценты по вкладу"],a:0},
+ {q:"Какая привычка лучше всего помогает копить?",o:["Откладывать то, что осталось к концу месяца","Откладывать часть дохода сразу после получения","Копить только на отпуск","Брать кредит для накоплений"],a:1},
+ {q:"Что такое пенсионные накопления?",o:["Средства, формируемые за счёт пенсионных взносов, на будущую пенсию","Ежемесячный налог","Банковский кредит","Страховая выплата"],a:0},
+ {q:"Что разумнее всего сделать перед покупкой в кредит?",o:["Взять в первом попавшемся банке","Сравнить условия и рассчитать полную переплату","Не читать договор","Занять у незнакомых людей"],a:1},
+ {q:"Правило 72 помогает оценить…",o:["срок удвоения вложений при заданной ставке","размер налога","курс валюты","сумму кредита"],a:0}
+];
+Q.forEach(q=>{const c=q.o[q.a];for(let i=q.o.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[q.o[i],q.o[j]]=[q.o[j],q.o[i]]}q.a=q.o.indexOf(c)});
+const L=['A','B','C','D','E'],DUR=35*60;
+const $=id=>document.getElementById(id);
+const S={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}},del(k){try{localStorage.removeItem(k)}catch(e){}}};
+let user=null,cur=0,ans={},end=0,tick=null,mem={test:null,prac:null};
+
+function show(id){document.querySelectorAll('.view').forEach(v=>v.classList.remove('on'));$(id).classList.add('on');window.scrollTo(0,0)}
+function enterParticipant(){user={name:'p'};mem={test:null,prac:null};ans={};refreshMenu();show('v-menu')}
+function refreshMenu(){$('a-test').classList.toggle('done',!!mem.test);$('a-prac').classList.toggle('done',!!mem.prac)}
+
+function startTest(){
+  if(mem.test){show('v-res');return}
+  $('rules').classList.add('on')
+}
+function beginTest(){
+  $('rules').classList.remove('on');
+  try{const r=document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen();if(r&&r.catch)r.catch(()=>{})}catch(e){}
+  const saved=S.get('progress:'+user.name,null);
+  if(saved){ans=saved.ans;end=saved.end;cur=0}else{ans={};end=Date.now()+DUR*1000;S.set('progress:'+user.name,{ans,end})}
+  show('v-test');renderQ();clearInterval(tick);tick=setInterval(tock,500);tock();grace=Date.now()+2000;armed=true
+}
+function tock(){
+  const left=Math.max(0,Math.round((end-Date.now())/1000));
+  $('t-timer').textContent=String(Math.floor(left/60)).padStart(2,'0')+':'+String(left%60).padStart(2,'0');
+  $('t-timer').classList.toggle('low',left<300);
+  if(left<=0){finishTest()}
+}
+function renderQ(){
+  const q=Q[cur];
+  $('q-n').textContent='Вопрос '+(cur+1);$('q-t').textContent=q.q;
+  $('t-pos').textContent=cur+1;
+  $('t-next').textContent=cur===Q.length-1?'Завершить ✓':'Далее ›';
+  const box=$('q-o');box.innerHTML='';
+  q.o.forEach((t,i)=>{
+    const b=document.createElement('button');b.className='opt'+(ans[cur]===i?' sel':'');
+    const l=document.createElement('span');l.className='l';l.textContent=L[i];
+    const s=document.createElement('span');s.textContent=t;
+    b.append(l,s);b.onclick=()=>{ans[cur]=i;S.set('progress:'+user.name,{ans,end});renderQ()};box.appendChild(b)
+  });
+    const g=$('t-grid');g.innerHTML='';
+  Q.forEach((_,i)=>{const b=document.createElement('button');b.className='g'+(ans[i]!==undefined?' ans':'')+(i===cur?' cur':'');b.textContent=i+1;b.onclick=()=>{cur=i;renderQ()};g.appendChild(b)})
+}
+function go(d){
+  if(d>0&&cur===Q.length-1){const left=Q.length-Object.keys(ans).length;$('ov-t').textContent=left?('Остались без ответа: '+left):'Вы ответили на все вопросы.';$('ov').classList.add('on');return}
+  cur=Math.min(Q.length-1,Math.max(0,cur+d));renderQ()
+}
+function finishTest(){
+  $('ov').classList.remove('on');clearInterval(tick);armed=false;try{document.fullscreenElement&&document.exitFullscreen()}catch(e){}$('res-score').style.fontSize='';$('res-h').textContent='Тест завершён';
+  let sc=0;Q.forEach((q,i)=>{if(ans[i]===q.a)sc++});
+  mem.test={score:sc,time:new Date().toLocaleTimeString('ru-RU')};S.del('progress:'+user.name);
+  $('res-score').textContent=sc+' / '+Q.length;
+  const p=sc/Q.length;$('res-note').textContent=p>=.8?'Отличный результат!':p>=.5?'Хороший результат, но есть над чем поработать.':'Рекомендуем повторить основы финансовой грамотности.';
+  refreshMenu();show('v-res')
+}
+function submitPractice(){
+  const a=$('p-ans').value.trim();
+  if(a.length<10){$('p-err').textContent='Пожалуйста, напишите развёрнутый ответ.';return}
+  $('p-err').textContent='';mem.prac={text:a,ok:/25[\s\u00a0]?000/.test(a)};refreshMenu();show('v-menu')
+}
+function finishAll(){
+  if(!mem.test&&!mem.prac){show('v-start');return}
+  const all=S.get('results',[]);
+  if(mem.saved){all[mem.saved-1].prac=mem.prac;S.set('results',all);user=null;$('p-ans').value='';show('v-start');return}
+  all.push({name:'Участник №'+(all.length+1),score:mem.test?(mem.test.annulled?'Аннулировано ('+mem.test.reason+')':mem.test.score+' из '+Q.length):'—',prac:mem.prac,time:new Date().toLocaleString('ru-RU')});
+  S.set('results',all);user=null;$('p-ans').value='';show('v-start')
+}
+function adminLogin(){
+  if($('a-pass').value==='admin123'){$('a-pass').value='';$('a-err').textContent='';renderAdmin();show('v-admin')}else $('a-err').textContent='Неверный пароль'
+}
+function renderAdmin(){
+  const tb=$('a-body');tb.innerHTML='';const all=S.get('results',[]);
+  if(!all.length){const tr=document.createElement('tr'),td=document.createElement('td');td.colSpan=4;td.style.textAlign='center';td.textContent='Пока нет результатов';tr.appendChild(td);tb.appendChild(tr);return}
+  all.slice().reverse().forEach(r=>{
+    const tr=document.createElement('tr');
+    const cells=[r.name,r.score];
+    cells.forEach(t=>{const td=document.createElement('td');td.textContent=t;tr.appendChild(td)});
+    const tp=document.createElement('td');
+    if(r.prac){const t=document.createElement('span');t.className='tag '+(r.prac.ok?'g1':'g0');t.textContent=r.prac.ok?'Верный расчёт':'Проверить';tp.appendChild(t);const d=document.createElement('div');d.style.cssText='margin-top:6px;color:var(--muted);font-size:13px';d.textContent=r.prac.text;tp.appendChild(d)}else tp.textContent='—';
+    tr.appendChild(tp);const tt=document.createElement('td');tt.textContent=r.time;tr.appendChild(tt);tb.appendChild(tr)
+  })
+}
+function clearAll(){S.del('results');renderAdmin()}
+
+/* ===== ПРОКТОРИНГ ===== */
+let armed=false,grace=0;
+function violation(reason){
+  if(!armed||Date.now()<grace)return;
+  armed=false;clearInterval(tick);
+  try{document.fullscreenElement&&document.exitFullscreen()}catch(e){}
+  S.del('progress:p');
+  mem.test={score:0,annulled:true,reason:reason};
+  const all=S.get('results',[]);
+  all.push({name:'Участник №'+(all.length+1),score:'Аннулировано ('+reason+')',prac:null,time:new Date().toLocaleString('ru-RU')});
+  S.set('results',all);mem.saved=all.length;
+  $('res-h').textContent='Результат аннулирован';$('res-score').style.fontSize='34px';$('res-score').textContent='Аннулировано';$('res-note').textContent='Нарушение правил: '+reason;
+  $('viol-r').textContent=reason;
+  refreshMenu();show('v-menu');$('viol').classList.add('on')
+}
+document.addEventListener('visibilitychange',()=>{if(document.hidden)violation('переключение на другую вкладку или окно')});
+window.addEventListener('blur',()=>violation('потеря фокуса окна тестирования (другое окно или приложение)'));
+document.addEventListener('fullscreenchange',()=>{if(!document.fullscreenElement)violation('выход из полноэкранного режима')});
+['copy','cut','paste'].forEach(t=>document.addEventListener(t,e=>{if(armed){e.preventDefault();violation('попытка копирования')}}));
+document.addEventListener('contextmenu',e=>{if(armed){e.preventDefault();violation('попытка открыть контекстное меню')}});
+['selectstart','dragstart'].forEach(t=>document.addEventListener(t,e=>{if(armed)e.preventDefault()}));
+document.addEventListener('keydown',e=>{
+  if(!armed)return;
+  const c=e.ctrlKey||e.metaKey,k=e.code;
+  if(e.key==='F12'||(c&&e.shiftKey&&['KeyI','KeyJ','KeyC','KeyK'].includes(k))||(c&&k==='KeyU')||(e.metaKey&&e.altKey&&['KeyI','KeyJ','KeyC'].includes(k))){e.preventDefault();violation('попытка открыть консоль разработчика')}
+  else if(c&&['KeyC','KeyX','KeyA','KeyS','KeyP','KeyV'].includes(k)){e.preventDefault();violation('попытка копирования / печати')}
+});
+document.addEventListener('keyup',e=>{if(armed&&e.key==='PrintScreen'){try{navigator.clipboard.writeText('')}catch(x){}violation('попытка сделать снимок экрана')}});
+setInterval(()=>{
+  if(!armed||window.top!==window.self||/Mobi|Android|iPhone|iPad/i.test(navigator.userAgent))return;
+  if(window.outerWidth-window.innerWidth>200||window.outerHeight-window.innerHeight>200)violation('открыта консоль разработчика (DevTools)')
+},1000);
+</script>
+</body>
+</html>
