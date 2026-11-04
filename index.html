@@ -393,12 +393,47 @@ function finishAll(){
   all.push({name:'Участник №'+(all.length+1),score:mem.test?(mem.test.annulled?'Аннулировано ('+mem.test.reason+')':mem.test.score+' из '+Q.length+' · время '+fmtT(mem.test.spent)):'—',prac:mem.prac,time:new Date().toLocaleString('ru-RU')});
   S.set('results',all);user=null;$('p-ans').value='';show('v-start')
 }
-const API_TEST='https://script.google.com/macros/s/AKfycbw2Xi6sjmnSTWtMiEo1OcoL3HiCpxikAHe9Utr5qwNB5sdd6yyin61lhlu-SmJH6c8T/exec';   // Скрипт №1 «Тестирование»
+const API_TEST='https://script.google.com/macros/s/AKfycby9Kv_hg9pRKOHyqeC6n7uyR99_ubUVSsu2TI8JbHHE-sczLHZSOWIQ5G7xSGYffGZy/exec';   // Скрипт №1 «Тестирование»
 const API_PRAC='https://script.google.com/macros/s/AKfycbz_Z3Z395D5SWvk6300n3xZwMLT9_aIs8mcKt93cueMESfMnX46g3-764A_HdEBCJR7Dg/exec';   // Скрипт №2 «Практика»
 const LIVE=!!(API_TEST||API_PRAC);
 let AD=null,tab='res',adminKey='',PIDp=null;
-function newPid(){PIDp=API_TEST?fetch(API_TEST+'?action=register').then(r=>r.json()).then(j=>j.pid||null).catch(()=>null):Promise.resolve(API_PRAC?'P'+Date.now().toString(36).toUpperCase():null)}
-function post(url,o){if(!url||!PIDp)return;PIDp.then(pid=>{if(!pid)return;const n=parseInt(pid);fetch(url,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(Object.assign({pid:pid,name:'Участник №'+(n>1000?n-1000:pid)},o))}).catch(()=>{})})}
+
+function newPid(){
+  if(!API_TEST) return Promise.resolve(null);
+  return fetch(API_TEST+'?action=register')
+    .then(r=>r.json())
+    .then(j=>j.pid||null)
+    .catch(err=>{
+      console.error("Ошибка регистрации ID:",err);
+      return null;
+    });
+}
+
+function post(url,o){
+  if(!url)return;
+  const doPost = (pid) => {
+     if(!pid) {
+       console.warn("Нет ID участника. Данные не отправлены.");
+       return;
+     }
+     const n=parseInt(pid);
+     fetch(url,{
+       method:'POST',
+       headers:{'Content-Type':'text/plain;charset=utf-8'},
+       body:JSON.stringify(Object.assign({pid:pid,name:'Участник №'+(n>1000?n-1000:pid)},o))
+     }).then(r=>r.json())
+       .then(res=>console.log("Ответ сервера:",res))
+       .catch(err => console.error("Ошибка отправки:", err));
+  };
+
+  if (PIDp) {
+    PIDp.then(doPost);
+  } else {
+    PIDp = newPid();
+    PIDp.then(doPost);
+  }
+}
+
 function send(o){post(API_TEST,o)}
 function sendP(o){post(API_PRAC,o)}
 setInterval(()=>{if(LIVE&&$('v-admin').classList.contains('on'))loadAdmin()},10000);
