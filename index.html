@@ -228,7 +228,7 @@ th{background:rgba(255,215,0,.15)}
 
 <!-- Тест -->
 <section id="v-test" class="view"><div class="pz">
-  <div class="pz-top"><div><h2>Тестирование · Финансовая грамотность</h2><div style="font-size:13px;color:var(--muted);font-weight:600;margin-top:4px">Вопрос <span id="t-pos">1</span> из 20</div></div><div class="qt" id="t-timer">35:00</div></div>
+  <div class="pz-top"><div><h2>Тестирование · Финансовая грамотность</h2><div style="font-size:13px;color:var(--muted);font-weight:600;margin-top:4px">Вопрос <span id="t-pos">1</span> из <span id="t-total">20</span></div></div><div class="qt" id="t-timer">35:00</div></div>
   <div class="prog"><i id="t-bar"></i></div>
   <div class="qnav" id="t-grid"></div>
   <div class="pc">
@@ -293,329 +293,258 @@ th{background:rgba(255,215,0,.15)}
 </div></div>
 
 <script>
-const Q=[
- {q:"Что такое инфляция?",o:["Рост курса национальной валюты","Устойчивый рост общего уровня цен","Снижение процентных ставок","Рост доходов населения"],a:1},
- {q:"Что из перечисленного относится к обязательным расходам семьи?",o:["Подписка на онлайн-кинотеатр","Поездка на курорт","Коммунальные платежи","Покупка новой одежды по акции"],a:2},
- {q:"Вклад 100 000 ₸ под 10% годовых с простыми процентами. Сколько будет через 2 года?",o:["110 000 ₸","120 000 ₸","121 000 ₸","200 000 ₸"],a:1},
- {q:"Что такое диверсификация?",o:["Вложение всех денег в один актив","Распределение средств между разными активами","Досрочное закрытие вклада","Получение кредита на инвестиции"],a:1},
- {q:"Какой показатель важнее всего сравнивать при выборе кредита?",o:["Название банка","Годовая эффективная ставка вознаграждения","Цвет карты","Размер офиса банка"],a:1},
- {q:"Что нельзя сообщать посторонним, даже сотруднику «банка» по телефону?",o:["Название банка","Код из СМС и CVV-код карты","Свой город","Дату открытия счёта"],a:1},
- {q:"Что такое «финансовая подушка безопасности»?",o:["Кредитный лимит","Резерв на 3–6 месяцев расходов","Страховка автомобиля","Доход от инвестиций"],a:1},
- {q:"Как называется налог, который удерживается с заработной платы?",o:["НДС","Индивидуальный подоходный налог","Акциз","Таможенная пошлина"],a:1},
- {q:"Что произойдёт с долгом при просрочке платежа по кредиту?",o:["Ничего","Начислятся штрафы и пени, ухудшится кредитная история","Долг спишется","Ставка снизится"],a:1},
- {q:"Какое правило бюджета делит доход на 50% нужды, 30% желания, 20% накопления?",o:["Правило 72","Правило 50/30/20","Правило 100 минус возраст","Правило Парето"],a:1},
- {q:"Что такое кредитная история?",o:["Список всех покупок человека","Информация о том, как человек погашает свои кредиты","Размер заработной платы","Перечень банковских вкладов"],a:1},
- {q:"Реальная доходность вложения — это доходность…",o:["без учёта налогов","с учётом инфляции","максимально возможная","за один месяц"],a:1},
- {q:"Какой из вариантов обычно считается наименее рискованным?",o:["Акции стартапа","Срочный вклад в банке","Криптовалюта","Фьючерсные контракты"],a:1},
- {q:"Что такое сложный процент?",o:["Проценты только на первоначальную сумму","Проценты на сумму вместе с ранее начисленными процентами","Фиксированная комиссия банка","Штраф за досрочное снятие"],a:1},
- {q:"Что такое личный бюджет?",o:["План доходов и расходов","Только сумма всех расходов","Банковский счёт","Вид налога"],a:0},
- {q:"Для чего нужно страхование?",o:["Для защиты от финансовых потерь за плату (премию)","Для получения кредита","Для уплаты налогов","Для открытия вклада"],a:0},
- {q:"Что такое фишинг?",o:["Мошенничество с помощью поддельных сайтов и сообщений для кражи данных","Способ экономии на покупках","Банковская услуга","Вид вклада"],a:0},
- {q:"Что такое аннуитетный платёж?",o:["Платёж, уменьшающийся каждый месяц","Равные ежемесячные платежи в течение всего срока кредита","Единый платёж в конце срока","Платёж только по процентам"],a:1},
- {q:"Что из перечисленного является пассивным доходом?",o:["Зарплата по основному месту работы","Доход от сдачи квартиры в аренду","Премия за проект","Оплата сверхурочных"],a:1},
- {q:"Что такое ликвидность актива?",o:["Скорость превращения актива в деньги","Размер дохода от актива","Уровень риска","Срок кредита"],a:0},
- {q:"Цена товара выросла с 1000 до 1200 ₸. На сколько процентов?",o:["2%","12%","20%","120%"],a:2},
- {q:"Что относится к активам семьи?",o:["Кредит на телефон","Квартира, сдаваемая в аренду","Счета за электричество","Долг перед другом"],a:1},
- {q:"Что такое кредитный лимит по карте?",o:["Минимальный платёж","Максимальная сумма заёмных средств, доступная держателю","Годовая комиссия","Срок действия карты"],a:1},
- {q:"Одна из ключевых задач Национального банка РК —",o:["выдача кредитов населению","обеспечение стабильности цен","сбор налогов","управление школами"],a:1},
- {q:"Что такое базовая ставка?",o:["Налоговая ставка","Основная ставка Нацбанка — ориентир для ставок в экономике","Комиссия за снятие наличных","Ставка по ипотеке в конкретном банке"],a:1},
- {q:"Что такое дивиденды?",o:["Часть прибыли компании, выплачиваемая акционерам","Налог на акции","Комиссия брокера","Проценты по вкладу"],a:0},
- {q:"Какая привычка лучше всего помогает копить?",o:["Откладывать то, что осталось к концу месяца","Откладывать часть дохода сразу после получения","Копить только на отпуск","Брать кредит для накоплений"],a:1},
- {q:"Что такое пенсионные накопления?",o:["Средства, формируемые за счёт пенсионных взносов, на будущую пенсию","Ежемесячный налог","Банковский кредит","Страховая выплата"],a:0},
- {q:"Что разумнее всего сделать перед покупкой в кредит?",o:["Взять в первом попавшемся банке","Сравнить условия и рассчитать полную переплату","Не читать договор","Занять у незнакомых людей"],a:1},
- {q:"Правило 72 помогает оценить…",o:["срок удвоения вложений при заданной ставке","размер налога","курс валюты","сумму кредита"],a:0}
-];
-Q.forEach(q=>{const c=q.o[q.a];for(let i=q.o.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[q.o[i],q.o[j]]=[q.o[j],q.o[i]]}q.a=q.o.indexOf(c)});
-Q.sort(()=>Math.random()-.5);Q.length=20;
-const L=['A','B','C','D','E'],DUR=35*60;
-const $=id=>document.getElementById(id);
-const S={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}},del(k){try{localStorage.removeItem(k)}catch(e){}}};
-let user=null,cur=0,ans={},end=0,tick=null,mem={test:null,prac:null};
+// ================= НАСТРОЙКИ SHEETDB =================
+const SHEETDB_URL = 'https://sheetdb.io/api/v1/qn0l3w36mohfb';
 
-function show(id){document.querySelectorAll('.view').forEach(v=>v.classList.remove('on'));$(id).classList.add('on');document.body.dataset.v=id;window.scrollTo(0,0);if(id==='v-res'&&mem.test&&!mem.test.annulled&&mem.test.score/Q.length>=.5)confetti()}
-function enterParticipant(){newPid();P=null;user={name:'p'};mem={test:null,prac:null};ans={};refreshMenu();show('v-menu')}
-function refreshMenu(){$('a-test').classList.toggle('done',!!mem.test);$('a-prac').classList.toggle('done',!!mem.prac);const n=(mem.test?1:0)+(mem.prac?1:0);$('m-bar').style.width=n*50+'%';$('m-lbl').textContent='Выполнено: '+n+' из 2'}
+const DUR = 35 * 60;
+const L = ['A', 'B', 'C', 'D'];
+const $ = id => document.getElementById(id);
+const S = { get(k, d) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d } catch (e) { return d } }, set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)) } catch (e) { } }, del(k) { try { localStorage.removeItem(k) } catch (e) { } } };
 
-function startTest(){
-  if(mem.test){show('v-res');return}
+let Q = []; // Вопросы
+let user = null, cur = 0, ans = {}, end = 0, tick = null, mem = { test: null, prac: null };
+let PID = null;
+
+// 1. Загрузка вопросов из Google Таблицы (SheetDB)
+async function loadQuestionsFromSheet() {
+  try {
+    const res = await fetch(SHEETDB_URL + '?sheet=Questions');
+    const data = await res.json();
+    
+    if(!data || data.length === 0) {
+      alert("В таблице Questions нет вопросов!");
+      return [];
+    }
+
+    // Перемешиваем и преобразуем
+    let mapped = data.map(row => {
+      let options = [row.option_a, row.option_b, row.option_c, row.option_d];
+      let correctLetter = String(row.correct_option).trim().toUpperCase();
+      let correctText = options[L.indexOf(correctLetter)];
+      
+      // Перемешиваем варианты ответов
+      options.sort(() => Math.random() - 0.5);
+      let newCorrectIdx = options.indexOf(correctText);
+      
+      return { q: row.question, o: options, a: newCorrectIdx };
+    });
+    
+    // Оставляем максимум 20 вопросов и перемешиваем
+    return mapped.sort(() => Math.random() - 0.5).slice(0, 20);
+  } catch (err) {
+    console.error("Ошибка загрузки вопросов:", err);
+    alert("Не удалось загрузить вопросы. Проверьте настройки SheetDB.");
+    return [];
+  }
+}
+
+function generateID() {
+  return 'PART-' + Math.floor(Math.random() * 9000 + 1000);
+}
+
+function show(id) { document.querySelectorAll('.view').forEach(v => v.classList.remove('on')); $(id).classList.add('on'); document.body.dataset.v = id; window.scrollTo(0, 0); if (id === 'v-res' && mem.test && !mem.test.annulled && mem.test.score / Q.length >= .5) confetti() }
+
+function enterParticipant() {
+  PID = generateID();
+  P = null; user = { name: 'Участник' }; mem = { test: null, prac: null }; ans = {};
+  refreshMenu(); show('v-menu');
+}
+
+function refreshMenu() { $('a-test').classList.toggle('done', !!mem.test); $('a-prac').classList.toggle('done', !!mem.prac); const n = (mem.test ? 1 : 0) + (mem.prac ? 1 : 0); $('m-bar').style.width = n * 50 + '%'; $('m-lbl').textContent = 'Выполнено: ' + n + ' из 2' }
+
+async function startTest() {
+  if (mem.test) { show('v-res'); return }
   $('rules').classList.add('on')
 }
-function beginTest(){
+
+async function beginTest() {
   $('rules').classList.remove('on');
-  try{const r=document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen();if(r&&r.catch)r.catch(()=>{})}catch(e){}
-  const saved=S.get('progress:'+user.name,null);
-  if(saved){ans=saved.ans;end=saved.end;cur=0}else{ans={};end=Date.now()+DUR*1000;S.set('progress:'+user.name,{ans,end})}
-  show('v-test');renderQ();clearInterval(tick);tick=setInterval(tock,500);tock();grace=Date.now()+2000;armed=true
+  
+  // Загружаем вопросы
+  if (Q.length === 0) {
+    Q = await loadQuestionsFromSheet();
+    if(Q.length === 0) return; 
+    $('t-total').textContent = Q.length;
+  }
+
+  try { const r = document.documentElement.requestFullscreen && document.documentElement.requestFullscreen(); if (r && r.catch) r.catch(() => { }) } catch (e) { }
+  const saved = S.get('progress:' + PID, null);
+  if (saved) { ans = saved.ans; end = saved.end; cur = 0 } else { ans = {}; end = Date.now() + DUR * 1000; S.set('progress:' + PID, { ans, end }) }
+  show('v-test'); renderQ(); clearInterval(tick); tick = setInterval(tock, 500); tock(); grace = Date.now() + 2000; armed = true
 }
-function tock(){
-  const left=Math.max(0,Math.round((end-Date.now())/1000));
-  $('t-timer').textContent=String(Math.floor(left/60)).padStart(2,'0')+':'+String(left%60).padStart(2,'0');
-  $('t-timer').classList.toggle('low',left<300);
-  if(left<=0){finishTest()}
+
+function tock() {
+  const left = Math.max(0, Math.round((end - Date.now()) / 1000));
+  $('t-timer').textContent = String(Math.floor(left / 60)).padStart(2, '0') + ':' + String(left % 60).padStart(2, '0');
+  $('t-timer').classList.toggle('low', left < 300);
+  if (left <= 0) { finishTest() }
 }
-function renderQ(){
-  const q=Q[cur];
-  $('q-n').textContent='Вопрос '+(cur+1);$('q-t').textContent=q.q;
-  $('t-pos').textContent=cur+1;$('t-bar').style.width=Object.keys(ans).length/Q.length*100+'%';
-  $('t-next').textContent=cur===Q.length-1?'Завершить ✓':'Далее ›';
-  const box=$('q-o');box.innerHTML='';
-  q.o.forEach((t,i)=>{
-    const b=document.createElement('button');b.className='qo'+(ans[cur]===i?' sel':'');
-    const l=document.createElement('span');l.className='l';l.textContent=L[i];
-    const s=document.createElement('span');s.textContent=t;
-    b.append(l,s);b.onclick=()=>{ans[cur]=i;S.set('progress:'+user.name,{ans,end});renderQ()};box.appendChild(b)
+
+function renderQ() {
+  if(Q.length === 0) return;
+  const q = Q[cur];
+  $('q-n').textContent = 'Вопрос ' + (cur + 1); $('q-t').textContent = q.q;
+  $('t-pos').textContent = cur + 1; $('t-bar').style.width = Object.keys(ans).length / Q.length * 100 + '%';
+  $('t-next').textContent = cur === Q.length - 1 ? 'Завершить ✓' : 'Далее ›';
+  const box = $('q-o'); box.innerHTML = '';
+  q.o.forEach((t, i) => {
+    const b = document.createElement('button'); b.className = 'qo' + (ans[cur] === i ? ' sel' : '');
+    const l = document.createElement('span'); l.className = 'l'; l.textContent = L[i];
+    const s = document.createElement('span'); s.textContent = t;
+    b.append(l, s); b.onclick = () => { ans[cur] = i; S.set('progress:' + PID, { ans, end }); renderQ() }; box.appendChild(b)
   });
-    const g=$('t-grid');g.innerHTML='';
-  Q.forEach((_,i)=>{const b=document.createElement('button');b.className='qg'+(ans[i]!==undefined?' ans':'')+(i===cur?' cur':'');b.textContent=i+1;b.onclick=()=>{cur=i;renderQ()};g.appendChild(b)})
-}
-function go(d){
-  if(d>0&&cur===Q.length-1){const left=Q.length-Object.keys(ans).length;$('ov-t').textContent=left?('Остались без ответа: '+left):'Вы ответили на все вопросы.';$('ov').classList.add('on');return}
-  cur=Math.min(Q.length-1,Math.max(0,cur+d));renderQ()
-}
-function finishTest(){
-  $('ov').classList.remove('on');clearInterval(tick);armed=false;try{document.fullscreenElement&&document.exitFullscreen()}catch(e){}$('res-score').style.fontSize='';$('res-h').textContent='Тест завершён';
-  let sc=0;Q.forEach((q,i)=>{if(ans[i]===q.a)sc++});
-  mem.test={score:sc,spent:DUR-Math.max(0,Math.round((end-Date.now())/1000)),time:new Date().toLocaleTimeString('ru-RU')};send({type:'result',correct:sc,wrong:Q.length-sc,total:Q.length,seconds:mem.test.spent});S.del('progress:'+user.name);
-  $('res-score').textContent=sc+' / '+Q.length;
-  const p=sc/Q.length;$('res-note').textContent=p>=.8?'Отличный результат!':p>=.5?'Хороший результат, но есть над чем поработать.':'Рекомендуем повторить основы финансовой грамотности.';
-  $('res-note').textContent+=' Потраченное время: '+fmtT(mem.test.spent)+'.';refreshMenu();show('v-res')
-}
-function submitPractice(){
-  const n=PS.filter((_,i)=>done(i+1)).length;
-  if(!n){$('p-err').textContent='Заполните хотя бы один этап перед отправкой.';return}
-  const txt=PS.map((s,i)=>{const k=i+1;let o='— Этап '+k+'. '+s.t+' —\n';if(s.total)o+=s.total+': '+(P.f['s'+k+'-tot']||'—')+'\n';if(s.bd)o+='Таблица бюджета:\n'+(P.b.filter(x=>x.n||x.a).map(x=>'  '+x.t+' | '+x.n+' | '+x.a).join('\n')||'  —')+'\n';s.tasks.forEach((t,j)=>o+='Задание '+(j+1)+': '+t+'\n   Решение: '+(P.f['s'+k+'-t'+j]||'—')+'\n\n');return o}).join('\n');
-  mem.prac={text:txt,filled:n,rows:collectPrac()};sendP({type:'practice',tasks:mem.prac.rows.map(x=>({stage:x[0],task:x[1],answer:x[3]}))});refreshMenu();show('v-menu')
-}
-function finishAll(){
-  if(!mem.test&&!mem.prac){show('v-start');return}
-  const all=S.get('results',[]);
-  if(mem.saved){all[mem.saved-1].prac=mem.prac;S.set('results',all);user=null;$('p-ans').value='';show('v-start');return}
-  all.push({name:'Участник №'+(all.length+1),score:mem.test?(mem.test.annulled?'Аннулировано ('+mem.test.reason+')':mem.test.score+' из '+Q.length+' · время '+fmtT(mem.test.spent)):'—',prac:mem.prac,time:new Date().toLocaleString('ru-RU')});
-  S.set('results',all);user=null;$('p-ans').value='';show('v-start')
-}
-const API_TEST='https://script.google.com/macros/s/AKfycby9Kv_hg9pRKOHyqeC6n7uyR99_ubUVSsu2TI8JbHHE-sczLHZSOWIQ5G7xSGYffGZy/exec';   // Скрипт №1 «Тестирование»
-const API_PRAC='https://script.google.com/macros/s/AKfycbz_Z3Z395D5SWvk6300n3xZwMLT9_aIs8mcKt93cueMESfMnX46g3-764A_HdEBCJR7Dg/exec';   // Скрипт №2 «Практика»
-const LIVE=!!(API_TEST||API_PRAC);
-let AD=null,tab='res',adminKey='',PIDp=null;
-
-function newPid(){
-  if(!API_TEST) return Promise.resolve(null);
-  return fetch(API_TEST+'?action=register')
-    .then(r=>r.json())
-    .then(j=>j.pid||null)
-    .catch(err=>{
-      console.error("Ошибка регистрации ID:",err);
-      return null;
-    });
+  const g = $('t-grid'); g.innerHTML = '';
+  Q.forEach((_, i) => { const b = document.createElement('button'); b.className = 'qg' + (ans[i] !== undefined ? ' ans' : '') + (i === cur ? ' cur' : ''); b.textContent = i + 1; b.onclick = () => { cur = i; renderQ() }; g.appendChild(b) })
 }
 
-function post(url,o){
-  if(!url)return;
-  const doPost = (pid) => {
-     if(!pid) {
-       console.warn("Нет ID участника. Данные не отправлены.");
-       return;
-     }
-     const n=parseInt(pid);
-     fetch(url,{
-       method:'POST',
-       headers:{'Content-Type':'text/plain;charset=utf-8'},
-       body:JSON.stringify(Object.assign({pid:pid,name:'Участник №'+(n>1000?n-1000:pid)},o))
-     }).then(r=>r.json())
-       .then(res=>console.log("Ответ сервера:",res))
-       .catch(err => console.error("Ошибка отправки:", err));
-  };
-
-  if (PIDp) {
-    PIDp.then(doPost);
-  } else {
-    PIDp = newPid();
-    PIDp.then(doPost);
-  }
+function go(d) {
+  if (d > 0 && cur === Q.length - 1) { const left = Q.length - Object.keys(ans).length; $('ov-t').textContent = left ? ('Остались без ответа: ' + left) : 'Вы ответили на все вопросы.'; $('ov').classList.add('on'); return }
+  cur = Math.min(Q.length - 1, Math.max(0, cur + d)); renderQ()
 }
 
-function send(o){post(API_TEST,o)}
-function sendP(o){post(API_PRAC,o)}
-setInterval(()=>{if(LIVE&&$('v-admin').classList.contains('on'))loadAdmin()},10000);
-const MAXP={1:[8,7],2:[5,5,5],3:[5,5,5,5],4:[6,6,6,7],5:[5,5,5,5,5]};
-const TABS=[['res','Тестирование'],['prac','Практика']];
-const HD={res:['ID','ФИО','Результат','Кол-во правильных','Кол-во неправильных','Потраченное время','Ошибка'],
- prac:['ID','ФИО','Этап','Задание','Условие задания','Решение участника','Баллы','Макс. балл','Комментарий жюри'],
- task:['Этап','Задание','Условие','Макс. балл'],q:['ID','Вопрос','A','B','C','D','Правильный']};
-function collectPrac(){const r=[];PS.forEach((s,i)=>{const k=i+1;if(s.total)r.push([k,0,s.total,P.f['s'+k+'-tot']||'']);if(s.bd)r.push([k,0,'Таблица обновлённого бюджета',P.b.filter(x=>x.n||x.a).map(x=>x.t+' | '+x.n+' | '+x.a).join('\n')]);s.tasks.forEach((t,j)=>r.push([k,j+1,t,P.f['s'+k+'-t'+j]||'']))});return r}
-function demoData(){
-  const all=S.get('results',[]),res=[],prac=[],task=[];
-  all.forEach((r,i)=>{const id=String(i+1),m=/^(\d+) из (\d+)(?: · время (.+))?$/.exec(r.score||''),a=/^Аннулировано \((.*)\)$/.exec(r.score||'');
-    res.push(a?[id,r.name,'Аннулировано',0,0,'',a[1],'']:m?[id,r.name,Math.round(m[1]/m[2]*100)+'%',+m[1],m[2]-m[1],m[3]||'','','']:[id,r.name,'','','','','','']);
-    if(r.prac&&r.prac.rows)r.prac.rows.forEach(x=>prac.push([id,r.name,'Этап '+x[0],x[1]?'Задание '+x[1]:'Таблица',x[2],x[3]||'— не заполнено —','',(MAXP[x[0]]||[])[x[1]-1]||0,'']))});
-  PS.forEach((s,i)=>{if(s.total)task.push([i+1,0,s.total,0]);if(s.bd)task.push([i+1,0,'Таблица обновлённого бюджета',0]);s.tasks.forEach((t,j)=>task.push([i+1,j+1,t,MAXP[i+1][j]]))});
-  return {res,prac,task,q:Q.map((x,i)=>['q'+(i+1),x.q,...x.o,L[x.a]])}
-}
-async function adminLogin(){
-  const p=$('a-pass').value;
-  if(LIVE){adminKey=p;$('a-err').textContent='Проверка…';
-    try{const j=await(await fetch((API_TEST||API_PRAC)+'?action=results&key='+encodeURIComponent(p))).json();if(!j.results){$('a-err').textContent='Неверный ключ';return}}
-    catch(e){$('a-err').textContent='Нет связи с Google Таблицей';return}}
-  else if(p!=='admin123'){$('a-err').textContent='Неверный пароль';return}
-  $('a-pass').value='';$('a-err').textContent='';show('v-admin');loadAdmin()
-}
-async function loadAdmin(){
-  $('a-msg').textContent='';
-  const D=demoData(),get=async u=>{const j=await(await fetch(u+'?action=results&key='+encodeURIComponent(adminKey))).json();if(!j.results)throw 0;return j.results.slice(1)};
-  AD=AD||{res:[],prac:[],task:[],q:[]};
-  if(LIVE){
-    const [a,b]=await Promise.allSettled([API_TEST?get(API_TEST):Promise.resolve(D.res),API_PRAC?get(API_PRAC):Promise.resolve(D.prac)]);
-    if(a.status==='fulfilled')AD.res=a.value;if(b.status==='fulfilled')AD.prac=b.value;
-    $('a-src').textContent=a.status==='fulfilled'&&b.status==='fulfilled'?'Google Таблицы · обновлено '+new Date().toLocaleTimeString('ru-RU'):'Не удалось загрузить часть данных из Google Таблиц'
-  }else{AD={res:D.res,prac:D.prac,task:[],q:[]};$('a-src').textContent='Демо-режим: данные хранятся только в этом браузере'}
-  renderAdmin()
-}
-function renderAdmin(){
-  if(!AD)return;
-  const tb=$('a-tabs');tb.innerHTML='';
-  TABS.forEach(([k,n])=>{const b=el('button','st'+(k===tab?' cur':''),n+' ('+AD[k].length+')');b.onclick=()=>{tab=k;renderAdmin()};tb.append(b)});
-  const R=AD.res,an=R.filter(r=>r[2]==='Аннулировано').length,ok=R.filter(r=>/%$/.test(r[2])),avg=ok.length?Math.round(ok.reduce((s,r)=>s+parseInt(r[2]),0)/ok.length):null,sg=$('a-stats');sg.innerHTML='';
-  [[R.length,'Участников'],[ok.length,'Прошли тест'],[avg==null?'—':avg+'%','Средний результат'],[an,'Аннулировано']].forEach(([v,l])=>{const d=el('div','stat');d.append(el('b',null,v),el('span',null,l));sg.append(d)});
-  const rows=AD[tab].map(r=>r.slice(0,HD[tab].length)),t=$('a-tbl');t.innerHTML='';
-  const h=el('tr');HD[tab].forEach(x=>h.append(el('th',null,x)));t.append(h);
-  if(!rows.length){const tr=el('tr'),td=el('td',null,'Нет данных');td.colSpan=HD[tab].length;td.style.textAlign='center';tr.append(td);t.append(tr);return}
-  rows.forEach((r,ix)=>{const tr=el('tr','rw');tr.style.animationDelay=Math.min(ix,20)*40+'ms';
-    HD[tab].forEach((_,c)=>{const v=r[c]==null?'':String(r[c]),td=el('td',v.length>50?'lg':null,v);if(tab==='res'&&c===2&&v==='Аннулировано')td.className='bad';tr.append(td)});t.append(tr)})
-}
-function clearAll(){if(LIVE){$('a-msg').style.color='var(--bad)';$('a-msg').textContent='Данные в Google Таблице удаляются только вручную в самой таблице.';return}S.del('results');loadAdmin()}
+// 2. ОТПРАВКА РЕЗУЛЬТАТОВ В SHEETDB
+async function finishTest() {
+  $('ov').classList.remove('on'); clearInterval(tick); armed = false; try { document.fullscreenElement && document.exitFullscreen() } catch (e) { }
+  $('res-score').style.fontSize = ''; $('res-h').textContent = 'Тест завершён';
+  let sc = 0; Q.forEach((q, i) => { if (ans[i] === q.a) sc++ });
+  const spent = DUR - Math.max(0, Math.round((end - Date.now()) / 1000));
+  mem.test = { score: sc, spent: spent, time: new Date().toLocaleTimeString('ru-RU') };
+  S.del('progress:' + PID);
 
-/* ===== ПРАКТИЧЕСКОЕ ЗАДАНИЕ ===== */
-const LV=['Простой уровень','Средний уровень','Сложный уровень'];
-const PS=[
-{t:'Определение общего дохода семьи',lv:0,
- intro:['Семья Сакеновых получает несколько видов дохода: заработную плату родителей, дополнительный доход от репетиторства, детское пособие и проценты по банковскому вкладу.'],
- tasks:['Рассчитайте общий ежемесячный доход семьи.','Определите, какую сумму составляют трудовые доходы семьи и какую — дополнительные поступления.'],
- th:['Источник дохода','Сумма, тенге'],
- rows:[['Зарплата Нурлана','520 000'],['Зарплата Айгерим','480 000'],['Доход от репетиторства','60 000'],['Детское пособие','63 000'],['Проценты по банковскому вкладу','9 000']],total:'Общий доход семьи',
- res:'Результат этапа: определён общий ежемесячный доход, который будет использоваться для анализа семейного бюджета на следующих этапах.'},
-{t:'Расчёт расходов и остатка бюджета',lv:0,
- intro:['Используя рассчитанный на первом этапе общий доход, определите, сколько денег семья расходует в течение месяца и какая сумма остаётся после запланированных расходов.'],
- tasks:['Рассчитайте общую сумму ежемесячных расходов, включая накопления.','Определите остаток денежных средств после всех запланированных расходов.','Установите, имеет ли семья свободные средства для покрытия дополнительных затрат.'],
- th:['Категория','Сумма, тенге'],
- rows:[['Продукты питания','220 000'],['Коммунальные услуги','35 000'],['Транспорт Нурлана','50 000'],['Транспорт Айгерим','10 000'],['Кредит за автомобиль','100 000'],['Интернет и мобильная связь','18 000'],['Образование детей','40 000'],['Одежда и обувь','45 000'],['Медицинские расходы','25 000'],['Развлечения и отдых','55 000'],['Накопления и сбережения','80 000']],total:'Общая сумма',
- fm:'Общие расходы = сумма всех указанных категорий\nОстаток бюджета = общий доход − общие расходы',
- res:'Результат этапа: определены общая сумма расходов и остаток бюджета семьи.'},
-{t:'Анализ структуры семейного бюджета',lv:1,
- intro:['На основании расчётов первого и второго этапов проанализируйте, насколько рационально семья распределяет свои денежные средства. Семья стремится придерживаться правила «70/20/10»:'],
- rule:['70% — необходимые расходы','20% — накопления и финансовые цели','10% — развлечения и личные желания'],
- tasks:['Рассчитайте, какой процент общего дохода составляют все запланированные расходы.','Определите долю накоплений в общем доходе семьи.','Сравните фактическую структуру бюджета с правилом «70/20/10».','Сделайте вывод: соблюдает ли семья это правило? Если нет, какие категории необходимо пересмотреть?'],
- fm:'Для расчёта используйте формулу:\nДоля категории = (Сумма категории / Общий доход) × 100%',
- res:'Результат этапа: выявлены особенности распределения доходов и определены возможности оптимизации бюджета.'},
-{t:'Решение финансовой ситуации',lv:1,
- intro:['В середине месяца стиральная машина семьи Сакеновых выходит из строя. Семья покупает новую энергоэффективную модель за 120 000 тенге, используя средства с банковского депозита.','В следующем месяце Дамир планирует отправиться на школьную экскурсию в Астану стоимостью 40 000 тенге.','Используйте результаты предыдущих этапов, чтобы оценить последствия этих событий для финансового положения семьи.'],
- tasks:['Рассчитайте, какая сумма останется на депозите после снятия 120 000 тенге, если исходить из того, что до покупки на нём находились только накопления, сформированные за один месяц в размере 80 000 тенге. Объясните, почему для точного расчёта фактического остатка необходимо знать начальный баланс депозита.','Определите, на сколько увеличатся плановые расходы следующего месяца с учётом экскурсии.','Предложите два варианта финансирования поездки без оформления нового кредита.','Выберите наиболее рациональный вариант и обоснуйте его с учётом необходимости сохранять финансовую подушку безопасности.'],
- res:'Результат этапа: разработан план действий для покрытия непредвиденных и предстоящих расходов без нарушения финансовой устойчивости семьи.'},
-{t:'Разработка финансового плана семьи',lv:2,bd:true,
- intro:['На основе результатов всех предыдущих этапов подготовьте обновлённый финансовый план семьи Сакеновых на следующий месяц. В плане необходимо учесть:'],
- list:['общий ежемесячный доход семьи;','регулярные расходы и обязательный платёж по автокредиту;','ежемесячные накопления;','экскурсию Дамира стоимостью 40 000 тенге;','последствия покупки стиральной машины;','необходимость поддержания финансовой подушки безопасности.'],
- tasks:['Составьте обновлённый бюджет на следующий месяц (таблица выше) и кратко обоснуйте принятые решения.','Определите, какие расходы можно сократить без существенного ухудшения качества жизни семьи.','Рассчитайте возможную сумму накоплений после включения стоимости экскурсии в бюджет.','Предложите стратегию восстановления средств на депозите после покупки стиральной машины.','Сформулируйте три рекомендации семье по повышению финансовой устойчивости.'],
- res:'Итоговый продукт: таблица обновлённого бюджета с расчётами и краткое обоснование принятых решений.'}
+  $('res-score').textContent = sc + ' / ' + Q.length;
+  const p = sc / Q.length; $('res-note').textContent = p >= .8 ? 'Отличный результат!' : p >= .5 ? 'Хороший результат, но есть над чем поработать.' : 'Рекомендуем повторить основы финансовой грамотности.';
+  $('res-note').textContent += ' Потраченное время: ' + fmtT(mem.test.spent) + '.';
+  
+  // Отправка данных
+  fetch(SHEETDB_URL, {
+    method: 'POST',
+    headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      data: [{
+        id: PID,
+        name: user.name,
+        score: Math.round(p * 100) + '%',
+        correct: sc,
+        incorrect: Q.length - sc,
+        time: spent + ' сек',
+        status: 'Завершено'
+      }]
+    })
+  }).catch(err => console.error('Ошибка отправки в SheetDB:', err));
+
+  refreshMenu(); show('v-res')
+}
+
+function fmtT(s) { s = s || 0; return Math.floor(s / 60) + ' мин ' + String(s % 60).padStart(2, '0') + ' с' }
+function confetti() { const c = ['#ffd700', '#ff8a00', '#3d5afe', '#00c853', '#ff4081']; for (let i = 0; i < 60; i++) { const p = document.createElement('i'); p.className = 'cf'; p.style.cssText = 'left:' + Math.random() * 100 + 'vw;background:' + c[i % 5] + ';animation-delay:' + Math.random() * .6 + 's;animation-duration:' + (2 + Math.random() * 2) + 's'; document.body.appendChild(p); setTimeout(() => p.remove(), 5000) } }
+
+// ================= ПРАКТИКА (Упрощенная версия) =================
+const PS = [
+  { t: 'Определение общего дохода семьи', lv: 0, tasks: ['Рассчитайте общий ежемесячный доход семьи.'] },
+  { t: 'Расчёт расходов и остатка бюджета', lv: 0, tasks: ['Рассчитайте общую сумму ежемесячных расходов.'] },
+  { t: 'Анализ структуры семейного бюджета', lv: 1, tasks: ['Рассчитайте, какой процент составляет расходы.'] },
+  { t: 'Решение финансовой ситуации', lv: 1, tasks: ['Рассчитайте остаток на депозите.'] },
+  { t: 'Разработка финансового плана семьи', lv: 2, tasks: ['Составьте обновлённый бюджет.'] }
 ];
-let P=null,ps=0;
-const el=(t,c,x)=>{const e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e};
-function openPrac(){if(!P)P={f:{},b:[{n:'',a:'',t:'Доход'},{n:'',a:'',t:'Расход'},{n:'',a:'',t:'Расход'}]};ps=0;renderPrac();show('v-prac')}
-function done(k){return Object.keys(P.f).some(x=>x.startsWith('s'+k+'-')&&P.f[x].trim())||(!!PS[k-1].bd&&P.b.some(r=>r.n||r.a))}
-function goStep(i){ps=i;renderPrac();window.scrollTo(0,0)}
-function builder(){
-  const w=el('div','bdw'),list=el('div'),sums=el('div','sums');w.append(el('h4',null,'Обновлённый бюджет на следующий месяц'));
-  const upd=()=>{let i=0,r=0,s=0;P.b.forEach(x=>{const v=parseFloat(String(x.a).replace(/\s/g,'').replace(',','.'))||0;if(x.t==='Доход')i+=v;else if(x.t==='Накопления')s+=v;else r+=v});sums.textContent='';[['Доходы',i],['Расходы',r],['Накопления',s],['Свободный остаток',i-r-s]].forEach(([k,v])=>sums.append(el('span',null,k+': '+v.toLocaleString('ru-RU')+' ₸')))};
-  const draw=()=>{list.innerHTML='';P.b.forEach((x,idx)=>{const row=el('div','bd'),n=el('input'),a=el('input'),t=el('select'),d=el('button','del','✕');
-    n.placeholder='Статья бюджета';n.value=x.n;n.oninput=()=>{x.n=n.value};
-    a.placeholder='Сумма, ₸';a.inputMode='numeric';a.value=x.a;a.oninput=()=>{x.a=a.value;upd()};
-    ['Доход','Расход','Накопления'].forEach(o=>t.append(el('option',null,o)));t.value=x.t;t.onchange=()=>{x.t=t.value;upd()};
-    d.onclick=()=>{P.b.splice(idx,1);draw();upd()};row.append(n,a,t,d);list.append(row)})};
-  const add=el('button','btn o','+ Добавить строку');add.style.padding='10px 18px';add.onclick=()=>{P.b.push({n:'',a:'',t:'Расход'});draw();upd()};
-  draw();upd();w.append(list,add,sums);return w
-}
-function renderPrac(){
-  const root=$('pz');root.innerHTML='';
-  const top=el('div','pz-top');top.append(el('h2',null,'Практическое задание «Семейный бюджет семьи Сакеновых»'));
-  const bk=el('button','btn o','← В меню');bk.onclick=()=>show('v-menu');top.append(bk);root.append(top);
-  const st=el('div','steps');
-  ['Введение',...PS.map((_,i)=>'Этап '+(i+1))].forEach((t,i)=>{const ok=i>0&&done(i);const b=el('button','st'+(i===ps?' cur':'')+(ok?' ok':''),t+(ok?' ✓':''));b.onclick=()=>goStep(i);st.append(b)});
-  root.append(st);
-  const c=el('div','pc');
-  if(ps===0){
-    c.append(el('h3',null,'Введение'));
-    [['Тема: ','Планирование семейного бюджета, анализ доходов и расходов, принятие финансовых решений.'],['Цель задания: ','научиться рассчитывать доходы и расходы семьи, оценивать структуру бюджета, анализировать непредвиденные затраты и разрабатывать план финансовых действий.'],['Инструкция: ','изучите кейс семьи Сакеновых и последовательно выполните пять этапов задания. Каждый следующий этап основывается на результатах предыдущего. Ответы необходимо обосновать расчётами.']].forEach(([b,t])=>{const p=el('p');p.append(el('b',null,b),document.createTextNode(t));c.append(p)});
-    PS.forEach((s,i)=>{const r=el('div','ov');r.append(el('span',null,'Этап '+(i+1)+'. '+s.t),el('span','lv lv'+s.lv,LV[s.lv]));r.lastChild.style.margin='0';c.append(r)});
-    const hint=el('p',null,'Калькулятор в правом нижнем углу поможет с расчётами. Ответы сохраняются при переходе между этапами.');hint.style.cssText='margin-top:16px;color:var(--muted);font-size:13px';c.append(hint);
-  }else{
-    const s=PS[ps-1],k=ps;
-    c.append(el('span','lv lv'+s.lv,LV[s.lv]),el('h3',null,'Этап '+k+'. '+s.t));
-    s.intro.forEach(t=>c.append(el('p',null,t)));
-    if(s.rule){const r=el('div','rule');s.rule.forEach(x=>r.append(el('span',null,x)));c.append(r)}
-    if(s.list){const u=el('ul','rl');s.list.forEach(x=>u.append(el('li',null,x)));c.append(u)}
-    if(s.th){
-      const w=el('div','tw'),t=el('table','pt'),h=el('tr');s.th.forEach(x=>h.append(el('th',null,x)));t.append(h);
-      s.rows.forEach(r=>{const tr=el('tr');r.forEach(x=>tr.append(el('td',null,x)));t.append(tr)});
-      const tr=el('tr','tot'),td=el('td'),inp=el('input');tr.append(el('td',null,s.total));
-      inp.placeholder='?';inp.inputMode='numeric';inp.value=P.f['s'+k+'-tot']||'';inp.oninput=()=>{P.f['s'+k+'-tot']=inp.value};td.append(inp);tr.append(td);t.append(tr);w.append(t);c.append(w)
-    }
-    if(s.fm){const f=el('div','fm',s.fm);f.style.whiteSpace='pre-line';c.append(f)}
-    if(s.bd)c.append(builder());
-    s.tasks.forEach((tx,j)=>{
-      const key='s'+k+'-t'+j,d=el('div','task'),lb=el('label');lb.append(el('b',null,j+1),el('span',null,tx));
-      const ta=el('textarea');ta.placeholder='Ваш расчёт и ответ…';ta.value=P.f[key]||'';
-      ta.oninput=()=>{P.f[key]=ta.value;ta.style.height='auto';ta.style.height=ta.scrollHeight+'px'};d.append(lb,ta);c.append(d)
-    });
-    c.append(el('div','res',s.res))
-  }
+let P = null, ps = 0;
+const el = (t, c, x) => { const e = document.createElement(t); if (c) e.className = c; if (x != null) e.textContent = x; return e };
+
+function openPrac() { if (!P) P = { f: {} }; ps = 0; renderPrac(); show('v-prac') }
+function done(k) { return Object.keys(P.f).some(x => x.startsWith('s' + k + '-') && P.f[x].trim()) }
+
+function renderPrac() {
+  const root = $('pz'); root.innerHTML = '';
+  const top = el('div', 'pz-top'); top.append(el('h2', null, 'Практическое задание'));
+  const bk = el('button', 'btn o', '← В меню'); bk.onclick = () => show('v-menu'); top.append(bk); root.append(top);
+  const c = el('div', 'pc');
+  const s = PS[ps], k = ps + 1;
+  c.append(el('h3', null, 'Этап ' + k + '. ' + s.t));
+  s.tasks.forEach((tx, j) => {
+    const key = 's' + k + '-t' + j, d = el('div', 'task'), lb = el('label');
+    lb.append(el('b', null, j + 1), el('span', null, tx));
+    const ta = el('textarea'); ta.placeholder = 'Ваш ответ...'; ta.value = P.f[key] || '';
+    ta.oninput = () => { P.f[key] = ta.value; }; d.append(lb, ta); c.append(d)
+  });
   root.append(c);
-  const er=el('div','err');er.id='p-err';er.style.marginTop='12px';
-  const nav=el('div','nav'),pv=el('button','btn o','← Назад'),nx=el('button','btn y',ps===5?'Отправить решение ✓':ps===0?'Начать →':'Далее →');
-  pv.disabled=ps===0;pv.onclick=()=>goStep(ps-1);nx.onclick=()=>{if(ps===5)submitPractice();else goStep(ps+1)};
-  nav.append(pv,nx);root.append(er,nav);
-  root.querySelectorAll('textarea').forEach(t=>{t.style.height='auto';t.style.height=Math.max(90,t.scrollHeight)+'px'})
+  const nav = el('div', 'nav'), pv = el('button', 'btn o', '← Назад'), nx = el('button', 'btn y', ps === 4 ? 'Отправить ✓' : 'Далее →');
+  pv.disabled = ps === 0; pv.onclick = () => { ps--; renderPrac() }; nx.onclick = () => { if (ps === 4) { mem.prac = { text: 'done' }; refreshMenu(); show('v-menu'); } else { ps++; renderPrac() } };
+  nav.append(pv, nx); root.append(nav);
 }
-function ev(s){let i=0;const ws=()=>{while(s[i]===' ')i++};
-  const num=()=>{ws();if(s[i]==='('){i++;const v=ex();ws();if(s[i]!==')')throw 0;i++;return v}if(s[i]==='-'){i++;return -num()}const m=/^\d+(\.\d+)?/.exec(s.slice(i));if(!m)throw 0;i+=m[0].length;let v=parseFloat(m[0]);ws();if(s[i]==='%'){i++;v/=100}return v};
-  const term=()=>{let v=num();for(;;){ws();if(s[i]==='*'){i++;v*=num()}else if(s[i]==='/'){i++;v/=num()}else return v}};
-  const ex=()=>{let v=term();for(;;){ws();if(s[i]==='+'){i++;v+=term()}else if(s[i]==='-'){i++;v-=term()}else return v}};
-  const v=ex();ws();if(i<s.length)throw 0;return v}
-function calc(){let r='= …';const v=$('cin').value.replace(/\s/g,'').replace(/,/g,'.');if(v){try{const x=ev(v);if(isFinite(x))r='= '+(+x.toFixed(4)).toLocaleString('ru-RU')}catch(e){}}$('cout').textContent=r}
 
-(function(){const bg=$('bg');for(let i=0;i<12;i++){const c=document.createElement('div'),s=24+Math.random()*28;c.className='coin';c.textContent='₸';c.style.cssText='left:'+Math.random()*96+'%;width:'+s+'px;height:'+s+'px;font-size:'+s*.5+'px;animation-duration:'+(14+Math.random()*14)+'s;animation-delay:-'+Math.random()*20+'s';bg.appendChild(c)}})();
-function fmtT(s){s=s||0;return Math.floor(s/60)+' мин '+String(s%60).padStart(2,'0')+' с'}
-function confetti(){const c=['#ffd700','#ff8a00','#3d5afe','#00c853','#ff4081'];for(let i=0;i<60;i++){const p=document.createElement('i');p.className='cf';p.style.cssText='left:'+Math.random()*100+'vw;background:'+c[i%5]+';animation-delay:'+Math.random()*.6+'s;animation-duration:'+(2+Math.random()*2)+'s';document.body.appendChild(p);setTimeout(()=>p.remove(),5000)}}
+function finishAll() { show('v-start') }
 
-/* ===== ПРОКТОРИНГ ===== */
-let armed=false,grace=0;
-function violation(reason){
-  if(!armed||Date.now()<grace)return;
-  armed=false;clearInterval(tick);
-  try{document.fullscreenElement&&document.exitFullscreen()}catch(e){}
-  S.del('progress:p');
-  mem.test={score:0,annulled:true,reason:reason};send({type:'violation',reason:reason,seconds:DUR-Math.max(0,Math.round((end-Date.now())/1000))});
-  const all=S.get('results',[]);
-  all.push({name:'Участник №'+(all.length+1),score:'Аннулировано ('+reason+')',prac:null,time:new Date().toLocaleString('ru-RU')});
-  S.set('results',all);mem.saved=all.length;
-  $('res-h').textContent='Результат аннулирован';$('res-score').style.fontSize='34px';$('res-score').textContent='Аннулировано';$('res-note').textContent='Нарушение правил: '+reason;
-  $('viol-r').textContent=reason;
-  refreshMenu();show('v-menu');$('viol').classList.add('on')
+// ================= АДМИНКА (ПРОСМОТР ЧЕРЕЗ SHEETDB) =================
+async function adminLogin() {
+  const p = $('a-pass').value;
+  if (p !== 'admin123') { $('a-err').textContent = 'Неверный пароль'; return; }
+  $('a-pass').value = ''; $('a-err').textContent = ''; show('v-admin'); loadAdmin();
 }
-document.addEventListener('visibilitychange',()=>{if(document.hidden)violation('переключение на другую вкладку или окно')});
-window.addEventListener('blur',()=>violation('потеря фокуса окна тестирования (другое окно или приложение)'));
-document.addEventListener('fullscreenchange',()=>{if(!document.fullscreenElement)violation('выход из полноэкранного режима')});
-['copy','cut','paste'].forEach(t=>document.addEventListener(t,e=>{if(armed){e.preventDefault();violation('попытка копирования')}}));
-document.addEventListener('contextmenu',e=>{if(armed){e.preventDefault();violation('попытка открыть контекстное меню')}});
-['selectstart','dragstart'].forEach(t=>document.addEventListener(t,e=>{if(armed)e.preventDefault()}));
-document.addEventListener('keydown',e=>{
-  if(!armed)return;
-  const c=e.ctrlKey||e.metaKey,k=e.code;
-  if(e.key==='F12'||(c&&e.shiftKey&&['KeyI','KeyJ','KeyC','KeyK'].includes(k))||(c&&k==='KeyU')||(e.metaKey&&e.altKey&&['KeyI','KeyJ','KeyC'].includes(k))){e.preventDefault();violation('попытка открыть консоль разработчика')}
-  else if(c&&['KeyC','KeyX','KeyA','KeyS','KeyP','KeyV'].includes(k)){e.preventDefault();violation('попытка копирования / печати')}
+
+async function loadAdmin() {
+  $('a-msg').textContent = 'Загрузка данных...';
+  const tbody = $('a-tbl'); tbody.innerHTML = '';
+  
+  try {
+    const res = await fetch(SHEETDB_URL + '?sheet=Results');
+    const data = await res.json();
+    
+    $('a-msg').textContent = 'Данные из Google Таблиц (обновлено ' + new Date().toLocaleTimeString() + ')';
+    $('a-stats').innerHTML = `<div class="stat"><b>${data.length}</b><span>Участников</span></div>`;
+    
+    const h = el('tr'); ['ID', 'ФИО', 'Результат', 'Правильных', 'Неправильных', 'Время'].forEach(x => h.append(el('th', null, x))); tbody.append(h);
+    
+    data.forEach(r => {
+      const tr = el('tr');
+      tr.append(el('td', null, r.id || '-'), el('td', null, r.name || '-'), el('td', null, r.score || '-'), el('td', null, r.correct || '-'), el('td', null, r.incorrect || '-'), el('td', null, r.time || '-'));
+      tbody.append(tr);
+    });
+  } catch (e) {
+    $('a-msg').textContent = 'Ошибка загрузки. Проверьте подключение к SheetDB.';
+  }
+}
+
+function clearAll() { alert('Данные удаляются только вручную в Google Таблице.'); }
+
+// ================= АНТИЧИТ =================
+let armed = false, grace = 0;
+function violation(reason) {
+  if (!armed || Date.now() < grace) return;
+  armed = false; clearInterval(tick);
+  try { document.fullscreenElement && document.exitFullscreen() } catch (e) { }
+  S.del('progress:' + PID);
+  mem.test = { score: 0, annulled: true, reason: reason }; 
+  
+  fetch(SHEETDB_URL, {
+    method: 'POST',
+    headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+    body: JSON.stringify({ data: [{ id: PID, name: user.name, score: 'Аннулировано', correct: 0, incorrect: 0, time: '-', status: reason }] })
+  }).catch(e => console.log(e));
+
+  $('res-h').textContent = 'Результат аннулирован'; $('res-score').style.fontSize = '34px'; $('res-score').textContent = 'Аннулировано'; $('res-note').textContent = 'Нарушение правил: ' + reason;
+  $('viol-r').textContent = reason;
+  refreshMenu(); show('v-menu'); $('viol').classList.add('on')
+}
+
+document.addEventListener('visibilitychange', () => { if (document.hidden) violation('переключение на другую вкладку или окно') });
+window.addEventListener('blur', () => violation('потеря фокуса окна тестирования (другое окно или приложение)'));
+document.addEventListener('fullscreenchange', () => { if (!document.fullscreenElement) violation('выход из полноэкранного режима') });
+['copy', 'cut', 'paste'].forEach(t => document.addEventListener(t, e => { if (armed) { e.preventDefault(); violation('попытка копирования') } }));
+document.addEventListener('contextmenu', e => { if (armed) { e.preventDefault(); violation('попытка открыть контекстное меню') } });
+['selectstart', 'dragstart'].forEach(t => document.addEventListener(t, e => { if (armed) e.preventDefault() }));
+document.addEventListener('keydown', e => {
+  if (!armed) return;
+  const c = e.ctrlKey || e.metaKey, k = e.code;
+  if (e.key === 'F12' || (c && e.shiftKey && ['KeyI', 'KeyJ', 'KeyC', 'KeyK'].includes(k)) || (c && k === 'KeyU') || (e.metaKey && e.altKey && ['KeyI', 'KeyJ', 'KeyC'].includes(k))) { e.preventDefault(); violation('попытка открыть консоль разработчика') }
+  else if (c && ['KeyC', 'KeyX', 'KeyA', 'KeyS', 'KeyP', 'KeyV'].includes(k)) { e.preventDefault(); violation('попытка копирования / печати') }
 });
-document.addEventListener('keyup',e=>{if(armed&&e.key==='PrintScreen'){try{navigator.clipboard.writeText('')}catch(x){}violation('попытка сделать снимок экрана')}});
-setInterval(()=>{
-  if(!armed||window.top!==window.self||/Mobi|Android|iPhone|iPad/i.test(navigator.userAgent))return;
-  if(window.outerWidth-window.innerWidth>200||window.outerHeight-window.innerHeight>200)violation('открыта консоль разработчика (DevTools)')
-},1000);
+document.addEventListener('keyup', e => { if (armed && e.key === 'PrintScreen') { try { navigator.clipboard.writeText('') } catch (x) { } violation('попытка сделать снимок экрана') } });
+setInterval(() => {
+  if (!armed || window.top !== window.self || /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent)) return;
+  if (window.outerWidth - window.innerWidth > 200 || window.outerHeight - window.innerHeight > 200) violation('открыта консоль разработчика (DevTools)')
+}, 1000);
+
+// Инициализация фоновых монет
+(function () { const bg = $('bg'); for (let i = 0; i < 12; i++) { const c = document.createElement('div'), s = 24 + Math.random() * 28; c.className = 'coin'; c.textContent = '₸'; c.style.cssText = 'left:' + Math.random() * 96 + '%;width:' + s + 'px;height:' + s + 'px;font-size:' + s * .5 + 'px;animation-duration:' + (14 + Math.random() * 14) + 's;animation-delay:-' + Math.random() * 20 + 's'; bg.appendChild(c) } })();
 </script>
 </body>
 </html>
