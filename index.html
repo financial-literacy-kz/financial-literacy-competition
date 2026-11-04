@@ -64,7 +64,7 @@ textarea{min-height:150px;resize:vertical}
 .g{aspect-ratio:1;border-radius:8px;border:2px solid transparent;background:var(--card);color:var(--muted);font-weight:700;cursor:pointer}
 .g.ans{background:var(--ok);color:#fff}.g.cur{border-color:var(--accent)}
 /* тест — тёмный экран */
-#v-test{background:#2b2e4a;color:#fff;font-family:'Inter',sans-serif;flex-direction:row;align-items:flex-start;justify-content:center;gap:20px;padding:20px}
+#v-test{justify-content:flex-start}
 .dt-main{flex:1;max-width:calc(100% - 320px);display:flex;flex-direction:column;gap:20px;min-width:0}
 .dt-head{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 0}
 .dt-head h1{font-size:20px;font-weight:600;text-transform:none;letter-spacing:0;text-align:left;margin:0 0 4px}
@@ -82,15 +82,102 @@ textarea{min-height:150px;resize:vertical}
 #v-test .opt .l{flex:0 0 28px;width:28px;height:28px;background:#1e2235;color:#a0a4b8;font-size:14px;font-weight:600}
 #v-test .opt.sel{border-color:#007bff;background:rgba(0,123,255,.1)}
 #v-test .opt.sel .l{background:#007bff;color:#fff}
-#v-test .nav{justify-content:center;margin:0}
-#v-test .btn{font:500 14px 'Inter',sans-serif;padding:10px 30px;border-radius:6px}
-#v-test .btn:hover{transform:none;box-shadow:none;opacity:.8}
+#v-test .nav{margin:18px 0 0}
 .dp{background:#007bff;color:#fff}.ds{background:transparent;color:#fff;border:1px solid #4a4e69}
 .dt-side{width:300px;flex:none;background:#1e2235;border-radius:8px;padding:20px}
 .dt-sh{margin-bottom:20px;font-size:14px}
 #v-test,#v-test *{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 @media print{#v-test{display:none!important}}
 #viol{z-index:100}
+/* ===== анимации и новый дизайн (кроме теста и практики) ===== */
+.view{position:relative;z-index:1}
+#bg{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+body[data-v="v-test"] #bg,body[data-v="v-prac"] #bg{display:none}
+.bl{position:absolute;border-radius:50%;filter:blur(60px);opacity:.45;animation:drift 18s ease-in-out infinite alternate}
+.bl.a{width:420px;height:420px;background:#ffd700;top:-120px;left:-100px}
+.bl.b{width:480px;height:480px;background:#3d5afe;bottom:-160px;right:-120px;animation-duration:24s;opacity:.3}
+.bl.c{width:300px;height:300px;background:#ff8a00;top:40%;left:55%;animation-duration:20s;opacity:.22}
+@keyframes drift{to{transform:translate(80px,60px) scale(1.15)}}
+.coin{position:absolute;bottom:-70px;border-radius:50%;background:linear-gradient(135deg,#ffe766,#f5b800);color:#7a5a00;display:grid;place-items:center;font-weight:800;opacity:.55;box-shadow:0 4px 12px rgba(245,184,0,.5);animation:coinup linear infinite}
+@keyframes coinup{to{transform:translateY(-125vh) rotate(360deg)}}
+@keyframes fadeup{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+@keyframes spin{to{transform:rotate(360deg)}}@keyframes unspin{to{transform:rotate(-360deg)}}
+@keyframes shim{to{background-position:-300% 0}}
+@keyframes pop{from{opacity:0;transform:scale(.8)}to{opacity:1;transform:none}}
+@keyframes shake{20%,60%{transform:translateX(-10px)}40%,80%{transform:translateX(10px)}}
+@keyframes bob{50%{transform:translateY(-8px)}}
+@keyframes sweep{to{left:140%}}
+@keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
+.stg>*{opacity:0;animation:fadeup .65s cubic-bezier(.2,.8,.2,1) forwards}
+.stg>*:nth-child(1){animation-delay:.05s}.stg>*:nth-child(2){animation-delay:.15s}.stg>*:nth-child(3){animation-delay:.25s}.stg>*:nth-child(4){animation-delay:.35s}.stg>*:nth-child(5){animation-delay:.45s}.stg>*:nth-child(6){animation-delay:.55s}.stg>*:nth-child(7){animation-delay:.65s}
+.shine{background:linear-gradient(90deg,var(--accent),#ff8a00,#ffd700,var(--accent));background-size:300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shim 5s linear infinite}
+.glass{background:color-mix(in srgb,var(--card) 82%,transparent);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border:1px solid var(--line);border-radius:28px;padding:38px 34px;box-shadow:0 24px 70px rgba(10,27,77,.18)}
+.hero{max-width:560px;width:100%;text-align:center}
+.ring{width:132px;height:132px;margin:0 auto 18px;border-radius:50%;padding:5px;background:conic-gradient(#ffd700,#ff8a00,#3d5afe,#ffd700);animation:spin 6s linear infinite;box-shadow:0 10px 40px rgba(255,200,0,.5)}
+.ring>div{width:100%;height:100%;border-radius:50%;background:var(--card);display:grid;place-items:center;font-size:50px;font-weight:800;color:var(--accent);animation:unspin 6s linear infinite}
+.chips{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:20px 0 26px}.chips span{padding:8px 14px;border-radius:99px;background:rgba(255,215,0,.22);font-weight:700;font-size:12px}
+.view:not(#v-test):not(#v-prac) .btn.y,.view:not(#v-test):not(#v-prac) .btn.b{position:relative;overflow:hidden}
+.view:not(#v-test):not(#v-prac) .btn.y::after,.view:not(#v-test):not(#v-prac) .btn.b::after{content:'';position:absolute;top:0;left:-80%;width:50%;height:100%;background:linear-gradient(120deg,transparent,rgba(255,255,255,.55),transparent);transform:skewX(-20deg);animation:sweep 3.5s infinite}
+.hero .stack .btn{padding:17px;font-size:16px}
+.act{overflow:hidden;border-radius:24px;padding:38px 26px;border:1px solid var(--line);transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s}
+.act::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,215,0,.25),transparent 55%);opacity:0;transition:.35s}
+.act:hover{transform:translateY(-10px) scale(1.02);box-shadow:0 26px 54px rgba(10,27,77,.24)}.act:hover::before{opacity:1}
+.act .ic{width:86px;height:86px;margin:0 auto 16px;border-radius:26px;display:grid;place-items:center;font-size:42px;background:linear-gradient(135deg,#ffe766,#ffb300);box-shadow:0 10px 24px rgba(255,179,0,.45);transition:.35s;position:relative}
+.act:hover .ic{transform:rotate(-8deg) scale(1.1)}
+.act .go{margin-top:16px;font-weight:700;font-size:13px;color:var(--accent);position:relative}
+.act.done .ic{background:linear-gradient(135deg,#6be39b,#00a650)}
+.mpw{display:flex;align-items:center;gap:12px;margin-bottom:26px;font-size:13px;font-weight:700;color:var(--muted)}
+.mp{width:200px;height:8px;border-radius:99px;background:var(--line);overflow:hidden}.mp i{display:block;height:100%;width:0;background:linear-gradient(90deg,#ffd700,#00c853);transition:width .7s}
+.overlay{-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.overlay.on .card{animation:pop .4s cubic-bezier(.2,1.4,.4,1)}
+#viol.on .card{animation:shake .55s}
+.ico{font-size:52px;text-align:center;animation:bob 2.5s ease-in-out infinite}
+.big{animation:pop .7s .2s cubic-bezier(.2,1.4,.4,1) both}
+.cf{position:fixed;top:-24px;width:10px;height:16px;border-radius:2px;z-index:60;pointer-events:none;animation:fall linear forwards}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin:20px 0}
+.stat{padding:16px;border-radius:16px;background:linear-gradient(135deg,rgba(255,215,0,.24),rgba(61,90,254,.1));text-align:center;animation:pop .5s both}
+.stat b{display:block;font-size:30px;color:var(--accent)}.stat span{font-size:12px;font-weight:600;color:var(--muted)}
+.rw{animation:fadeup .5s both}tbody tr:hover td{background:rgba(255,215,0,.08)}
+.qt{font-weight:800;font-size:18px;padding:8px 18px;border-radius:999px;background:var(--card);border:3px solid var(--ok);white-space:nowrap}
+.qt.low{border-color:var(--bad);color:var(--bad)}
+.prog{height:8px;border-radius:99px;background:var(--line);overflow:hidden;margin-bottom:16px}.prog i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--yellow),#ffb300);transition:width .3s}
+.qnav{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+.qg{width:40px;height:40px;border-radius:12px;border:2px solid var(--line);background:var(--card);color:var(--muted);font:700 13px 'Montserrat',sans-serif;cursor:pointer;transition:.2s}
+.qg:hover{border-color:var(--yellow)}.qg.ans{border-color:var(--ok);color:var(--ok)}.qg.cur{border-color:var(--yellow);color:var(--text);box-shadow:0 4px 14px rgba(255,215,0,.35)}
+#q-o{display:flex;flex-direction:column;gap:10px}
+.qo{display:flex;gap:14px;align-items:center;width:100%;text-align:left;padding:14px 16px;border-radius:12px;border:2px solid var(--line);background:var(--bg);color:var(--text);font:500 15px 'Montserrat',sans-serif;cursor:pointer;transition:.15s}
+.qo:hover{border-color:var(--yellow)}.qo .l{flex:0 0 30px;height:30px;border-radius:50%;background:var(--line);display:grid;place-items:center;font-weight:700;font-size:13px}
+.qo.sel{border-color:var(--yellow);background:rgba(255,215,0,.15)}.qo.sel .l{background:var(--yellow);color:var(--on-yellow)}
+.pc h3.qq{font-size:19px;line-height:1.5;color:var(--text);margin:6px 0 18px}
+.pz{width:100%;max-width:940px;animation:rise .4s ease}
+.pz-top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px}
+.pz-top h2{text-align:left;font-size:20px;margin:0}
+.steps{display:flex;gap:8px;margin-bottom:18px;overflow-x:auto;padding-bottom:4px}
+.st{flex:1;min-width:88px;padding:10px 12px;border-radius:12px;border:2px solid var(--line);background:var(--card);cursor:pointer;font:700 13px 'Montserrat',sans-serif;color:var(--muted);transition:.2s}
+.st:hover{border-color:var(--yellow)}.st.cur{border-color:var(--yellow);color:var(--text);box-shadow:0 4px 14px rgba(255,215,0,.35)}.st.ok{border-color:var(--ok);color:var(--ok)}
+.pc{background:var(--card);border-radius:18px;padding:30px;border-top:8px solid var(--yellow);box-shadow:0 10px 32px rgba(10,27,77,.12)}
+.pc h3{font-size:22px;color:var(--accent);margin-bottom:10px}.pc p{line-height:1.7;margin-bottom:10px}
+.lv{display:inline-block;padding:4px 12px;border-radius:99px;font-size:12px;font-weight:700;margin-bottom:10px}
+.lv0{background:rgba(0,166,80,.15);color:var(--ok)}.lv1{background:rgba(255,170,0,.2);color:#c98a00}.lv2{background:rgba(217,58,58,.15);color:var(--bad)}
+.ov{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid var(--line);font-size:14px}
+.task{margin-top:18px}.task label{display:flex;gap:10px;font-weight:600;font-size:14px;line-height:1.5;margin-bottom:8px}
+.task label b{flex:0 0 26px;height:26px;border-radius:50%;background:var(--yellow);color:var(--on-yellow);display:grid;place-items:center;font-size:13px}
+.task textarea{min-height:90px}
+.tw{overflow-x:auto}
+.pt{margin:14px 0;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.pt th,.pt td{padding:10px 14px;border-bottom:1px solid var(--line)}.pt th{text-align:left}
+.pt td:last-child,.pt th:last-child{text-align:right;font-variant-numeric:tabular-nums}
+.pt tr.tot td{font-weight:800;background:rgba(255,215,0,.12)}.pt input{max-width:170px;text-align:right}
+.rule{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0 14px}.rule span{padding:10px 16px;border-radius:12px;background:rgba(255,215,0,.18);font-weight:700;font-size:14px}
+.fm{margin:12px 0;padding:12px 16px;border-radius:10px;background:var(--bg);font-weight:600;font-size:14px;line-height:1.6}
+.res{margin-top:20px;padding:12px 16px;border-left:4px solid var(--yellow);background:rgba(255,215,0,.1);border-radius:8px;font-size:13px;font-weight:600;line-height:1.5}
+.bdw{margin:16px 0;padding:16px;border:2px dashed var(--line);border-radius:14px}.bdw h4{margin-bottom:12px}
+.bd{display:grid;grid-template-columns:1fr 130px 130px 38px;gap:8px;margin-bottom:8px}
+.bd .del{border:0;border-radius:10px;background:rgba(217,58,58,.15);color:var(--bad);cursor:pointer;font-weight:700}
+.sums{display:flex;gap:10px 20px;flex-wrap:wrap;margin-top:12px;font-weight:700;font-size:14px}
+@media(max-width:640px){.bd{grid-template-columns:1fr 1fr 38px}.bd input:first-child{grid-column:1/-1}.pc{padding:20px}.pz-top{flex-direction:column;align-items:flex-start}}
+.calc{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:40;display:flex;flex-direction:column;align-items:flex-end}
+.cp{display:none;background:var(--card);padding:14px;border-radius:14px;box-shadow:0 8px 30px rgba(0,0,0,.3);margin-bottom:10px;width:260px}.cp.on{display:block}.cp input{margin-bottom:8px}#cout{font-weight:800;font-size:18px}
 .rl{margin:14px 0 16px 18px;line-height:1.7;font-size:14px;text-align:left}
 #v-test .grid{grid-template-columns:repeat(5,1fr);gap:8px}
 #v-test .g{background:#383c5a;color:#a0a4b8;border:2px solid transparent;border-radius:4px;font-size:13px;font-weight:600}
@@ -109,15 +196,19 @@ th{background:rgba(255,215,0,.15)}
 .overlay.on{display:grid}
 .back{background:none;border:0;color:var(--muted);font:600 13px 'Montserrat';cursor:pointer;margin-top:16px;text-align:center}
 @media(max-width:560px){.card{padding:26px 20px}.q p{font-size:16px}}
+#v-admin .card{max-width:1180px}
+.at{margin:8px 0}.at th{white-space:nowrap}.at td.lg{min-width:260px;max-width:460px;white-space:pre-wrap;font-size:13px}.at td.bad{color:var(--bad);font-weight:700}
 </style>
 </head>
 <body>
 
+<div id="bg"><i class="bl a"></i><i class="bl b"></i><i class="bl c"></i></div>
 <!-- Старт -->
-<section id="v-start" class="view on"><div class="card">
-  <div class="logo">5<span>0</span></div>
-  <h1>Республиканский конкурс</h1><h2>Финансовая грамотность</h2>
-  <div class="sub">— Ключ к успеху —<br>среди обучающихся колледжей</div>
+<section id="v-start" class="view on"><div class="hero glass stg">
+  <div class="ring"><div>5<span style="color:var(--yellow)">0</span></div></div>
+  <h1>Республиканский конкурс</h1><h2 class="shine" style="font-size:34px">Финансовая грамотность</h2>
+  <div class="sub" style="margin-bottom:0">— Ключ к успеху —<br>среди обучающихся колледжей</div>
+  <div class="chips"><span>📝 20 вопросов</span><span>⏱ 35 минут</span><span>💼 5 этапов практики</span></div>
   <div class="stack">
     <button class="btn y" onclick="enterParticipant()">Я участник</button>
     <button class="btn o" onclick="show('v-alogin')">Я администратор</button>
@@ -125,25 +216,29 @@ th{background:rgba(255,215,0,.15)}
 </div></section>
 
 <!-- Меню участника -->
-<section id="v-menu" class="view">
-  <div style="text-align:center;margin-bottom:30px"><h2 style="font-size:32px">Добро пожаловать!</h2><div class="sub" style="margin:0">Выберите этап конкурса для прохождения</div></div>
+<section id="v-menu" class="view stg">
+  <div style="text-align:center;margin-bottom:20px"><h2 class="shine" style="font-size:36px">Добро пожаловать!</h2><div class="sub" style="margin:6px 0 0">Выберите этап конкурса для прохождения</div></div>
+  <div class="mpw"><div class="mp"><i id="m-bar"></i></div><span id="m-lbl">Выполнено: 0 из 2</span></div>
   <div class="cards">
-    <div class="act" id="a-test" onclick="startTest()"><div class="ic">📝</div><h3>Тестирование</h3><p>30 вопросов по теории. Ограничение по времени — 35 минут. Прогресс сохраняется.</p></div>
-    <div class="act" id="a-prac" onclick="show('v-prac')"><div class="ic">💼</div><h3>Практическое задание</h3><p>Решите финансовую задачу и дайте развёрнутый ответ.</p></div>
+    <div class="act" id="a-test" onclick="startTest()"><div class="ic">📝</div><h3>Тестирование</h3><p>20 вопросов по теории. Ограничение по времени — 35 минут. Прогресс сохраняется.</p><div class="go">Начать →</div></div>
+    <div class="act" id="a-prac" onclick="openPrac()"><div class="ic">💼</div><h3>Практическое задание</h3><p>5 этапов: доходы, расходы, анализ бюджета и финансовый план семьи.</p><div class="go">Открыть →</div></div>
   </div>
   <button class="back" onclick="finishAll()">Завершить и выйти</button>
 </section>
 
 <!-- Тест -->
-<section id="v-test" class="view">
-  <div class="dt-main">
-    <div class="dt-head"><div><h1>Финансовая грамотность</h1><p>Республиканский конкурс среди обучающихся колледжей</p></div><div class="dt-time"><span>Осталось времени:</span><div class="timer" id="t-timer">35:00</div></div></div>
-    <div class="q"><h3 id="q-n"></h3><p id="q-t"></p><div class="note">Выберите один правильный ответ.</div></div>
-    <div class="q" id="q-o"></div>
-    <div class="nav"><button class="btn ds" onclick="go(-1)">‹ Назад</button><button class="btn dp" id="t-next" onclick="go(1)">Далее ›</button></div>
+<section id="v-test" class="view"><div class="pz">
+  <div class="pz-top"><div><h2>Тестирование · Финансовая грамотность</h2><div style="font-size:13px;color:var(--muted);font-weight:600;margin-top:4px">Вопрос <span id="t-pos">1</span> из 20</div></div><div class="qt" id="t-timer">35:00</div></div>
+  <div class="prog"><i id="t-bar"></i></div>
+  <div class="qnav" id="t-grid"></div>
+  <div class="pc">
+    <span class="lv lv1" id="q-n"></span>
+    <h3 class="qq" id="q-t"></h3>
+    <div id="q-o"></div>
+    <div class="res">Выберите один правильный ответ. К любому вопросу можно вернуться через номер вверху.</div>
   </div>
-  <aside class="dt-side"><div class="dt-sh">Вопрос <span id="t-pos">1</span>/30</div><div class="grid" id="t-grid"></div></aside>
-</section>
+  <div class="nav"><button class="btn o" onclick="go(-1)">← Назад</button><button class="btn y" id="t-next" onclick="go(1)">Далее →</button></div>
+</div></section>
 
 <!-- Результат теста -->
 <section id="v-res" class="view"><div class="card" style="text-align:center">
@@ -152,17 +247,14 @@ th{background:rgba(255,215,0,.15)}
 </div></section>
 
 <!-- Практика -->
-<section id="v-prac" class="view"><div class="card wide">
-  <h2>Практическое задание</h2>
-  <p style="line-height:1.7;margin:14px 0">Семья Петровых имеет ежемесячный доход 150 000 тенге. Расходы: коммунальные услуги — 20 000 ₸, питание — 60 000 ₸, транспорт — 15 000 ₸. Ежемесячный платёж по кредиту — 30 000 ₸.<br><br><b>Вопрос:</b> сколько семья может ежемесячно откладывать в накопления? Какую долю дохода это составляет и что бы вы посоветовали семье? Напишите ответ с обоснованием.</p>
-  <textarea id="p-ans" placeholder="Введите ваш ответ здесь…"></textarea>
-  <div class="err" id="p-err"></div>
-  <div class="nav"><button class="btn o" onclick="show('v-menu')">Назад</button><button class="btn y" onclick="submitPractice()">Отправить ответ</button></div>
-</div></section>
+<section id="v-prac" class="view" style="justify-content:flex-start"><div class="pz" id="pz"></div>
+  <textarea id="p-ans" hidden></textarea>
+  <div class="calc"><div class="cp" id="cp"><input id="cin" placeholder="520000+480000" oninput="calc()" autocomplete="off"><div id="cout">= …</div></div><button class="btn y" onclick="$('cp').classList.toggle('on')" title="Калькулятор">🧮</button></div>
+</section>
 
 <!-- Вход админа -->
 <section id="v-alogin" class="view"><div class="card">
-  <h2>Администратор</h2><div class="sub">Введите пароль (демо: admin123)</div>
+  <div class="ico">🔐</div><h2>Администратор</h2><div class="sub">Введите пароль (демо: admin123)</div>
   <div class="stack"><input id="a-pass" type="password" placeholder="Пароль" onkeydown="if(event.key==='Enter')adminLogin()">
   <div class="err" id="a-err"></div>
   <button class="btn b" onclick="adminLogin()">Войти</button>
@@ -172,8 +264,11 @@ th{background:rgba(255,215,0,.15)}
 <!-- Админка -->
 <section id="v-admin" class="view"><div class="card wide" style="border-top-color:var(--accent)">
   <h2>Панель администратора</h2>
-  <div class="sub" style="margin-bottom:0">Демо-режим: данные хранятся только в этом браузере</div>
-  <div class="tw"><table><thead><tr><th>Участник</th><th>Тест</th><th>Практика</th><th>Время</th></tr></thead><tbody id="a-body"></tbody></table></div>
+  <div class="sub" id="a-src" style="margin-bottom:0">Демо-режим: данные хранятся только в этом браузере</div>
+  <div class="stats" id="a-stats"></div>
+  <div class="steps" id="a-tabs"></div>
+  <div class="err" id="a-msg" style="min-height:0;margin:6px 0"></div>
+  <div class="tw"><table class="at" id="a-tbl"></table></div>
   <div class="nav" style="margin-bottom:0"><button class="btn o" onclick="clearAll()">Очистить данные</button><button class="btn b" onclick="show('v-start')">На главную</button></div>
 </div></section>
 
@@ -185,7 +280,7 @@ th{background:rgba(255,215,0,.15)}
 </div></div>
 
 <div class="overlay" id="viol"><div class="card" style="text-align:center;border-top-color:var(--bad)">
-  <div style="font-size:56px">⛔</div>
+  <div class="ico" style="font-size:56px">⛔</div>
   <h2 style="font-size:22px;color:var(--bad)">Нарушение правил тестирования</h2>
   <p style="line-height:1.6;margin:12px 0">Тестирование прекращено автоматически.<br>Обнаружено: <b id="viol-r"></b>.</p>
   <p style="font-weight:700;margin-bottom:20px">Ваш результат аннулирован.</p>
@@ -231,14 +326,15 @@ const Q=[
  {q:"Правило 72 помогает оценить…",o:["срок удвоения вложений при заданной ставке","размер налога","курс валюты","сумму кредита"],a:0}
 ];
 Q.forEach(q=>{const c=q.o[q.a];for(let i=q.o.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[q.o[i],q.o[j]]=[q.o[j],q.o[i]]}q.a=q.o.indexOf(c)});
+Q.sort(()=>Math.random()-.5);Q.length=20;
 const L=['A','B','C','D','E'],DUR=35*60;
 const $=id=>document.getElementById(id);
 const S={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}},del(k){try{localStorage.removeItem(k)}catch(e){}}};
 let user=null,cur=0,ans={},end=0,tick=null,mem={test:null,prac:null};
 
-function show(id){document.querySelectorAll('.view').forEach(v=>v.classList.remove('on'));$(id).classList.add('on');window.scrollTo(0,0)}
-function enterParticipant(){user={name:'p'};mem={test:null,prac:null};ans={};refreshMenu();show('v-menu')}
-function refreshMenu(){$('a-test').classList.toggle('done',!!mem.test);$('a-prac').classList.toggle('done',!!mem.prac)}
+function show(id){document.querySelectorAll('.view').forEach(v=>v.classList.remove('on'));$(id).classList.add('on');document.body.dataset.v=id;window.scrollTo(0,0);if(id==='v-res'&&mem.test&&!mem.test.annulled&&mem.test.score/Q.length>=.5)confetti()}
+function enterParticipant(){newPid();P=null;user={name:'p'};mem={test:null,prac:null};ans={};refreshMenu();show('v-menu')}
+function refreshMenu(){$('a-test').classList.toggle('done',!!mem.test);$('a-prac').classList.toggle('done',!!mem.prac);const n=(mem.test?1:0)+(mem.prac?1:0);$('m-bar').style.width=n*50+'%';$('m-lbl').textContent='Выполнено: '+n+' из 2'}
 
 function startTest(){
   if(mem.test){show('v-res');return}
@@ -260,17 +356,17 @@ function tock(){
 function renderQ(){
   const q=Q[cur];
   $('q-n').textContent='Вопрос '+(cur+1);$('q-t').textContent=q.q;
-  $('t-pos').textContent=cur+1;
+  $('t-pos').textContent=cur+1;$('t-bar').style.width=Object.keys(ans).length/Q.length*100+'%';
   $('t-next').textContent=cur===Q.length-1?'Завершить ✓':'Далее ›';
   const box=$('q-o');box.innerHTML='';
   q.o.forEach((t,i)=>{
-    const b=document.createElement('button');b.className='opt'+(ans[cur]===i?' sel':'');
+    const b=document.createElement('button');b.className='qo'+(ans[cur]===i?' sel':'');
     const l=document.createElement('span');l.className='l';l.textContent=L[i];
     const s=document.createElement('span');s.textContent=t;
     b.append(l,s);b.onclick=()=>{ans[cur]=i;S.set('progress:'+user.name,{ans,end});renderQ()};box.appendChild(b)
   });
     const g=$('t-grid');g.innerHTML='';
-  Q.forEach((_,i)=>{const b=document.createElement('button');b.className='g'+(ans[i]!==undefined?' ans':'')+(i===cur?' cur':'');b.textContent=i+1;b.onclick=()=>{cur=i;renderQ()};g.appendChild(b)})
+  Q.forEach((_,i)=>{const b=document.createElement('button');b.className='qg'+(ans[i]!==undefined?' ans':'')+(i===cur?' cur':'');b.textContent=i+1;b.onclick=()=>{cur=i;renderQ()};g.appendChild(b)})
 }
 function go(d){
   if(d>0&&cur===Q.length-1){const left=Q.length-Object.keys(ans).length;$('ov-t').textContent=left?('Остались без ответа: '+left):'Вы ответили на все вопросы.';$('ov').classList.add('on');return}
@@ -279,39 +375,179 @@ function go(d){
 function finishTest(){
   $('ov').classList.remove('on');clearInterval(tick);armed=false;try{document.fullscreenElement&&document.exitFullscreen()}catch(e){}$('res-score').style.fontSize='';$('res-h').textContent='Тест завершён';
   let sc=0;Q.forEach((q,i)=>{if(ans[i]===q.a)sc++});
-  mem.test={score:sc,time:new Date().toLocaleTimeString('ru-RU')};S.del('progress:'+user.name);
+  mem.test={score:sc,spent:DUR-Math.max(0,Math.round((end-Date.now())/1000)),time:new Date().toLocaleTimeString('ru-RU')};send({type:'result',correct:sc,wrong:Q.length-sc,total:Q.length,seconds:mem.test.spent});S.del('progress:'+user.name);
   $('res-score').textContent=sc+' / '+Q.length;
   const p=sc/Q.length;$('res-note').textContent=p>=.8?'Отличный результат!':p>=.5?'Хороший результат, но есть над чем поработать.':'Рекомендуем повторить основы финансовой грамотности.';
-  refreshMenu();show('v-res')
+  $('res-note').textContent+=' Потраченное время: '+fmtT(mem.test.spent)+'.';refreshMenu();show('v-res')
 }
 function submitPractice(){
-  const a=$('p-ans').value.trim();
-  if(a.length<10){$('p-err').textContent='Пожалуйста, напишите развёрнутый ответ.';return}
-  $('p-err').textContent='';mem.prac={text:a,ok:/25[\s\u00a0]?000/.test(a)};refreshMenu();show('v-menu')
+  const n=PS.filter((_,i)=>done(i+1)).length;
+  if(!n){$('p-err').textContent='Заполните хотя бы один этап перед отправкой.';return}
+  const txt=PS.map((s,i)=>{const k=i+1;let o='— Этап '+k+'. '+s.t+' —\n';if(s.total)o+=s.total+': '+(P.f['s'+k+'-tot']||'—')+'\n';if(s.bd)o+='Таблица бюджета:\n'+(P.b.filter(x=>x.n||x.a).map(x=>'  '+x.t+' | '+x.n+' | '+x.a).join('\n')||'  —')+'\n';s.tasks.forEach((t,j)=>o+='Задание '+(j+1)+': '+t+'\n   Решение: '+(P.f['s'+k+'-t'+j]||'—')+'\n\n');return o}).join('\n');
+  mem.prac={text:txt,filled:n,rows:collectPrac()};sendP({type:'practice',tasks:mem.prac.rows.map(x=>({stage:x[0],task:x[1],answer:x[3]}))});refreshMenu();show('v-menu')
 }
 function finishAll(){
   if(!mem.test&&!mem.prac){show('v-start');return}
   const all=S.get('results',[]);
   if(mem.saved){all[mem.saved-1].prac=mem.prac;S.set('results',all);user=null;$('p-ans').value='';show('v-start');return}
-  all.push({name:'Участник №'+(all.length+1),score:mem.test?(mem.test.annulled?'Аннулировано ('+mem.test.reason+')':mem.test.score+' из '+Q.length):'—',prac:mem.prac,time:new Date().toLocaleString('ru-RU')});
+  all.push({name:'Участник №'+(all.length+1),score:mem.test?(mem.test.annulled?'Аннулировано ('+mem.test.reason+')':mem.test.score+' из '+Q.length+' · время '+fmtT(mem.test.spent)):'—',prac:mem.prac,time:new Date().toLocaleString('ru-RU')});
   S.set('results',all);user=null;$('p-ans').value='';show('v-start')
 }
-function adminLogin(){
-  if($('a-pass').value==='admin123'){$('a-pass').value='';$('a-err').textContent='';renderAdmin();show('v-admin')}else $('a-err').textContent='Неверный пароль'
+const API_TEST='https://script.google.com/macros/s/AKfycbw2Xi6sjmnSTWtMiEo1OcoL3HiCpxikAHe9Utr5qwNB5sdd6yyin61lhlu-SmJH6c8T/exec';   // Скрипт №1 «Тестирование»
+const API_PRAC='https://script.google.com/macros/s/AKfycbz_Z3Z395D5SWvk6300n3xZwMLT9_aIs8mcKt93cueMESfMnX46g3-764A_HdEBCJR7Dg/exec';   // Скрипт №2 «Практика»
+const LIVE=!!(API_TEST||API_PRAC);
+let AD=null,tab='res',adminKey='',PIDp=null;
+function newPid(){PIDp=API_TEST?fetch(API_TEST+'?action=register').then(r=>r.json()).then(j=>j.pid||null).catch(()=>null):Promise.resolve(API_PRAC?'P'+Date.now().toString(36).toUpperCase():null)}
+function post(url,o){if(!url||!PIDp)return;PIDp.then(pid=>{if(!pid)return;const n=parseInt(pid);fetch(url,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(Object.assign({pid:pid,name:'Участник №'+(n>1000?n-1000:pid)},o))}).catch(()=>{})})}
+function send(o){post(API_TEST,o)}
+function sendP(o){post(API_PRAC,o)}
+setInterval(()=>{if(LIVE&&$('v-admin').classList.contains('on'))loadAdmin()},10000);
+const MAXP={1:[8,7],2:[5,5,5],3:[5,5,5,5],4:[6,6,6,7],5:[5,5,5,5,5]};
+const TABS=[['res','Тестирование'],['prac','Практика']];
+const HD={res:['ID','ФИО','Результат','Кол-во правильных','Кол-во неправильных','Потраченное время','Ошибка'],
+ prac:['ID','ФИО','Этап','Задание','Условие задания','Решение участника','Баллы','Макс. балл','Комментарий жюри'],
+ task:['Этап','Задание','Условие','Макс. балл'],q:['ID','Вопрос','A','B','C','D','Правильный']};
+function collectPrac(){const r=[];PS.forEach((s,i)=>{const k=i+1;if(s.total)r.push([k,0,s.total,P.f['s'+k+'-tot']||'']);if(s.bd)r.push([k,0,'Таблица обновлённого бюджета',P.b.filter(x=>x.n||x.a).map(x=>x.t+' | '+x.n+' | '+x.a).join('\n')]);s.tasks.forEach((t,j)=>r.push([k,j+1,t,P.f['s'+k+'-t'+j]||'']))});return r}
+function demoData(){
+  const all=S.get('results',[]),res=[],prac=[],task=[];
+  all.forEach((r,i)=>{const id=String(i+1),m=/^(\d+) из (\d+)(?: · время (.+))?$/.exec(r.score||''),a=/^Аннулировано \((.*)\)$/.exec(r.score||'');
+    res.push(a?[id,r.name,'Аннулировано',0,0,'',a[1],'']:m?[id,r.name,Math.round(m[1]/m[2]*100)+'%',+m[1],m[2]-m[1],m[3]||'','','']:[id,r.name,'','','','','','']);
+    if(r.prac&&r.prac.rows)r.prac.rows.forEach(x=>prac.push([id,r.name,'Этап '+x[0],x[1]?'Задание '+x[1]:'Таблица',x[2],x[3]||'— не заполнено —','',(MAXP[x[0]]||[])[x[1]-1]||0,'']))});
+  PS.forEach((s,i)=>{if(s.total)task.push([i+1,0,s.total,0]);if(s.bd)task.push([i+1,0,'Таблица обновлённого бюджета',0]);s.tasks.forEach((t,j)=>task.push([i+1,j+1,t,MAXP[i+1][j]]))});
+  return {res,prac,task,q:Q.map((x,i)=>['q'+(i+1),x.q,...x.o,L[x.a]])}
+}
+async function adminLogin(){
+  const p=$('a-pass').value;
+  if(LIVE){adminKey=p;$('a-err').textContent='Проверка…';
+    try{const j=await(await fetch((API_TEST||API_PRAC)+'?action=results&key='+encodeURIComponent(p))).json();if(!j.results){$('a-err').textContent='Неверный ключ';return}}
+    catch(e){$('a-err').textContent='Нет связи с Google Таблицей';return}}
+  else if(p!=='admin123'){$('a-err').textContent='Неверный пароль';return}
+  $('a-pass').value='';$('a-err').textContent='';show('v-admin');loadAdmin()
+}
+async function loadAdmin(){
+  $('a-msg').textContent='';
+  const D=demoData(),get=async u=>{const j=await(await fetch(u+'?action=results&key='+encodeURIComponent(adminKey))).json();if(!j.results)throw 0;return j.results.slice(1)};
+  AD=AD||{res:[],prac:[],task:[],q:[]};
+  if(LIVE){
+    const [a,b]=await Promise.allSettled([API_TEST?get(API_TEST):Promise.resolve(D.res),API_PRAC?get(API_PRAC):Promise.resolve(D.prac)]);
+    if(a.status==='fulfilled')AD.res=a.value;if(b.status==='fulfilled')AD.prac=b.value;
+    $('a-src').textContent=a.status==='fulfilled'&&b.status==='fulfilled'?'Google Таблицы · обновлено '+new Date().toLocaleTimeString('ru-RU'):'Не удалось загрузить часть данных из Google Таблиц'
+  }else{AD={res:D.res,prac:D.prac,task:[],q:[]};$('a-src').textContent='Демо-режим: данные хранятся только в этом браузере'}
+  renderAdmin()
 }
 function renderAdmin(){
-  const tb=$('a-body');tb.innerHTML='';const all=S.get('results',[]);
-  if(!all.length){const tr=document.createElement('tr'),td=document.createElement('td');td.colSpan=4;td.style.textAlign='center';td.textContent='Пока нет результатов';tr.appendChild(td);tb.appendChild(tr);return}
-  all.slice().reverse().forEach(r=>{
-    const tr=document.createElement('tr');
-    const cells=[r.name,r.score];
-    cells.forEach(t=>{const td=document.createElement('td');td.textContent=t;tr.appendChild(td)});
-    const tp=document.createElement('td');
-    if(r.prac){const t=document.createElement('span');t.className='tag '+(r.prac.ok?'g1':'g0');t.textContent=r.prac.ok?'Верный расчёт':'Проверить';tp.appendChild(t);const d=document.createElement('div');d.style.cssText='margin-top:6px;color:var(--muted);font-size:13px';d.textContent=r.prac.text;tp.appendChild(d)}else tp.textContent='—';
-    tr.appendChild(tp);const tt=document.createElement('td');tt.textContent=r.time;tr.appendChild(tt);tb.appendChild(tr)
-  })
+  if(!AD)return;
+  const tb=$('a-tabs');tb.innerHTML='';
+  TABS.forEach(([k,n])=>{const b=el('button','st'+(k===tab?' cur':''),n+' ('+AD[k].length+')');b.onclick=()=>{tab=k;renderAdmin()};tb.append(b)});
+  const R=AD.res,an=R.filter(r=>r[2]==='Аннулировано').length,ok=R.filter(r=>/%$/.test(r[2])),avg=ok.length?Math.round(ok.reduce((s,r)=>s+parseInt(r[2]),0)/ok.length):null,sg=$('a-stats');sg.innerHTML='';
+  [[R.length,'Участников'],[ok.length,'Прошли тест'],[avg==null?'—':avg+'%','Средний результат'],[an,'Аннулировано']].forEach(([v,l])=>{const d=el('div','stat');d.append(el('b',null,v),el('span',null,l));sg.append(d)});
+  const rows=AD[tab].map(r=>r.slice(0,HD[tab].length)),t=$('a-tbl');t.innerHTML='';
+  const h=el('tr');HD[tab].forEach(x=>h.append(el('th',null,x)));t.append(h);
+  if(!rows.length){const tr=el('tr'),td=el('td',null,'Нет данных');td.colSpan=HD[tab].length;td.style.textAlign='center';tr.append(td);t.append(tr);return}
+  rows.forEach((r,ix)=>{const tr=el('tr','rw');tr.style.animationDelay=Math.min(ix,20)*40+'ms';
+    HD[tab].forEach((_,c)=>{const v=r[c]==null?'':String(r[c]),td=el('td',v.length>50?'lg':null,v);if(tab==='res'&&c===2&&v==='Аннулировано')td.className='bad';tr.append(td)});t.append(tr)})
 }
-function clearAll(){S.del('results');renderAdmin()}
+function clearAll(){if(LIVE){$('a-msg').style.color='var(--bad)';$('a-msg').textContent='Данные в Google Таблице удаляются только вручную в самой таблице.';return}S.del('results');loadAdmin()}
+
+/* ===== ПРАКТИЧЕСКОЕ ЗАДАНИЕ ===== */
+const LV=['Простой уровень','Средний уровень','Сложный уровень'];
+const PS=[
+{t:'Определение общего дохода семьи',lv:0,
+ intro:['Семья Сакеновых получает несколько видов дохода: заработную плату родителей, дополнительный доход от репетиторства, детское пособие и проценты по банковскому вкладу.'],
+ tasks:['Рассчитайте общий ежемесячный доход семьи.','Определите, какую сумму составляют трудовые доходы семьи и какую — дополнительные поступления.'],
+ th:['Источник дохода','Сумма, тенге'],
+ rows:[['Зарплата Нурлана','520 000'],['Зарплата Айгерим','480 000'],['Доход от репетиторства','60 000'],['Детское пособие','63 000'],['Проценты по банковскому вкладу','9 000']],total:'Общий доход семьи',
+ res:'Результат этапа: определён общий ежемесячный доход, который будет использоваться для анализа семейного бюджета на следующих этапах.'},
+{t:'Расчёт расходов и остатка бюджета',lv:0,
+ intro:['Используя рассчитанный на первом этапе общий доход, определите, сколько денег семья расходует в течение месяца и какая сумма остаётся после запланированных расходов.'],
+ tasks:['Рассчитайте общую сумму ежемесячных расходов, включая накопления.','Определите остаток денежных средств после всех запланированных расходов.','Установите, имеет ли семья свободные средства для покрытия дополнительных затрат.'],
+ th:['Категория','Сумма, тенге'],
+ rows:[['Продукты питания','220 000'],['Коммунальные услуги','35 000'],['Транспорт Нурлана','50 000'],['Транспорт Айгерим','10 000'],['Кредит за автомобиль','100 000'],['Интернет и мобильная связь','18 000'],['Образование детей','40 000'],['Одежда и обувь','45 000'],['Медицинские расходы','25 000'],['Развлечения и отдых','55 000'],['Накопления и сбережения','80 000']],total:'Общая сумма',
+ fm:'Общие расходы = сумма всех указанных категорий\nОстаток бюджета = общий доход − общие расходы',
+ res:'Результат этапа: определены общая сумма расходов и остаток бюджета семьи.'},
+{t:'Анализ структуры семейного бюджета',lv:1,
+ intro:['На основании расчётов первого и второго этапов проанализируйте, насколько рационально семья распределяет свои денежные средства. Семья стремится придерживаться правила «70/20/10»:'],
+ rule:['70% — необходимые расходы','20% — накопления и финансовые цели','10% — развлечения и личные желания'],
+ tasks:['Рассчитайте, какой процент общего дохода составляют все запланированные расходы.','Определите долю накоплений в общем доходе семьи.','Сравните фактическую структуру бюджета с правилом «70/20/10».','Сделайте вывод: соблюдает ли семья это правило? Если нет, какие категории необходимо пересмотреть?'],
+ fm:'Для расчёта используйте формулу:\nДоля категории = (Сумма категории / Общий доход) × 100%',
+ res:'Результат этапа: выявлены особенности распределения доходов и определены возможности оптимизации бюджета.'},
+{t:'Решение финансовой ситуации',lv:1,
+ intro:['В середине месяца стиральная машина семьи Сакеновых выходит из строя. Семья покупает новую энергоэффективную модель за 120 000 тенге, используя средства с банковского депозита.','В следующем месяце Дамир планирует отправиться на школьную экскурсию в Астану стоимостью 40 000 тенге.','Используйте результаты предыдущих этапов, чтобы оценить последствия этих событий для финансового положения семьи.'],
+ tasks:['Рассчитайте, какая сумма останется на депозите после снятия 120 000 тенге, если исходить из того, что до покупки на нём находились только накопления, сформированные за один месяц в размере 80 000 тенге. Объясните, почему для точного расчёта фактического остатка необходимо знать начальный баланс депозита.','Определите, на сколько увеличатся плановые расходы следующего месяца с учётом экскурсии.','Предложите два варианта финансирования поездки без оформления нового кредита.','Выберите наиболее рациональный вариант и обоснуйте его с учётом необходимости сохранять финансовую подушку безопасности.'],
+ res:'Результат этапа: разработан план действий для покрытия непредвиденных и предстоящих расходов без нарушения финансовой устойчивости семьи.'},
+{t:'Разработка финансового плана семьи',lv:2,bd:true,
+ intro:['На основе результатов всех предыдущих этапов подготовьте обновлённый финансовый план семьи Сакеновых на следующий месяц. В плане необходимо учесть:'],
+ list:['общий ежемесячный доход семьи;','регулярные расходы и обязательный платёж по автокредиту;','ежемесячные накопления;','экскурсию Дамира стоимостью 40 000 тенге;','последствия покупки стиральной машины;','необходимость поддержания финансовой подушки безопасности.'],
+ tasks:['Составьте обновлённый бюджет на следующий месяц (таблица выше) и кратко обоснуйте принятые решения.','Определите, какие расходы можно сократить без существенного ухудшения качества жизни семьи.','Рассчитайте возможную сумму накоплений после включения стоимости экскурсии в бюджет.','Предложите стратегию восстановления средств на депозите после покупки стиральной машины.','Сформулируйте три рекомендации семье по повышению финансовой устойчивости.'],
+ res:'Итоговый продукт: таблица обновлённого бюджета с расчётами и краткое обоснование принятых решений.'}
+];
+let P=null,ps=0;
+const el=(t,c,x)=>{const e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e};
+function openPrac(){if(!P)P={f:{},b:[{n:'',a:'',t:'Доход'},{n:'',a:'',t:'Расход'},{n:'',a:'',t:'Расход'}]};ps=0;renderPrac();show('v-prac')}
+function done(k){return Object.keys(P.f).some(x=>x.startsWith('s'+k+'-')&&P.f[x].trim())||(!!PS[k-1].bd&&P.b.some(r=>r.n||r.a))}
+function goStep(i){ps=i;renderPrac();window.scrollTo(0,0)}
+function builder(){
+  const w=el('div','bdw'),list=el('div'),sums=el('div','sums');w.append(el('h4',null,'Обновлённый бюджет на следующий месяц'));
+  const upd=()=>{let i=0,r=0,s=0;P.b.forEach(x=>{const v=parseFloat(String(x.a).replace(/\s/g,'').replace(',','.'))||0;if(x.t==='Доход')i+=v;else if(x.t==='Накопления')s+=v;else r+=v});sums.textContent='';[['Доходы',i],['Расходы',r],['Накопления',s],['Свободный остаток',i-r-s]].forEach(([k,v])=>sums.append(el('span',null,k+': '+v.toLocaleString('ru-RU')+' ₸')))};
+  const draw=()=>{list.innerHTML='';P.b.forEach((x,idx)=>{const row=el('div','bd'),n=el('input'),a=el('input'),t=el('select'),d=el('button','del','✕');
+    n.placeholder='Статья бюджета';n.value=x.n;n.oninput=()=>{x.n=n.value};
+    a.placeholder='Сумма, ₸';a.inputMode='numeric';a.value=x.a;a.oninput=()=>{x.a=a.value;upd()};
+    ['Доход','Расход','Накопления'].forEach(o=>t.append(el('option',null,o)));t.value=x.t;t.onchange=()=>{x.t=t.value;upd()};
+    d.onclick=()=>{P.b.splice(idx,1);draw();upd()};row.append(n,a,t,d);list.append(row)})};
+  const add=el('button','btn o','+ Добавить строку');add.style.padding='10px 18px';add.onclick=()=>{P.b.push({n:'',a:'',t:'Расход'});draw();upd()};
+  draw();upd();w.append(list,add,sums);return w
+}
+function renderPrac(){
+  const root=$('pz');root.innerHTML='';
+  const top=el('div','pz-top');top.append(el('h2',null,'Практическое задание «Семейный бюджет семьи Сакеновых»'));
+  const bk=el('button','btn o','← В меню');bk.onclick=()=>show('v-menu');top.append(bk);root.append(top);
+  const st=el('div','steps');
+  ['Введение',...PS.map((_,i)=>'Этап '+(i+1))].forEach((t,i)=>{const ok=i>0&&done(i);const b=el('button','st'+(i===ps?' cur':'')+(ok?' ok':''),t+(ok?' ✓':''));b.onclick=()=>goStep(i);st.append(b)});
+  root.append(st);
+  const c=el('div','pc');
+  if(ps===0){
+    c.append(el('h3',null,'Введение'));
+    [['Тема: ','Планирование семейного бюджета, анализ доходов и расходов, принятие финансовых решений.'],['Цель задания: ','научиться рассчитывать доходы и расходы семьи, оценивать структуру бюджета, анализировать непредвиденные затраты и разрабатывать план финансовых действий.'],['Инструкция: ','изучите кейс семьи Сакеновых и последовательно выполните пять этапов задания. Каждый следующий этап основывается на результатах предыдущего. Ответы необходимо обосновать расчётами.']].forEach(([b,t])=>{const p=el('p');p.append(el('b',null,b),document.createTextNode(t));c.append(p)});
+    PS.forEach((s,i)=>{const r=el('div','ov');r.append(el('span',null,'Этап '+(i+1)+'. '+s.t),el('span','lv lv'+s.lv,LV[s.lv]));r.lastChild.style.margin='0';c.append(r)});
+    const hint=el('p',null,'Калькулятор в правом нижнем углу поможет с расчётами. Ответы сохраняются при переходе между этапами.');hint.style.cssText='margin-top:16px;color:var(--muted);font-size:13px';c.append(hint);
+  }else{
+    const s=PS[ps-1],k=ps;
+    c.append(el('span','lv lv'+s.lv,LV[s.lv]),el('h3',null,'Этап '+k+'. '+s.t));
+    s.intro.forEach(t=>c.append(el('p',null,t)));
+    if(s.rule){const r=el('div','rule');s.rule.forEach(x=>r.append(el('span',null,x)));c.append(r)}
+    if(s.list){const u=el('ul','rl');s.list.forEach(x=>u.append(el('li',null,x)));c.append(u)}
+    if(s.th){
+      const w=el('div','tw'),t=el('table','pt'),h=el('tr');s.th.forEach(x=>h.append(el('th',null,x)));t.append(h);
+      s.rows.forEach(r=>{const tr=el('tr');r.forEach(x=>tr.append(el('td',null,x)));t.append(tr)});
+      const tr=el('tr','tot'),td=el('td'),inp=el('input');tr.append(el('td',null,s.total));
+      inp.placeholder='?';inp.inputMode='numeric';inp.value=P.f['s'+k+'-tot']||'';inp.oninput=()=>{P.f['s'+k+'-tot']=inp.value};td.append(inp);tr.append(td);t.append(tr);w.append(t);c.append(w)
+    }
+    if(s.fm){const f=el('div','fm',s.fm);f.style.whiteSpace='pre-line';c.append(f)}
+    if(s.bd)c.append(builder());
+    s.tasks.forEach((tx,j)=>{
+      const key='s'+k+'-t'+j,d=el('div','task'),lb=el('label');lb.append(el('b',null,j+1),el('span',null,tx));
+      const ta=el('textarea');ta.placeholder='Ваш расчёт и ответ…';ta.value=P.f[key]||'';
+      ta.oninput=()=>{P.f[key]=ta.value;ta.style.height='auto';ta.style.height=ta.scrollHeight+'px'};d.append(lb,ta);c.append(d)
+    });
+    c.append(el('div','res',s.res))
+  }
+  root.append(c);
+  const er=el('div','err');er.id='p-err';er.style.marginTop='12px';
+  const nav=el('div','nav'),pv=el('button','btn o','← Назад'),nx=el('button','btn y',ps===5?'Отправить решение ✓':ps===0?'Начать →':'Далее →');
+  pv.disabled=ps===0;pv.onclick=()=>goStep(ps-1);nx.onclick=()=>{if(ps===5)submitPractice();else goStep(ps+1)};
+  nav.append(pv,nx);root.append(er,nav);
+  root.querySelectorAll('textarea').forEach(t=>{t.style.height='auto';t.style.height=Math.max(90,t.scrollHeight)+'px'})
+}
+function ev(s){let i=0;const ws=()=>{while(s[i]===' ')i++};
+  const num=()=>{ws();if(s[i]==='('){i++;const v=ex();ws();if(s[i]!==')')throw 0;i++;return v}if(s[i]==='-'){i++;return -num()}const m=/^\d+(\.\d+)?/.exec(s.slice(i));if(!m)throw 0;i+=m[0].length;let v=parseFloat(m[0]);ws();if(s[i]==='%'){i++;v/=100}return v};
+  const term=()=>{let v=num();for(;;){ws();if(s[i]==='*'){i++;v*=num()}else if(s[i]==='/'){i++;v/=num()}else return v}};
+  const ex=()=>{let v=term();for(;;){ws();if(s[i]==='+'){i++;v+=term()}else if(s[i]==='-'){i++;v-=term()}else return v}};
+  const v=ex();ws();if(i<s.length)throw 0;return v}
+function calc(){let r='= …';const v=$('cin').value.replace(/\s/g,'').replace(/,/g,'.');if(v){try{const x=ev(v);if(isFinite(x))r='= '+(+x.toFixed(4)).toLocaleString('ru-RU')}catch(e){}}$('cout').textContent=r}
+
+(function(){const bg=$('bg');for(let i=0;i<12;i++){const c=document.createElement('div'),s=24+Math.random()*28;c.className='coin';c.textContent='₸';c.style.cssText='left:'+Math.random()*96+'%;width:'+s+'px;height:'+s+'px;font-size:'+s*.5+'px;animation-duration:'+(14+Math.random()*14)+'s;animation-delay:-'+Math.random()*20+'s';bg.appendChild(c)}})();
+function fmtT(s){s=s||0;return Math.floor(s/60)+' мин '+String(s%60).padStart(2,'0')+' с'}
+function confetti(){const c=['#ffd700','#ff8a00','#3d5afe','#00c853','#ff4081'];for(let i=0;i<60;i++){const p=document.createElement('i');p.className='cf';p.style.cssText='left:'+Math.random()*100+'vw;background:'+c[i%5]+';animation-delay:'+Math.random()*.6+'s;animation-duration:'+(2+Math.random()*2)+'s';document.body.appendChild(p);setTimeout(()=>p.remove(),5000)}}
 
 /* ===== ПРОКТОРИНГ ===== */
 let armed=false,grace=0;
@@ -320,7 +556,7 @@ function violation(reason){
   armed=false;clearInterval(tick);
   try{document.fullscreenElement&&document.exitFullscreen()}catch(e){}
   S.del('progress:p');
-  mem.test={score:0,annulled:true,reason:reason};
+  mem.test={score:0,annulled:true,reason:reason};send({type:'violation',reason:reason,seconds:DUR-Math.max(0,Math.round((end-Date.now())/1000))});
   const all=S.get('results',[]);
   all.push({name:'Участник №'+(all.length+1),score:'Аннулировано ('+reason+')',prac:null,time:new Date().toLocaleString('ru-RU')});
   S.set('results',all);mem.saved=all.length;
