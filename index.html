@@ -494,7 +494,7 @@ async function finishTest(isAuto = false) {
   refreshMenu(); show('v-res');
 }
 
-// ================= ПРАКТИКА: ТЕКСТЫ И ДАННЫЕ КЕЙСА =================
+// ================= ПРАКТИКА: ДАННЫЕ =================
 const PM = {
   ru: {
     title: 'Практическое задание «Семейный бюджет семьи Сакеновых»',
@@ -556,7 +556,7 @@ const PM = {
 
 // ================= ПРАКТИКА: ЛОГИКА =================
 let pracTimer = null, pracEnd = 0, pracArmed = false, pracGrace = 0;
-let PA = {}, pStep = 0;   // PA — введённые ответы, pStep — текущая вкладка (0 = Введение)
+let PA = {}, pStep = 0;
 
 function startPrac() {
   if (mem.prac) { alert("Вы уже прошли практику!"); return; }
@@ -574,18 +574,15 @@ function beginPrac() {
   clearInterval(pracTimer);
   pracTimer = setInterval(() => {
     const left = Math.max(0, Math.round((pracEnd - Date.now()) / 1000));
-    updPracTimer();
+    const t = $('p-timer');
+    if (t) {
+      t.textContent = String(Math.floor(left / 60)).padStart(2, '0') + ':' + String(left % 60).padStart(2, '0');
+      t.classList.toggle('low', left < 300);
+    }
     if (left <= 0) { clearInterval(pracTimer); submitPractice(true); }
   }, 1000);
 
   pracGrace = Date.now() + 3000; pracArmed = true;
-}
-
-function updPracTimer() {
-  const t = $('p-timer'); if (!t) return;
-  const left = Math.max(0, Math.round((pracEnd - Date.now()) / 1000));
-  t.textContent = String(Math.floor(left / 60)).padStart(2, '0') + ':' + String(left % 60).padStart(2, '0');
-  t.classList.toggle('low', left < 300);
 }
 
 function renderPrac() {
@@ -596,11 +593,9 @@ function renderPrac() {
   const done = k => tasksOf(k).some(t => (PA[t.id] || '') !== '');
   const goTo = i => { pStep = i; renderPrac(); window.scrollTo(0, 0); };
 
-  // Шапка: заголовок + таймер
   const top = E('div', 'pz-top'); top.append(E('h2', null, m.title));
   const tm = E('div', 'qt', '--:--'); tm.id = 'p-timer'; top.append(tm); root.append(top);
 
-  // Вкладки: Введение, Этап 1–5
   const st = E('div', 'steps');
   [m.tabIntro].concat([1, 2, 3, 4, 5].map(k => m.stage + ' ' + k)).forEach((t, i) => {
     const ok = i > 0 && done(i);
@@ -611,7 +606,6 @@ function renderPrac() {
 
   const c = E('div', 'pc');
   if (pStep === 0) {
-    // ----- Введение -----
     c.append(E('h3', null, m.tabIntro));
     m.head.forEach(([b, t]) => { const p = E('p'); p.append(E('b', null, b), document.createTextNode(t)); c.append(p); });
     [1, 2, 3, 4, 5].forEach(k => {
@@ -622,7 +616,6 @@ function renderPrac() {
     });
     const hint = E('p', null, m.hint); hint.style.cssText = 'margin-top:16px;color:var(--muted);font-size:13px'; c.append(hint);
   } else {
-    // ----- Этап -----
     const k = pStep, sd = D['stage' + k] || {}, li = m.lvOf[k - 1];
     c.append(E('span', 'lv lv' + li, m.lv[li]), E('h3', null, m.stage + ' ' + k + '. ' + (sd.title || m.names[k - 1])));
     [].concat(sd.intro || m.intro[k - 1]).forEach(t => c.append(E('p', null, t)));
@@ -649,13 +642,11 @@ function renderPrac() {
   }
   root.append(c);
 
-  // Навигация
   const nav = E('div', 'nav'), pv = E('button', 'btn o', m.back),
         nx = E('button', 'btn y', pStep === 5 ? m.send : pStep === 0 ? m.start : m.next);
   pv.disabled = pStep === 0; pv.onclick = () => goTo(pStep - 1);
   nx.onclick = () => { if (pStep === 5) submitPractice(false); else goTo(pStep + 1); };
   nav.append(pv, nx); root.append(nav);
-  updPracTimer();
 }
 
 async function submitPractice(isAuto = false) {
