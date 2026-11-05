@@ -4,11 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Республиканский конкурс — Финансовая грамотность</title>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
-  --yellow:#ffd700;--yellow-h:#e6c200;--blue:#0a1b4d;
-  --bg:#f4f7fc;--card:#fff;--text:#1d2340;--muted:#667;--line:#e3e8f2;--ok:#00a650;--bad:#d93a3a;--on-yellow:#0a1b4d;--accent:#0a1b4d;--on-accent:#fff;
+  --yellow:#ffd700;--bg:#f4f7fc;--card:#fff;--text:#1d2340;--muted:#667;--line:#e3e8f2;--ok:#00a650;--bad:#d93a3a;--on-yellow:#0a1b4d;--accent:#0a1b4d;--on-accent:#fff;
   box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#171a2e;--card:#232744;--text:#f1f3fb;--muted:#a3a8c3;--line:#363b60;--accent:#ffd700;--on-accent:#0a1b4d;color-scheme:dark}}
@@ -17,13 +16,10 @@
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
 body{font-family:'Montserrat',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;
   background-image:radial-gradient(circle at 8% 10%,rgba(255,215,0,.18),transparent 35%),radial-gradient(circle at 92% 90%,rgba(60,90,220,.15),transparent 35%);background-attachment:fixed}
-.view{display:none;min-height:100vh;padding:24px 16px;align-items:center;justify-content:center;flex-direction:column}
+.view{display:none;position:relative;z-index:1;min-height:100vh;padding:24px 16px;align-items:center;justify-content:center;flex-direction:column}
 .view.on{display:flex}
 .card{background:var(--card);border-radius:20px;padding:36px;width:100%;max-width:520px;border-top:8px solid var(--yellow);box-shadow:0 12px 40px rgba(10,27,77,.14);animation:rise .4s ease}
 .card.wide{max-width:1180px}
-@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
-.logo{display:flex;justify-content:center;gap:4px;font-size:56px;font-weight:800;color:var(--accent);line-height:1}
-.logo span{color:var(--yellow)}
 h1{font-size:20px;text-transform:uppercase;letter-spacing:1px;text-align:center;margin:8px 0 4px}
 h2{font-size:26px;text-align:center;font-weight:800;color:var(--accent);margin-bottom:6px}
 .sub{text-align:center;color:var(--muted);font-size:14px;font-weight:600;margin-bottom:26px}
@@ -33,74 +29,22 @@ h2{font-size:26px;text-align:center;font-weight:800;color:var(--accent);margin-b
 .btn:disabled{opacity:.5;cursor:default;transform:none;box-shadow:none}
 .y{background:var(--yellow);color:var(--on-yellow)}.b{background:var(--accent);color:var(--on-accent)}
 .o{background:transparent;border:2px solid var(--accent);color:var(--accent)}
+.view:not(#v-test):not(#v-prac) .btn.y,.view:not(#v-test):not(#v-prac) .btn.b{position:relative;overflow:hidden}
+.view:not(#v-test):not(#v-prac) .btn.y::after,.view:not(#v-test):not(#v-prac) .btn.b::after{content:'';position:absolute;top:0;left:-80%;width:50%;height:100%;background:linear-gradient(120deg,transparent,rgba(255,255,255,.55),transparent);transform:skewX(-20deg);animation:sweep 3.5s infinite}
 label.f{display:block;font-size:13px;font-weight:600;color:var(--muted);margin-bottom:6px}
 input,select,textarea{width:100%;padding:13px 14px;border-radius:10px;border:1.5px solid var(--line);background:var(--bg);color:var(--text);font:500 15px 'Montserrat',sans-serif}
 input:focus,textarea:focus,select:focus{outline:2px solid var(--yellow);border-color:var(--yellow)}
-textarea{min-height:150px;resize:vertical}
 .err{color:var(--bad);font-size:13px;font-weight:600;min-height:18px}
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;width:100%;max-width:760px}
-.act{background:var(--card);border-radius:18px;padding:34px 24px;text-align:center;cursor:pointer;border-bottom:6px solid transparent;box-shadow:0 6px 22px rgba(0,0,0,.08);transition:.25s;position:relative}
-.act:hover{transform:translateY(-6px);border-bottom-color:var(--yellow)}
-.act .ic{font-size:46px;margin-bottom:12px}.act h3{color:var(--accent);margin-bottom:8px}.act p{font-size:14px;color:var(--muted);line-height:1.5}
-.act.done{opacity:.7}.act.done::after{content:"✓ Выполнено";position:absolute;top:12px;right:14px;font-size:12px;font-weight:700;color:var(--ok)}
-/* тест */
-.test{width:100%;max-width:900px;align-self:flex-start;margin:0 auto}
-.top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}
-.top b{font-size:15px}.top small{color:var(--muted)}
-.timer{font-weight:800;font-size:18px;padding:8px 16px;border-radius:999px;background:var(--card);border:3px solid var(--ok);min-width:92px;text-align:center}
-.timer.low{border-color:var(--bad);color:var(--bad)}
-.bar{height:8px;border-radius:99px;background:var(--line);overflow:hidden;margin-bottom:18px}
-.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--yellow),#ffb300);transition:width .3s}
-.q{background:var(--card);border-radius:16px;padding:26px;box-shadow:0 6px 22px rgba(0,0,0,.08)}
-.q h3{font-size:13px;color:var(--muted);margin-bottom:10px;text-transform:uppercase;letter-spacing:1px}
-.q p{font-size:18px;font-weight:600;line-height:1.5;margin-bottom:20px}
-.opt{display:flex;gap:14px;align-items:center;width:100%;text-align:left;padding:14px 16px;margin-bottom:10px;border-radius:12px;border:2px solid var(--line);background:var(--bg);color:var(--text);font:500 15px 'Montserrat',sans-serif;cursor:pointer;transition:.15s}
-.opt:hover{border-color:var(--yellow)}
-.opt .l{flex:0 0 30px;height:30px;border-radius:50%;background:var(--line);display:grid;place-items:center;font-weight:700;font-size:13px}
-.opt.sel{border-color:var(--yellow);background:rgba(255,215,0,.15)}
-.opt.sel .l{background:var(--yellow);color:var(--on-yellow)}
+.ico{font-size:52px;text-align:center;animation:bob 2.5s ease-in-out infinite}
+.back{background:none;border:0;color:var(--muted);font:600 13px 'Montserrat';cursor:pointer;margin-top:16px;text-align:center}
 .nav{display:flex;justify-content:space-between;gap:12px;margin:18px 0}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(42px,1fr));gap:8px}
-.g{aspect-ratio:1;border-radius:8px;border:2px solid transparent;background:var(--card);color:var(--muted);font-weight:700;cursor:pointer}
-.g.ans{background:var(--ok);color:#fff}.g.cur{border-color:var(--accent)}
-/* тест — тёмный экран */
-#v-test{justify-content:flex-start}
-.dt-main{flex:1;max-width:calc(100% - 320px);display:flex;flex-direction:column;gap:20px;min-width:0}
-.dt-head{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 0}
-.dt-head h1{font-size:20px;font-weight:600;text-transform:none;letter-spacing:0;text-align:left;margin:0 0 4px}
-.dt-head p{font-size:12px;color:#a0a4b8}
-.dt-time{display:flex;align-items:center;gap:15px;font-size:14px;white-space:nowrap}
-#v-test .timer{width:50px;height:50px;min-width:0;padding:0;border-radius:50%;border:3px solid #00c853;background:transparent;display:grid;place-items:center;font-size:13px;font-weight:600;color:#fff}
-#v-test .timer.low{border-color:#ff5252;color:#ff5252}
-#v-test .q{background:#1e2235;border-radius:8px;padding:25px;box-shadow:0 4px 6px rgba(0,0,0,.1)}
-#v-test .q h3{font-size:16px;font-weight:600;color:#e2e8f0;text-transform:none;letter-spacing:0;margin-bottom:15px}
-#v-test .q p{font-size:15px;font-weight:400;line-height:1.6;color:#cbd5e1;margin-bottom:20px}
-.note{font-size:13px;color:#a0a4b8}.note::before{content:'• '}
-#q-o{display:flex;flex-direction:column;gap:10px}
-#v-test .opt{background:#383c5a;border:1px solid transparent;border-radius:6px;padding:15px 20px;margin:0;color:#e2e8f0;font:400 14px 'Inter',sans-serif}
-#v-test .opt:hover{border-color:#4a4e69}
-#v-test .opt .l{flex:0 0 28px;width:28px;height:28px;background:#1e2235;color:#a0a4b8;font-size:14px;font-weight:600}
-#v-test .opt.sel{border-color:#007bff;background:rgba(0,123,255,.1)}
-#v-test .opt.sel .l{background:#007bff;color:#fff}
-#v-test .nav{margin:18px 0 0}
-.dp{background:#007bff;color:#fff}.ds{background:transparent;color:#fff;border:1px solid #4a4e69}
-.dt-side{width:300px;flex:none;background:#1e2235;border-radius:8px;padding:20px}
-.dt-sh{margin-bottom:20px;font-size:14px}
-#v-test,#v-test *{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
-@media print{#v-test{display:none!important}}
-#viol{z-index:100}
+.tw{overflow-x:auto}
+
 /* ===== анимации ===== */
-.view{position:relative;z-index:1}
-#bg{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:0}
-body[data-v="v-test"] #bg,body[data-v="v-prac"] #bg{display:none}
-.bl{position:absolute;border-radius:50%;filter:blur(60px);opacity:.45;animation:drift 18s ease-in-out infinite alternate}
-.bl.a{width:420px;height:420px;background:#ffd700;top:-120px;left:-100px}
-.bl.b{width:480px;height:480px;background:#3d5afe;bottom:-160px;right:-120px;animation-duration:24s;opacity:.3}
-.bl.c{width:300px;height:300px;background:#ff8a00;top:40%;left:55%;animation-duration:20s;opacity:.22}
-@keyframes drift{to{transform:translate(80px,60px) scale(1.15)}}
-.coin{position:absolute;bottom:-70px;border-radius:50%;background:linear-gradient(135deg,#ffe766,#f5b800);color:#7a5a00;display:grid;place-items:center;font-weight:800;opacity:.55;box-shadow:0 4px 12px rgba(245,184,0,.5);animation:coinup linear infinite}
-@keyframes coinup{to{transform:translateY(-125vh) rotate(360deg)}}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 @keyframes fadeup{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+@keyframes drift{to{transform:translate(80px,60px) scale(1.15)}}
+@keyframes coinup{to{transform:translateY(-125vh) rotate(360deg)}}
 @keyframes spin{to{transform:rotate(360deg)}}@keyframes unspin{to{transform:rotate(-360deg)}}
 @keyframes shim{to{background-position:-300% 0}}
 @keyframes pop{from{opacity:0;transform:scale(.8)}to{opacity:1;transform:none}}
@@ -108,33 +52,39 @@ body[data-v="v-test"] #bg,body[data-v="v-prac"] #bg{display:none}
 @keyframes bob{50%{transform:translateY(-8px)}}
 @keyframes sweep{to{left:140%}}
 @keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
+#bg{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+body[data-v="v-test"] #bg,body[data-v="v-prac"] #bg{display:none}
+.bl{position:absolute;border-radius:50%;filter:blur(60px);opacity:.45;animation:drift 18s ease-in-out infinite alternate}
+.bl.a{width:420px;height:420px;background:#ffd700;top:-120px;left:-100px}
+.bl.b{width:480px;height:480px;background:#3d5afe;bottom:-160px;right:-120px;animation-duration:24s;opacity:.3}
+.bl.c{width:300px;height:300px;background:#ff8a00;top:40%;left:55%;animation-duration:20s;opacity:.22}
+.coin{position:absolute;bottom:-70px;border-radius:50%;background:linear-gradient(135deg,#ffe766,#f5b800);color:#7a5a00;display:grid;place-items:center;font-weight:800;opacity:.55;box-shadow:0 4px 12px rgba(245,184,0,.5);animation:coinup linear infinite}
 .stg>*{opacity:0;animation:fadeup .65s cubic-bezier(.2,.8,.2,1) forwards}
 .stg>*:nth-child(1){animation-delay:.05s}.stg>*:nth-child(2){animation-delay:.15s}.stg>*:nth-child(3){animation-delay:.25s}.stg>*:nth-child(4){animation-delay:.35s}.stg>*:nth-child(5){animation-delay:.45s}.stg>*:nth-child(6){animation-delay:.55s}.stg>*:nth-child(7){animation-delay:.65s}
 .shine{background:linear-gradient(90deg,var(--accent),#ff8a00,#ffd700,var(--accent));background-size:300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shim 5s linear infinite}
-.glass{background:color-mix(in srgb,var(--card) 82%,transparent);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border:1px solid var(--line);border-radius:28px;padding:38px 34px;box-shadow:0 24px 70px rgba(10,27,77,.18)}
+.glass{background:color-mix(in srgb,var(--card) 82%,transparent);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border:1px solid var(--line);border-radius:28px;box-shadow:0 24px 70px rgba(10,27,77,.18)}
 .hero{max-width:560px;width:100%;text-align:center}
-.ring{width:132px;height:132px;margin:0 auto 18px;border-radius:50%;padding:5px;background:conic-gradient(#ffd700,#ff8a00,#3d5afe,#ffd700);animation:spin 6s linear infinite;box-shadow:0 10px 40px rgba(255,200,0,.5)}
-.ring>div{width:100%;height:100%;border-radius:50%;background:var(--card);display:grid;place-items:center;font-size:50px;font-weight:800;color:var(--accent);animation:unspin 6s linear infinite}
 .chips{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:20px 0 26px}.chips span{padding:8px 14px;border-radius:99px;background:rgba(255,215,0,.22);font-weight:700;font-size:12px}
-.act{overflow:hidden;border-radius:24px;padding:38px 26px;border:1px solid var(--line);transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;place-items:center;padding:16px;z-index:50;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.overlay.on{display:grid}.overlay.on .card{animation:pop .4s cubic-bezier(.2,1.4,.4,1)}
+#viol{z-index:100}#viol.on .card{animation:shake .55s}
+.rl{margin:14px 0 16px 18px;line-height:1.7;font-size:14px;text-align:left}
+
+/* ===== меню ===== */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;width:100%;max-width:760px}
+.act{background:var(--card);border-radius:24px;padding:38px 26px;text-align:center;cursor:pointer;border:1px solid var(--line);box-shadow:0 6px 22px rgba(0,0,0,.08);position:relative;overflow:hidden;transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s}
 .act::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,215,0,.25),transparent 55%);opacity:0;transition:.35s}
 .act:hover{transform:translateY(-10px) scale(1.02);box-shadow:0 26px 54px rgba(10,27,77,.24)}.act:hover::before{opacity:1}
 .act .ic{width:86px;height:86px;margin:0 auto 16px;border-radius:26px;display:grid;place-items:center;font-size:42px;background:linear-gradient(135deg,#ffe766,#ffb300);box-shadow:0 10px 24px rgba(255,179,0,.45);transition:.35s;position:relative}
 .act:hover .ic{transform:rotate(-8deg) scale(1.1)}
+.act h3{color:var(--accent);margin-bottom:8px;position:relative}.act p{font-size:14px;color:var(--muted);line-height:1.5;position:relative}
 .act .go{margin-top:16px;font-weight:700;font-size:13px;color:var(--accent);position:relative}
-.act.done .ic{background:linear-gradient(135deg,#6be39b,#00a650)}
+.act.done{opacity:.7}.act.done .ic{background:linear-gradient(135deg,#6be39b,#00a650)}
+.act.done::after{content:"✓ Выполнено";position:absolute;top:12px;right:14px;font-size:12px;font-weight:700;color:var(--ok)}
 .mpw{display:flex;align-items:center;gap:12px;margin-bottom:26px;font-size:13px;font-weight:700;color:var(--muted)}
 .mp{width:200px;height:8px;border-radius:99px;background:var(--line);overflow:hidden}.mp i{display:block;height:100%;width:0;background:linear-gradient(90deg,#ffd700,#00c853);transition:width .7s}
-.overlay{-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
-.overlay.on .card{animation:pop .4s cubic-bezier(.2,1.4,.4,1)}
-#viol.on .card{animation:shake .55s}
-.ico{font-size:52px;text-align:center;animation:bob 2.5s ease-in-out infinite}
-.big{animation:pop .7s .2s cubic-bezier(.2,1.4,.4,1) both}
-.cf{position:fixed;top:-24px;width:10px;height:16px;border-radius:2px;z-index:60;pointer-events:none;animation:fall linear forwards}
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin:20px 0}
-.stat{padding:16px;border-radius:16px;background:linear-gradient(135deg,rgba(255,215,0,.24),rgba(61,90,254,.1));text-align:center;animation:pop .5s both}
-.stat b{display:block;font-size:30px;color:var(--accent)}.stat span{font-size:12px;font-weight:600;color:var(--muted)}
-.rw{animation:fadeup .5s both}tbody tr:hover td{background:rgba(255,215,0,.08)}
+
+/* ===== тест ===== */
 .qt{font-weight:800;font-size:18px;padding:8px 18px;border-radius:999px;background:var(--card);border:3px solid var(--ok);white-space:nowrap}
 .qt.low{border-color:var(--bad);color:var(--bad)}
 .prog{height:8px;border-radius:99px;background:var(--line);overflow:hidden;margin-bottom:16px}.prog i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--yellow),#ffb300);transition:width .3s}
@@ -146,76 +96,57 @@ body[data-v="v-test"] #bg,body[data-v="v-prac"] #bg{display:none}
 .qo:hover{border-color:var(--yellow)}.qo .l{flex:0 0 30px;height:30px;border-radius:50%;background:var(--line);display:grid;place-items:center;font-weight:700;font-size:13px}
 .qo.sel{border-color:var(--yellow);background:rgba(255,215,0,.15)}.qo.sel .l{background:var(--yellow);color:var(--on-yellow)}
 .pc h3.qq{font-size:19px;line-height:1.5;color:var(--text);margin:6px 0 18px}
-/* ================= СТИЛИ ПРАКТИКИ (встроены) ================= */
-.pz { width: 100%; max-width: 940px; animation: rise .4s ease; }
-.pz-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 16px; }
-.pz-top h2 { text-align: left; font-size: 20px; margin: 0; }
-.steps { display: flex; gap: 8px; margin-bottom: 18px; overflow-x: auto; padding-bottom: 4px; }
-.st { flex: 1; min-width: 88px; padding: 10px 12px; border-radius: 12px; border: 2px solid var(--line); background: var(--card); cursor: pointer; font: 700 13px 'Montserrat', sans-serif; color: var(--muted); transition: .2s; }
-.st:hover { border-color: var(--yellow); }
-.st.cur { border-color: var(--yellow); color: var(--text); box-shadow: 0 4px 14px rgba(255,215,0,.35); }
-.st.ok { border-color: var(--ok); color: var(--ok); }
-.pc { background: var(--card); border-radius: 18px; padding: 30px; border-top: 8px solid var(--yellow); box-shadow: 0 10px 32px rgba(10,27,77,.12); }
-.pc h3 { font-size: 22px; color: var(--accent); margin-bottom: 10px; }
-.pc p { line-height: 1.7; margin-bottom: 10px; }
-.lv { display: inline-block; padding: 4px 12px; border-radius: 99px; font-size: 12px; font-weight: 700; margin-bottom: 10px; }
-.lv0 { background: rgba(0,166,80,.15); color: var(--ok); }
-.lv1 { background: rgba(255,170,0,.2); color: #c98a00; }
-.lv2 { background: rgba(217,58,58,.15); color: var(--bad); }
-.ov { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 12px 0; border-bottom: 1px solid var(--line); font-size: 14px; }
-.task { margin-top: 18px; }
-.task label { display: flex; gap: 10px; font-weight: 600; font-size: 14px; line-height: 1.5; margin-bottom: 8px; }
-.task label b { flex: 0 0 26px; height: 26px; border-radius: 50%; background: var(--yellow); color: var(--on-yellow); display: grid; place-items: center; font-size: 13px; }
-.task input{min-height:40px; font-size:16px;}
-.task textarea { min-height: 90px; }
-.tw { overflow-x: auto; }
-.pt { margin: 14px 0; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
-.pt th, .pt td { padding: 10px 14px; border-bottom: 1px solid var(--line); }
-.pt th { text-align: left; }
-.pt td:last-child, .pt th:last-child { text-align: right; font-variant-numeric: tabular-nums; }
-.pt tr.tot td { font-weight: 800; background: rgba(255,215,0,.12); }
-.pt input { max-width: 170px; text-align: right; }
-.rule { display: flex; gap: 10px; flex-wrap: wrap; margin: 10px 0 14px; }
-.rule span { padding: 10px 16px; border-radius: 12px; background: rgba(255,215,0,.18); font-weight: 700; font-size: 14px; }
-.fm { margin: 12px 0; padding: 12px 16px; border-radius: 10px; background: var(--bg); font-weight: 600; font-size: 14px; line-height: 1.6; }
-.res { margin-top: 20px; padding: 12px 16px; border-left: 4px solid var(--yellow); background: rgba(255,215,0,.1); border-radius: 8px; font-size: 13px; font-weight: 600; line-height: 1.5; }
-.bdw { margin: 16px 0; padding: 16px; border: 2px dashed var(--line); border-radius: 14px; }
-.bdw h4 { margin-bottom: 12px; }
-.bd { display: grid; grid-template-columns: 1fr 130px 130px 38px; gap: 8px; margin-bottom: 8px; }
-.bd .del { border: 0; border-radius: 10px; background: rgba(217,58,58,.15); color: var(--bad); cursor: pointer; font-weight: 700; }
-.sums { display: flex; gap: 10px 20px; flex-wrap: wrap; margin-top: 12px; font-weight: 700; font-size: 14px; }
-@media(max-width: 640px) {
-  .bd { grid-template-columns: 1fr 1fr 38px; }
-  .bd input:first-child { grid-column: 1 / -1; }
-  .pc { padding: 20px; }
-  .pz-top { flex-direction: column; align-items: flex-start; }
-}
+#v-test,#v-test *{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+@media print{#v-test{display:none!important}}
+
+/* ===== СТИЛИ ПРАКТИКИ ===== */
+.pz{width:100%;max-width:940px;animation:rise .4s ease}
+.pz-top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px}
+.pz-top h2{text-align:left;font-size:20px;margin:0}
+.steps{display:flex;gap:8px;margin-bottom:18px;overflow-x:auto;padding-bottom:4px}
+.st{flex:1;min-width:88px;padding:10px 12px;border-radius:12px;border:2px solid var(--line);background:var(--card);cursor:pointer;font:700 13px 'Montserrat',sans-serif;color:var(--muted);transition:.2s}
+.st:hover{border-color:var(--yellow)}
+.st.cur{border-color:var(--yellow);color:var(--text);box-shadow:0 4px 14px rgba(255,215,0,.35)}
+.st.ok{border-color:var(--ok);color:var(--ok)}
+.pc{background:var(--card);border-radius:18px;padding:30px;border-top:8px solid var(--yellow);box-shadow:0 10px 32px rgba(10,27,77,.12)}
+.pc h3{font-size:22px;color:var(--accent);margin-bottom:10px}
+.pc p{line-height:1.7;margin-bottom:10px}
+.lv{display:inline-block;padding:4px 12px;border-radius:99px;font-size:12px;font-weight:700;margin-bottom:10px}
+.lv0{background:rgba(0,166,80,.15);color:var(--ok)}
+.lv1{background:rgba(255,170,0,.2);color:#c98a00}
+.lv2{background:rgba(217,58,58,.15);color:var(--bad)}
+.ov{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid var(--line);font-size:14px}
+.task{margin-top:18px}
+.task label{display:flex;gap:10px;font-weight:600;font-size:14px;line-height:1.5;margin-bottom:8px}
+.task label b{flex:0 0 26px;height:26px;border-radius:50%;background:var(--yellow);color:var(--on-yellow);display:grid;place-items:center;font-size:13px}
+.task input{min-height:40px;font-size:16px}
+.pt{width:100%;border-collapse:collapse;margin:14px 0;border:1px solid var(--line);border-radius:12px;overflow:hidden;font-size:14px}
+.pt th,.pt td{padding:10px 14px;border-bottom:1px solid var(--line);text-align:left}
+.pt th{background:rgba(255,215,0,.15)}
+.pt td:last-child,.pt th:last-child{text-align:right;font-variant-numeric:tabular-nums}
+.pt tr.tot td{font-weight:800;background:rgba(255,215,0,.12)}
+.rule{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0 14px}
+.rule span{padding:10px 16px;border-radius:12px;background:rgba(255,215,0,.18);font-weight:700;font-size:14px}
+.fm{margin:12px 0;padding:12px 16px;border-radius:10px;background:var(--bg);font-weight:600;font-size:14px;line-height:1.6;white-space:pre-line}
+.res{margin-top:20px;padding:12px 16px;border-left:4px solid var(--yellow);background:rgba(255,215,0,.1);border-radius:8px;font-size:13px;font-weight:600;line-height:1.5}
+@media(max-width:640px){.pc{padding:20px}.pz-top{flex-direction:column;align-items:flex-start}}
 .calc{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:40;display:flex;flex-direction:column;align-items:flex-end}
 .cp{display:none;background:var(--card);padding:14px;border-radius:14px;box-shadow:0 8px 30px rgba(0,0,0,.3);margin-bottom:10px;width:260px}.cp.on{display:block}.cp input{margin-bottom:8px}#cout{font-weight:800;font-size:18px}
-.rl{margin:14px 0 16px 18px;line-height:1.7;font-size:14px;text-align:left}
-#v-test .grid{grid-template-columns:repeat(5,1fr);gap:8px}
-#v-test .g{background:#383c5a;color:#a0a4b8;border:2px solid transparent;border-radius:4px;font-size:13px;font-weight:600}
-#v-test .g.ans{background:#00c853;color:#fff}
-#v-test .g.cur{border-color:#fff;color:#fff}
-@media(max-width:820px){#v-test{flex-direction:column;align-items:stretch}.dt-main{max-width:100%}.dt-side{width:100%}.dt-head{flex-direction:column;align-items:flex-start}}
-/* результат */
-.big{font-size:64px;font-weight:800;color:var(--accent);text-align:center}
-.tw{overflow-x:auto}
-table{width:100%;border-collapse:collapse;margin:16px 0;font-size:14px}
-th,td{padding:12px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
-th{background:rgba(255,215,0,.15)}
-.tag{display:inline-block;padding:3px 10px;border-radius:99px;font-size:12px;font-weight:700}
-.tag.g1{background:rgba(0,166,80,.15);color:var(--ok)}.tag.g0{background:rgba(217,58,58,.15);color:var(--bad)}
-.overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;place-items:center;padding:16px;z-index:50}
-.overlay.on{display:grid}
-.back{background:none;border:0;color:var(--muted);font:600 13px 'Montserrat';cursor:pointer;margin-top:16px;text-align:center}
-@media(max-width:560px){.card{padding:26px 20px}.q p{font-size:16px}}
-#v-admin .card{max-width:1180px}
-.at{margin:8px 0}.at th{white-space:nowrap}.at td.lg{min-width:260px;max-width:460px;white-space:pre-wrap;font-size:13px}.at td.bad{color:var(--bad);font-weight:700}
-/* Переключатель языка */
-.lang-switch { display: flex; gap: 10px; justify-content: flex-end; width: 100%; max-width: 940px; margin-bottom: 15px; }
-.lang-switch button { background: var(--card); border: 2px solid var(--line); color: var(--text); padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: bold; }
-.lang-switch button.active { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
+.lang-switch{display:flex;gap:10px;justify-content:flex-end;width:100%;max-width:940px;margin-bottom:15px}
+.lang-switch button{background:var(--card);border:2px solid var(--line);color:var(--text);padding:8px 16px;border-radius:8px;cursor:pointer;font-weight:bold}
+.lang-switch button.active{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+
+/* ===== результат и админка ===== */
+.big{font-size:64px;font-weight:800;color:var(--accent);text-align:center;animation:pop .7s .2s cubic-bezier(.2,1.4,.4,1) both}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin:20px 0}
+.stat{padding:16px;border-radius:16px;background:linear-gradient(135deg,rgba(255,215,0,.24),rgba(61,90,254,.1));text-align:center;animation:pop .5s both}
+.stat b{display:block;font-size:30px;color:var(--accent)}.stat span{font-size:12px;font-weight:600;color:var(--muted)}
+.at{width:100%;border-collapse:collapse;margin:8px 0;font-size:14px}
+.at th,.at td{padding:12px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+.at th{background:rgba(255,215,0,.15);white-space:nowrap}
+.at tbody tr:hover td{background:rgba(255,215,0,.08)}
+.cf{position:fixed;top:-24px;width:10px;height:16px;border-radius:2px;z-index:60;pointer-events:none;animation:fall linear forwards}
+@media(max-width:560px){.card{padding:26px 20px}}
 </style>
 </head>
 <body>
@@ -224,40 +155,26 @@ th{background:rgba(255,215,0,.15)}
 
 <!-- Старт -->
 <section id="v-start" class="view on">
-  <div class="hero glass stg" style="padding: 0; overflow: hidden;">
-    
-    <!-- Логотип на пол блока -->
-    <div style="width: 100%; display: flex; justify-content: center; background: #fff; border-bottom: 1px solid var(--line);">
-      <img src="лого.jpeg" alt="Логотип" style="width: 100%; max-width: 100%; height: auto; display: block; object-fit: cover;">
+  <div class="hero glass stg" style="padding:0;overflow:hidden;">
+    <div style="width:100%;display:flex;justify-content:center;background:#fff;border-bottom:1px solid var(--line);">
+      <img src="лого.jpeg" alt="Логотип" style="width:100%;max-width:100%;height:auto;display:block;object-fit:cover;">
     </div>
-
-    <!-- Текстовая часть -->
-    <div style="padding: 30px 20px; text-align: center;">
-      <h1 style="font-size: 16px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; font-weight: 700; margin-bottom: 5px;">
-        Республиканский конкурс
-      </h1>
-      <h2 class="shine" style="font-size: 28px; line-height: 1.2; margin: 0 0 15px 0; text-transform: uppercase;">
-        ПО ФИНАНСОВОЙ ГРАМОТНОСТИ
-      </h2>
-      
-      <div class="sub" style="margin-bottom: 25px;">— Ключ к успеху —<br>среди обучающихся колледжей</div>
-      
-      <div class="chips" style="margin-bottom: 30px;">
-        <span>📝 20 вопросов</span>
-        <span>⏱ 30 минут</span>
-        <span>💼 5 этапов практики</span>
+    <div style="padding:30px 20px;text-align:center;">
+      <h1 style="font-size:16px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;font-weight:700;margin-bottom:5px;">Республиканский конкурс</h1>
+      <h2 class="shine" style="font-size:28px;line-height:1.2;margin:0 0 15px 0;text-transform:uppercase;">ПО ФИНАНСОВОЙ ГРАМОТНОСТИ</h2>
+      <div class="sub" style="margin-bottom:25px;">— Ключ к успеху —<br>среди обучающихся колледжей</div>
+      <div class="chips" style="margin-bottom:30px;">
+        <span>📝 20 вопросов</span><span>⏱ 30 минут</span><span>💼 5 этапов практики</span>
       </div>
-      
       <div class="stack">
         <button class="btn y" onclick="show('v-register')">Я участник</button>
         <button class="btn o" onclick="show('v-alogin')">Я администратор</button>
       </div>
     </div>
-
   </div>
 </section>
 
-<!-- РЕГИСТРАЦИЯ УЧАСТНИКА -->
+<!-- Регистрация участника -->
 <section id="v-register" class="view"><div class="card">
   <div class="ico">👤</div>
   <h2>Вход для участника</h2>
@@ -273,7 +190,7 @@ th{background:rgba(255,215,0,.15)}
   </div>
 </div></section>
 
-<!-- Меню участника (Кнопка "На главную") -->
+<!-- Меню участника -->
 <section id="v-menu" class="view stg">
   <div style="text-align:center;margin-bottom:20px"><h2 class="shine" style="font-size:36px">Добро пожаловать!</h2><div class="sub" style="margin:6px 0 0">Выберите этап конкурса для прохождения</div></div>
   <div class="mpw"><div class="mp"><i id="m-bar"></i></div><span id="m-lbl">Выполнено: 0 из 2</span></div>
@@ -284,7 +201,7 @@ th{background:rgba(255,215,0,.15)}
   <button class="back" onclick="show('v-start')">← На главную</button>
 </section>
 
-<!-- ТЕСТ -->
+<!-- Тест -->
 <section id="v-test" class="view">
   <div class="lang-switch">
     <button id="btn-lang-ru-test" onclick="setLang('ru')" class="active">RU</button>
@@ -295,8 +212,8 @@ th{background:rgba(255,215,0,.15)}
       <div>
         <h2 id="test-main-title">Тестирование · Финансовая грамотность</h2>
         <div style="font-size:13px;color:var(--muted);font-weight:600;margin-top:4px">
-           <span id="test-user-name" style="color:var(--accent); font-weight:800;"></span><br>
-           Вопрос <span id="t-pos">1</span> из <span id="t-total">20</span>
+          <span id="test-user-name" style="color:var(--accent);font-weight:800;"></span><br>
+          Вопрос <span id="t-pos">1</span> из <span id="t-total">20</span>
         </div>
       </div>
       <div class="qt" id="t-timer">30:00</div>
@@ -312,15 +229,15 @@ th{background:rgba(255,215,0,.15)}
   </div>
 </section>
 
-<!-- РЕЗУЛЬТАТ (СКРЫТ) -->
+<!-- Результат -->
 <section id="v-res" class="view"><div class="card" style="text-align:center">
-  <h2 id="res-h" style="color:var(--accent);">Спасибо!</h2>
-  <div class="big" id="res-score" style="font-size: 24px; color: var(--ok);">Ваш результат отправлен</div>
+  <h2 id="res-h">Спасибо!</h2>
+  <div class="big" id="res-score" style="font-size:24px;color:var(--ok);">Ваш результат отправлен</div>
   <div class="sub" id="res-note">Рахмет! Сіздің нәтижеңіз жіберілді</div>
   <button class="btn y" onclick="show('v-menu');refreshMenu()">К заданиям / Тапсырмаларға</button>
 </div></section>
 
-<!-- ПРАКТИКА -->
+<!-- Практика (содержимое рисует renderPrac) -->
 <section id="v-prac" class="view" style="justify-content:flex-start">
   <div class="lang-switch">
     <button id="btn-lang-ru-prac" onclick="setLang('ru')" class="active">RU</button>
@@ -350,7 +267,7 @@ th{background:rgba(255,215,0,.15)}
   <div class="nav" style="margin-bottom:0"><button class="btn b" onclick="show('v-start')">На главную</button></div>
 </div></section>
 
-<!-- Оверлеи правил и нарушений -->
+<!-- Окна: правила теста, правила практики, нарушение, завершение -->
 <div class="overlay" id="rules"><div class="card">
   <h2 style="font-size:22px">Правила тестирования</h2>
   <ul class="rl">
@@ -384,10 +301,10 @@ th{background:rgba(255,215,0,.15)}
 
 <div class="overlay" id="ov"><div class="card" style="text-align:center">
   <h2 style="font-size:22px">Завершить тест?</h2><div class="sub" id="ov-t"></div>
-  <div class="nav" style="margin-bottom:0"><button class="btn o" onclick="ov.classList.remove('on')">Вернуться</button><button class="btn y" onclick="finishTest()">Завершить</button></div>
+  <div class="nav" style="margin-bottom:0"><button class="btn o" onclick="$('ov').classList.remove('on')">Вернуться</button><button class="btn y" onclick="finishTest()">Завершить</button></div>
 </div></div>
 
-<!-- ПОДКЛЮЧЕНИЕ ФАЙЛОВ -->
+<!-- ПОДКЛЮЧЕНИЕ ФАЙЛОВ С ДАННЫМИ -->
 <script src="questions_ru.js"></script>
 <script src="questions_kz.js"></script>
 <script src="practise_ru.js"></script>
@@ -403,17 +320,17 @@ const L = ['A', 'B', 'C', 'D', 'E'];
 const $ = id => document.getElementById(id);
 const S = { get(k, d) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d } catch (e) { return d } }, set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)) } catch (e) { } }, del(k) { try { localStorage.removeItem(k) } catch (e) { } } };
 
-let currentLang = 'ru'; 
-let Q = []; 
-let activeVariantName = ""; 
+let currentLang = 'ru';
+let Q = [];
+let activeVariantName = "";
 let user = null, cur = 0, ans = {}, end = 0, tick = null, mem = { test: null, prac: null };
 let PID = null;
-let armed = false, grace = 0; 
+let armed = false, grace = 0;
 
 // ================= ПЕРЕКЛЮЧАТЕЛЬ ЯЗЫКА =================
 function setLang(lang) {
   currentLang = lang;
-  if(lang === 'ru') {
+  if (lang === 'ru') {
     $('btn-lang-ru-test').classList.add('active'); $('btn-lang-kz-test').classList.remove('active');
     $('btn-lang-ru-prac').classList.add('active'); $('btn-lang-kz-prac').classList.remove('active');
     $('test-main-title').textContent = "Тестирование · Финансовая грамотность";
@@ -422,7 +339,7 @@ function setLang(lang) {
     $('btn-lang-kz-prac').classList.add('active'); $('btn-lang-ru-prac').classList.remove('active');
     $('test-main-title').textContent = "Тестілеу · Қаржылық сауаттылық";
   }
-  
+
   if (Q.length > 0 && $('v-test').classList.contains('on')) {
     let rawData = [];
     if (lang === 'ru') rawData = ALL_VARIANTS.find(v => v.name === activeVariantName)?.data || ALL_VARIANTS[0].data;
@@ -430,7 +347,7 @@ function setLang(lang) {
     prepareQuestions(rawData);
     renderQ();
   }
-  
+
   if ($('v-prac').classList.contains('on')) renderPrac();
 }
 
@@ -439,21 +356,19 @@ function prepareQuestions(questionsArray) {
   let temp = JSON.parse(JSON.stringify(questionsArray));
   temp.forEach(q => {
     const correctText = q.o[q.a];
-    q.o.sort(() => Math.random() - 0.5); 
-    q.a = q.o.indexOf(correctText);      
+    q.o.sort(() => Math.random() - 0.5);
+    q.a = q.o.indexOf(correctText);
   });
-  Q = temp.sort(() => Math.random() - 0.5); 
+  Q = temp.sort(() => Math.random() - 0.5);
 }
 
-function generateID() {
-  return 'PART-' + Math.floor(Math.random() * 9000 + 1000);
-}
+function generateID() { return 'PART-' + Math.floor(Math.random() * 9000 + 1000); }
 
-function show(id) { 
-  document.querySelectorAll('.view').forEach(v => v.classList.remove('on')); 
-  $(id).classList.add('on'); 
-  document.body.dataset.v = id; 
-  window.scrollTo(0, 0); 
+function show(id) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('on'));
+  $(id).classList.add('on');
+  document.body.dataset.v = id;
+  window.scrollTo(0, 0);
 }
 
 // ================= РЕГИСТРАЦИЯ =================
@@ -463,7 +378,7 @@ function registerParticipant() {
     $('reg-err').textContent = 'Пожалуйста, введите ваше ФИО / Аты-жөніңізді енгізіңіз.';
     return;
   }
-  
+
   const savedUser = S.get('contest_user', null);
   if (savedUser && savedUser.name === name) {
     user = savedUser;
@@ -474,12 +389,12 @@ function registerParticipant() {
     user = { name: name };
     PID = generateID();
     mem = { test: null, prac: null };
-    
+
     let variants = currentLang === 'ru' ? ALL_VARIANTS : ALL_VARIANTS_KZ;
     const randomIndex = Math.floor(Math.random() * variants.length);
     const selectedVariant = variants[randomIndex];
     activeVariantName = selectedVariant.name;
-    
+
     prepareQuestions(selectedVariant.data);
     S.set('contest_user', { name: name, id: PID, mem: mem, variant: activeVariantName, lang: currentLang });
   }
@@ -487,7 +402,7 @@ function registerParticipant() {
   ans = {};
   $('reg-err').textContent = '';
   $('reg-name').value = '';
-  $('test-user-name').textContent = user.name; 
+  $('test-user-name').textContent = user.name;
   refreshMenu(); show('v-menu');
 }
 
@@ -504,12 +419,12 @@ async function beginTest() {
   $('rules').classList.remove('on');
   $('t-total').textContent = Q.length;
   try { const r = document.documentElement.requestFullscreen && document.documentElement.requestFullscreen(); if (r && r.catch) r.catch(() => { }) } catch (e) { }
-  
+
   const saved = S.get('progress_test_' + PID, null);
   if (saved) { ans = saved.ans; end = saved.end; cur = 0 } else { ans = {}; end = Date.now() + DUR_TEST * 1000; S.set('progress_test_' + PID, { ans, end }) }
-  
-  show('v-test'); renderQ(); 
-  clearInterval(tick); tick = setInterval(tock, 500); tock(); 
+
+  show('v-test'); renderQ();
+  clearInterval(tick); tick = setInterval(tock, 500); tock();
   grace = Date.now() + 3000; armed = true;
 }
 
@@ -521,13 +436,13 @@ function tock() {
 }
 
 function renderQ() {
-  if(Q.length === 0) return;
+  if (Q.length === 0) return;
   const q = Q[cur];
-  $('q-n').textContent = (currentLang === 'ru' ? 'Вопрос ' : 'Сұрақ ') + (cur + 1); 
+  $('q-n').textContent = (currentLang === 'ru' ? 'Вопрос ' : 'Сұрақ ') + (cur + 1);
   $('q-t').textContent = q.q;
   $('t-pos').textContent = cur + 1; $('t-bar').style.width = Object.keys(ans).length / Q.length * 100 + '%';
   $('t-next').textContent = cur === Q.length - 1 ? (currentLang === 'ru' ? 'Завершить ✓' : 'Аяқтау ✓') : (currentLang === 'ru' ? 'Далее ›' : 'Келесі ›');
-  
+
   const box = $('q-o'); box.innerHTML = '';
   q.o.forEach((t, i) => {
     const b = document.createElement('button'); b.className = 'qo' + (ans[cur] === i ? ' sel' : '');
@@ -545,19 +460,19 @@ function go(d) {
 }
 
 async function finishTest(isAuto = false) {
-  $('ov').classList.remove('on'); clearInterval(tick); armed = false; 
+  $('ov').classList.remove('on'); clearInterval(tick); armed = false;
   try { document.fullscreenElement && document.exitFullscreen() } catch (e) { }
-  
+
   let sc = 0; Q.forEach((q, i) => { if (ans[i] === q.a) sc++ });
   const spentSec = DUR_TEST - Math.max(0, Math.round((end - Date.now()) / 1000));
-  const scorePoints = sc * 5; 
-  
+  const scorePoints = sc * 5;
+
   mem.test = { score: sc, spent: spentSec, points: scorePoints };
   saveProgress(); S.del('progress_test_' + PID);
 
   $('res-score').textContent = currentLang === 'ru' ? 'Ваш результат отправлен!' : 'Сіздің нәтижеңіз жіберілді!';
   $('res-note').textContent = currentLang === 'ru' ? 'Ожидайте результатов от организаторов.' : 'Ұйымдастырушылардың нәтижелерін күтіңіз.';
-  
+
   fetch(API_TEST, {
     method: 'POST',
     headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
@@ -579,8 +494,69 @@ async function finishTest(isAuto = false) {
   refreshMenu(); show('v-res');
 }
 
-// ================= ПРАКТИКА =================
+// ================= ПРАКТИКА: ТЕКСТЫ И ДАННЫЕ КЕЙСА =================
+const PM = {
+  ru: {
+    title: 'Практическое задание «Семейный бюджет семьи Сакеновых»',
+    tabIntro: 'Введение', stage: 'Этап', lvOf: [0, 0, 1, 1, 2],
+    lv: ['Простой уровень', 'Средний уровень', 'Сложный уровень'],
+    names: ['Определение общего дохода семьи', 'Расчёт расходов и остатка бюджета', 'Анализ структуры семейного бюджета', 'Решение финансовой ситуации', 'Разработка финансового плана семьи'],
+    head: [
+      ['Тема: ', 'Планирование семейного бюджета, анализ доходов и расходов, принятие финансовых решений.'],
+      ['Цель задания: ', 'научиться рассчитывать доходы и расходы семьи, оценивать структуру бюджета, анализировать непредвиденные затраты и разрабатывать план финансовых действий.'],
+      ['Инструкция: ', 'изучите кейс семьи Сакеновых и последовательно выполните пять этапов задания. Каждый следующий этап основывается на результатах предыдущего. Ответы необходимо обосновать расчётами.']
+    ],
+    hint: 'Калькулятор в правом нижнем углу поможет с расчётами. Ответы сохраняются при переходе между этапами.',
+    back: '← Назад', next: 'Далее →', start: 'Начать →', send: 'Отправить ответы ✓', ph: 'Введите число…',
+    intro: [
+      ['Семья Сакеновых получает несколько видов дохода: заработную плату родителей, дополнительный доход от репетиторства, детское пособие и проценты по банковскому вкладу.'],
+      ['Используя рассчитанный на первом этапе общий доход, определите, сколько денег семья расходует в течение месяца и какая сумма остаётся после запланированных расходов.'],
+      ['На основании расчётов первого и второго этапов проанализируйте, насколько рационально семья распределяет свои денежные средства. Семья стремится придерживаться правила «70/20/10»:'],
+      ['В середине месяца стиральная машина семьи Сакеновых выходит из строя. Семья покупает новую энергоэффективную модель за 120 000 тенге, используя средства с банковского депозита.', 'В следующем месяце Дамир планирует отправиться на школьную экскурсию в Астану стоимостью 40 000 тенге.', 'Используйте результаты предыдущих этапов, чтобы оценить последствия этих событий для финансового положения семьи.'],
+      ['На основе результатов всех предыдущих этапов подготовьте обновлённый финансовый план семьи Сакеновых на следующий месяц. В плане необходимо учесть:']
+    ],
+    rule: ['70% — необходимые расходы', '20% — накопления и финансовые цели', '10% — развлечения и личные желания'],
+    list: ['общий ежемесячный доход семьи;', 'регулярные расходы и обязательный платёж по автокредиту;', 'ежемесячные накопления;', 'экскурсию Дамира стоимостью 40 000 тенге;', 'последствия покупки стиральной машины;', 'необходимость поддержания финансовой подушки безопасности.'],
+    fm: { 2: 'Общие расходы = сумма всех указанных категорий\nОстаток бюджета = общий доход − общие расходы', 3: 'Для расчёта используйте формулу:\nДоля категории = (Сумма категории / Общий доход) × 100%' },
+    tbl: {
+      1: { th: ['Источник дохода', 'Сумма, тенге'], tot: 'Общий доход семьи', rows: [['Зарплата Нурлана', '520 000'], ['Зарплата Айгерим', '480 000'], ['Доход от репетиторства', '60 000'], ['Детское пособие', '63 000'], ['Проценты по банковскому вкладу', '9 000']] },
+      2: { th: ['Категория', 'Сумма, тенге'], tot: 'Общая сумма', rows: [['Продукты питания', '220 000'], ['Коммунальные услуги', '35 000'], ['Транспорт Нурлана', '50 000'], ['Транспорт Айгерим', '10 000'], ['Кредит за автомобиль', '100 000'], ['Интернет и мобильная связь', '18 000'], ['Образование детей', '40 000'], ['Одежда и обувь', '45 000'], ['Медицинские расходы', '25 000'], ['Развлечения и отдых', '55 000'], ['Накопления и сбережения', '80 000']] }
+    },
+    res: ['Результат этапа: определён общий ежемесячный доход семьи.', 'Результат этапа: определены общая сумма расходов и остаток бюджета.', 'Результат этапа: выявлены особенности распределения бюджета.', 'Результат этапа: разработан план покрытия непредвиденных расходов.', 'Итоговый продукт: обновлённый бюджет с расчётами и обоснованием решений.']
+  },
+  kz: {
+    title: 'Практикалық тапсырма «Сакеновтер отбасының бюджеті»',
+    tabIntro: 'Кіріспе', stage: 'Кезең', lvOf: [0, 0, 1, 1, 2],
+    lv: ['Қарапайым деңгей', 'Орта деңгей', 'Күрделі деңгей'],
+    names: ['Отбасының жалпы табысын анықтау', 'Шығыстар мен бюджет қалдығын есептеу', 'Отбасы бюджетінің құрылымын талдау', 'Қаржылық жағдайды шешу', 'Отбасының қаржылық жоспарын әзірлеу'],
+    head: [
+      ['Тақырып: ', 'Отбасы бюджетін жоспарлау, табыс пен шығыстарды талдау, қаржылық шешімдер қабылдау.'],
+      ['Тапсырманың мақсаты: ', 'отбасының табыстары мен шығыстарын есептеуді үйрену, бюджет құрылымын бағалау, күтпеген шығындарды талдау және қаржылық әрекеттер жоспарын әзірлеу.'],
+      ['Нұсқаулық: ', 'Сакеновтер отбасының кейсін зерттеп, тапсырманың бес кезеңін ретімен орындаңыз. Әр келесі кезең алдыңғысының нәтижелеріне негізделеді. Жауаптарды есептеулермен негіздеу қажет.']
+    ],
+    hint: 'Оң жақ төменгі бұрыштағы калькулятор есептеуге көмектеседі. Жауаптар кезеңдер арасында ауысқанда сақталады.',
+    back: '← Артқа', next: 'Әрі қарай →', start: 'Бастау →', send: 'Жауаптарды жіберу ✓', ph: 'Санды енгізіңіз…',
+    intro: [
+      ['Сакеновтер отбасы бірнеше түрлі табыс алады: ата-аналардың жалақысы, репетиторлықтан қосымша табыс, балалар жәрдемақысы және банктік депозит бойынша пайыздар.'],
+      ['Бірінші кезеңде есептелген жалпы табысты пайдаланып, отбасы бір айда қанша ақша жұмсайтынын және жоспарланған шығыстардан кейін қанша сома қалатынын анықтаңыз.'],
+      ['Бірінші және екінші кезеңдердегі есептеулер негізінде отбасы өз қаражатын қаншалықты ұтымды бөлетінін талдаңыз. Отбасы «70/20/10» ережесін ұстануға тырысады:'],
+      ['Айдың ортасында Сакеновтер отбасының кір жуатын машинасы істен шығады. Отбасы банктік депозиттегі қаражатты пайдаланып, 120 000 теңгеге жаңа энергия үнемдейтін модель сатып алады.', 'Келесі айда Дамир Астанаға 40 000 теңге тұратын мектеп экскурсиясына барғысы келеді.', 'Бұрынғы кезеңдердің нәтижелерін пайдаланып, осы оқиғалардың отбасының қаржылық жағдайына әсерін бағалаңыз.'],
+      ['Алдыңғы барлық кезеңдердің нәтижелері негізінде Сакеновтер отбасының келесі айға арналған жаңартылған қаржылық жоспарын дайындаңыз. Жоспарда мыналарды ескеру қажет:']
+    ],
+    rule: ['70% — қажетті шығыстар', '20% — жинақ және қаржылық мақсаттар', '10% — ойын-сауық және жеке қалаулар'],
+    list: ['отбасының жалпы айлық табысы;', 'тұрақты шығыстар және автокредит бойынша міндетті төлем;', 'ай сайынғы жинақтар;', 'Дамирдің 40 000 теңгелік экскурсиясы;', 'кір жуатын машина сатып алудың салдары;', 'қаржылық қауіпсіздік жастығын ұстап тұру қажеттілігі.'],
+    fm: { 2: 'Жалпы шығыстар = көрсетілген барлық санаттардың қосындысы\nБюджет қалдығы = жалпы табыс − жалпы шығыстар', 3: 'Есептеу үшін формуланы қолданыңыз:\nСанат үлесі = (Санат сомасы / Жалпы табыс) × 100%' },
+    tbl: {
+      1: { th: ['Табыс көзі', 'Сома, теңге'], tot: 'Отбасының жалпы табысы', rows: [['Нұрланның жалақысы', '520 000'], ['Айгерімнің жалақысы', '480 000'], ['Репетиторлықтан түскен табыс', '60 000'], ['Балалар жәрдемақысы', '63 000'], ['Банктік депозит бойынша пайыздар', '9 000']] },
+      2: { th: ['Санат', 'Сома, теңге'], tot: 'Жалпы сома', rows: [['Азық-түлік', '220 000'], ['Коммуналдық қызметтер', '35 000'], ['Нұрланның көлік шығыстары', '50 000'], ['Айгерімнің көлік шығыстары', '10 000'], ['Автокөлік бойынша кредит', '100 000'], ['Интернет және ұялы байланыс', '18 000'], ['Балалардың білімі', '40 000'], ['Киім және аяқ киім', '45 000'], ['Медициналық шығыстар', '25 000'], ['Көңіл көтеру және демалыс', '55 000'], ['Жинақ пен қор', '80 000']] }
+    },
+    res: ['Кезең нәтижесі: отбасының жалпы айлық табысы анықталды.', 'Кезең нәтижесі: жалпы шығыс сомасы мен бюджет қалдығы анықталды.', 'Кезең нәтижесі: бюджетті бөлу ерекшеліктері анықталды.', 'Кезең нәтижесі: күтпеген шығыстарды жабу жоспары әзірленді.', 'Қорытынды өнім: есептеулермен және шешімдердің негіздемесімен жаңартылған бюджет.']
+  }
+};
+
+// ================= ПРАКТИКА: ЛОГИКА =================
 let pracTimer = null, pracEnd = 0, pracArmed = false, pracGrace = 0;
+let PA = {}, pStep = 0;   // PA — введённые ответы, pStep — текущая вкладка (0 = Введение)
 
 function startPrac() {
   if (mem.prac) { alert("Вы уже прошли практику!"); return; }
@@ -590,99 +566,131 @@ function startPrac() {
 function beginPrac() {
   $('rules-prac').classList.remove('on');
   try { const r = document.documentElement.requestFullscreen && document.documentElement.requestFullscreen(); if (r && r.catch) r.catch(() => { }) } catch (e) { }
-  
+
   pracEnd = Date.now() + DUR_PRAC * 1000;
+  PA = {}; pStep = 0;
   show('v-prac'); renderPrac();
-  
+
   clearInterval(pracTimer);
   pracTimer = setInterval(() => {
     const left = Math.max(0, Math.round((pracEnd - Date.now()) / 1000));
+    updPracTimer();
     if (left <= 0) { clearInterval(pracTimer); submitPractice(true); }
   }, 1000);
-  
+
   pracGrace = Date.now() + 3000; pracArmed = true;
 }
 
+function updPracTimer() {
+  const t = $('p-timer'); if (!t) return;
+  const left = Math.max(0, Math.round((pracEnd - Date.now()) / 1000));
+  t.textContent = String(Math.floor(left / 60)).padStart(2, '0') + ':' + String(left % 60).padStart(2, '0');
+  t.classList.toggle('low', left < 300);
+}
+
 function renderPrac() {
-  const root = $('pz'); root.innerHTML = '';
-  const pracData = currentLang === 'ru' ? PRACTICE_DATA_RU : PRACTICE_DATA_KZ;
-  
-  const top = document.createElement('div'); top.className = 'pz-top';
-  const title = document.createElement('h2'); title.textContent = currentLang === 'ru' ? 'Практическое задание' : 'Практикалық тапсырма';
-  top.append(title); 
-  root.append(top);
+  const m = PM[currentLang], D = currentLang === 'ru' ? PRACTICE_DATA_RU : PRACTICE_DATA_KZ, root = $('pz');
+  root.innerHTML = '';
+  const E = (t, c, x) => { const e = document.createElement(t); if (c) e.className = c; if (x != null) e.textContent = x; return e; };
+  const tasksOf = k => ((D['stage' + k] || {}).tasks || []);
+  const done = k => tasksOf(k).some(t => (PA[t.id] || '') !== '');
+  const goTo = i => { pStep = i; renderPrac(); window.scrollTo(0, 0); };
 
-  const c = document.createElement('div'); c.className = 'pc';
-  
-  for (let stage = 1; stage <= 5; stage++) {
-    const sData = pracData['stage' + stage];
-    if(!sData) continue;
-    
-    const h3 = document.createElement('h3'); h3.textContent = (currentLang === 'ru' ? 'Этап ' : 'Кезең ') + stage;
-    c.append(h3);
-    
-    sData.tasks.forEach((task, idx) => {
-      const d = document.createElement('div'); d.className = 'task';
-      const lb = document.createElement('label');
-      const b = document.createElement('b'); b.textContent = idx + 1;
-      const span = document.createElement('span'); span.textContent = task.text;
-      lb.append(b, span);
-      
-      const input = document.createElement('input');
-      input.type = 'number';
-      input.id = task.id;
-      input.placeholder = currentLang === 'ru' ? 'Введите число...' : 'Санды енгізіңіз...';
-      input.className = 'prac-input';
-      
-      d.append(lb, input);
-      c.append(d);
+  // Шапка: заголовок + таймер
+  const top = E('div', 'pz-top'); top.append(E('h2', null, m.title));
+  const tm = E('div', 'qt', '--:--'); tm.id = 'p-timer'; top.append(tm); root.append(top);
+
+  // Вкладки: Введение, Этап 1–5
+  const st = E('div', 'steps');
+  [m.tabIntro].concat([1, 2, 3, 4, 5].map(k => m.stage + ' ' + k)).forEach((t, i) => {
+    const ok = i > 0 && done(i);
+    const b = E('button', 'st' + (i === pStep ? ' cur' : '') + (ok ? ' ok' : ''), t + (ok ? ' ✓' : ''));
+    b.onclick = () => goTo(i); st.append(b);
+  });
+  root.append(st);
+
+  const c = E('div', 'pc');
+  if (pStep === 0) {
+    // ----- Введение -----
+    c.append(E('h3', null, m.tabIntro));
+    m.head.forEach(([b, t]) => { const p = E('p'); p.append(E('b', null, b), document.createTextNode(t)); c.append(p); });
+    [1, 2, 3, 4, 5].forEach(k => {
+      const r = E('div', 'ov'), li = m.lvOf[k - 1];
+      const badge = E('span', 'lv lv' + li, m.lv[li]); badge.style.margin = '0';
+      r.append(E('span', null, m.stage + ' ' + k + '. ' + ((D['stage' + k] || {}).title || m.names[k - 1])), badge);
+      c.append(r);
     });
+    const hint = E('p', null, m.hint); hint.style.cssText = 'margin-top:16px;color:var(--muted);font-size:13px'; c.append(hint);
+  } else {
+    // ----- Этап -----
+    const k = pStep, sd = D['stage' + k] || {}, li = m.lvOf[k - 1];
+    c.append(E('span', 'lv lv' + li, m.lv[li]), E('h3', null, m.stage + ' ' + k + '. ' + (sd.title || m.names[k - 1])));
+    [].concat(sd.intro || m.intro[k - 1]).forEach(t => c.append(E('p', null, t)));
+    if (k === 3) { const r = E('div', 'rule'); m.rule.forEach(x => r.append(E('span', null, x))); c.append(r); }
+    if (k === 5) { const u = E('ul', 'rl'); m.list.forEach(x => u.append(E('li', null, x))); c.append(u); }
+    const tb = m.tbl[k];
+    if (tb) {
+      const w = E('div', 'tw'), t = E('table', 'pt'), h = E('tr');
+      tb.th.forEach(x => h.append(E('th', null, x))); t.append(h);
+      tb.rows.forEach(r => { const tr = E('tr'); r.forEach(x => tr.append(E('td', null, x))); t.append(tr); });
+      const tot = E('tr', 'tot'); tot.append(E('td', null, tb.tot), E('td', null, '?')); t.append(tot);
+      w.append(t); c.append(w);
+    }
+    if (m.fm[k]) c.append(E('div', 'fm', m.fm[k]));
+    tasksOf(k).forEach((task, idx) => {
+      const d = E('div', 'task'), lb = E('label');
+      lb.append(E('b', null, idx + 1), E('span', null, task.text));
+      const inp = E('input'); inp.type = 'number'; inp.inputMode = 'decimal'; inp.id = task.id;
+      inp.className = 'prac-input'; inp.placeholder = m.ph; inp.value = PA[task.id] || '';
+      inp.oninput = () => { PA[task.id] = inp.value; };
+      d.append(lb, inp); c.append(d);
+    });
+    c.append(E('div', 'res', m.res[k - 1]));
   }
-
-  const btn = document.createElement('button');
-  btn.className = 'btn y'; btn.style.width = '100%'; btn.style.marginTop = '20px';
-  btn.textContent = currentLang === 'ru' ? 'Отправить ответы' : 'Жауаптарды жіберу';
-  btn.onclick = () => submitPractice(false);
-  c.append(btn);
-  
   root.append(c);
+
+  // Навигация
+  const nav = E('div', 'nav'), pv = E('button', 'btn o', m.back),
+        nx = E('button', 'btn y', pStep === 5 ? m.send : pStep === 0 ? m.start : m.next);
+  pv.disabled = pStep === 0; pv.onclick = () => goTo(pStep - 1);
+  nx.onclick = () => { if (pStep === 5) submitPractice(false); else goTo(pStep + 1); };
+  nav.append(pv, nx); root.append(nav);
+  updPracTimer();
 }
 
 async function submitPractice(isAuto = false) {
   if (!isAuto && !confirm(currentLang === 'ru' ? 'Отправить ответы?' : 'Жауаптарды жіберу?')) return;
-  
+
   clearInterval(pracTimer); pracArmed = false;
   try { document.fullscreenElement && document.exitFullscreen() } catch (e) { }
-  
+
   const answers = {};
-  document.querySelectorAll('.prac-input').forEach(inp => {
-    answers[inp.id] = inp.value;
-  });
-  
-  const pracData = currentLang === 'ru' ? PRACTICE_DATA_RU : PRACTICE_DATA_KZ;
+  const _pd = currentLang === 'ru' ? PRACTICE_DATA_RU : PRACTICE_DATA_KZ;
+  for (let k = 1; k <= 5; k++) ((_pd['stage' + k] || {}).tasks || []).forEach(t => { answers[t.id] = PA[t.id] || ''; });
+
   const calcFn = currentLang === 'ru' ? calculatePracticeScoreRU : calculatePracticeScoreKZ;
   const result = calcFn(answers);
-  
+
   mem.prac = { score: result.totalScore };
   saveProgress();
-  
+
   let dataToSend = {
     id: PID,
     name: user.name,
     language: currentLang.toUpperCase(),
     status: isAuto ? 'Время вышло' : 'Завершено',
-    error: '', 
+    error: '',
     time: new Date().toLocaleTimeString('ru-RU'),
     date: new Date().toLocaleDateString('ru-RU'),
     total_score: result.totalScore
   };
 
   result.details.forEach((detail) => {
-      const colName = detail.taskId.replace('-', '_'); 
-      dataToSend[colName + '_ans'] = detail.userAnswer || '';
-      dataToSend[colName + '_pts'] = detail.pointsEarned;
+    const colName = detail.taskId.replace('-', '_');
+    dataToSend[colName + '_ans'] = detail.userAnswer || '';
+    dataToSend[colName + '_pts'] = detail.pointsEarned;
   });
-  
+
   fetch(API_PRACTICE, {
     method: 'POST',
     headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
@@ -691,40 +699,60 @@ async function submitPractice(isAuto = false) {
 
   $('res-score').textContent = currentLang === 'ru' ? 'Ваш результат отправлен!' : 'Сіздің нәтижеңіз жіберілді!';
   $('res-note').textContent = currentLang === 'ru' ? 'Ожидайте результатов от организаторов.' : 'Ұйымдастырушылардың нәтижелерін күтіңіз.';
-  
+
   refreshMenu(); show('v-res');
 }
 
+// ================= КАЛЬКУЛЯТОР =================
+function ev(s) {
+  let i = 0; const ws = () => { while (s[i] === ' ') i++; };
+  const num = () => {
+    ws();
+    if (s[i] === '(') { i++; const v = ex(); ws(); if (s[i] !== ')') throw 0; i++; return v; }
+    if (s[i] === '-') { i++; return -num(); }
+    const m = /^\d+(\.\d+)?/.exec(s.slice(i)); if (!m) throw 0;
+    i += m[0].length; let v = parseFloat(m[0]); ws();
+    if (s[i] === '%') { i++; v /= 100; } return v;
+  };
+  const term = () => { let v = num(); for (;;) { ws(); if (s[i] === '*') { i++; v *= num(); } else if (s[i] === '/') { i++; v /= num(); } else return v; } };
+  const ex = () => { let v = term(); for (;;) { ws(); if (s[i] === '+') { i++; v += term(); } else if (s[i] === '-') { i++; v -= term(); } else return v; } };
+  const v = ex(); ws(); if (i < s.length) throw 0; return v;
+}
+function calc() {
+  let r = '= …'; const v = $('cin').value.replace(/\s/g, '').replace(/,/g, '.');
+  if (v) { try { const x = ev(v); if (isFinite(x)) r = '= ' + (+x.toFixed(4)).toLocaleString('ru-RU'); } catch (e) { } }
+  $('cout').textContent = r;
+}
+
 // ================= АДМИНКА =================
-let adminData = []; 
-let currentAdminTab = 'test'; 
+let currentAdminTab = 'test';
 
 async function adminLogin() {
   const p = $('a-pass').value;
   if (p !== 'admin123') { $('a-err').textContent = 'Неверный пароль'; return; }
-  $('a-pass').value = ''; $('a-err').textContent = ''; 
-  show('v-admin'); 
+  $('a-pass').value = ''; $('a-err').textContent = '';
+  show('v-admin');
   loadAdmin();
 }
 
 async function loadAdmin() {
   $('a-msg').textContent = 'Загрузка данных из Google Таблиц...';
   $('a-tbl').innerHTML = '';
-  
+
   try {
     const [resTests, resPracs] = await Promise.all([
       fetch(API_TEST).then(r => r.json()).catch(() => []),
       fetch(API_PRACTICE).then(r => r.json()).catch(() => [])
     ]);
-    
+
     $('a-msg').textContent = 'Обновлено: ' + new Date().toLocaleTimeString();
-    
+
     const tests = resTests || [];
     const pracs = resPracs || [];
-    
+
     const avgTest = tests.length ? Math.round(tests.reduce((acc, r) => acc + parseInt(r.score_points || 0), 0) / tests.length) : 0;
     const avgPrac = pracs.length ? Math.round(pracs.reduce((acc, r) => acc + parseInt(r.total_score || 0), 0) / pracs.length) : 0;
-    
+
     $('a-stats').innerHTML = `
       <div class="stat"><b>${tests.length}</b><span>Тестов сдано</span></div>
       <div class="stat"><b>${pracs.length}</b><span>Практик сдано</span></div>
@@ -737,21 +765,21 @@ async function loadAdmin() {
     btnTest.className = 'st ' + (currentAdminTab === 'test' ? 'cur' : '');
     btnTest.textContent = `Тесты (${tests.length})`;
     btnTest.onclick = () => { currentAdminTab = 'test'; loadAdmin(); };
-    
+
     const btnPrac = document.createElement('button');
     btnPrac.className = 'st ' + (currentAdminTab === 'prac' ? 'cur' : '');
     btnPrac.textContent = `Практика (${pracs.length})`;
     btnPrac.onclick = () => { currentAdminTab = 'prac'; loadAdmin(); };
-    
+
     $('a-tabs').append(btnTest, btnPrac);
 
     const tbody = $('a-tbl');
     const thead = document.createElement('thead');
     const hRow = document.createElement('tr');
-    
+
     let headers = [];
     let dataToShow = [];
-    
+
     if (currentAdminTab === 'test') {
       headers = ['ID', 'ФИО', 'Вариант', 'Результат', 'Баллы', 'Прав.', 'Неправ.', 'Время', 'Статус'];
       dataToShow = tests.sort((a, b) => (parseInt(b.score_points) || 0) - (parseInt(a.score_points) || 0));
@@ -769,11 +797,11 @@ async function loadAdmin() {
     dataToShow.forEach(r => {
       const tr = document.createElement('tr');
       let cells = [];
-      
+
       if (currentAdminTab === 'test') {
         let variantName = r.variant || '-';
-        if(variantName.includes('Направление')) {
-            variantName = variantName.replace('Направление ', 'Напр. ').replace(' - Вариант', ' (в.)');
+        if (variantName.includes('Направление')) {
+          variantName = variantName.replace('Направление ', 'Напр. ').replace(' - Вариант', ' (в.)');
         }
         cells = [r.id, r.name, variantName, r.score, r.score_points, r.correct, r.incorrect, r.time, r.status];
       } else {
@@ -791,22 +819,17 @@ async function loadAdmin() {
       cells.forEach((val, i) => {
         const td = document.createElement('td');
         td.textContent = val;
-        
-        if ((currentAdminTab === 'test' && i === 8 && (val === 'Аннулировано' || val === 'Время вышло')) || 
-            (currentAdminTab === 'prac' && i === 22 && (val === 'Аннулировано' || val === 'Время вышло'))) {
-            td.style.color = 'var(--bad)';
-            td.style.fontWeight = 'bold';
-        }
-        
-        if (currentAdminTab === 'prac' && i === 23 && val !== '-') {
-            td.style.color = 'var(--bad)';
-        }
 
-        if ((currentAdminTab === 'test' && i === 4) || (currentAdminTab === 'prac' && i === 21)) {
-            td.style.fontWeight = 'bold';
-            td.style.color = 'var(--accent)';
+        if ((currentAdminTab === 'test' && i === 8 && (val === 'Аннулировано' || val === 'Время вышло')) ||
+            (currentAdminTab === 'prac' && i === 22 && (val === 'Аннулировано' || val === 'Время вышло'))) {
+          td.style.color = 'var(--bad)';
+          td.style.fontWeight = 'bold';
         }
-        
+        if (currentAdminTab === 'prac' && i === 23 && val !== '-') td.style.color = 'var(--bad)';
+        if ((currentAdminTab === 'test' && i === 4) || (currentAdminTab === 'prac' && i === 21)) {
+          td.style.fontWeight = 'bold';
+          td.style.color = 'var(--accent)';
+        }
         tr.append(td);
       });
       tb.append(tr);
@@ -831,12 +854,12 @@ function violation(reason) {
       headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
       body: JSON.stringify({ data: [{ id: PID, name: user.name, variant: activeVariantName, score: 'Аннулировано', score_points: 0, correct: 0, incorrect: 0, time: '-', status: reason }] })
     }).catch(e => console.log(e));
-    
+
     $('viol-r').textContent = reason;
     $('viol').classList.add('on');
     show('v-menu'); refreshMenu();
   }
-  
+
   // Для практики
   if (pracArmed && Date.now() > pracGrace) {
     pracArmed = false; clearInterval(pracTimer);
@@ -845,15 +868,15 @@ function violation(reason) {
     fetch(API_PRACTICE, {
       method: 'POST',
       headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
-      body: JSON.stringify({ 
-        data: [{ 
+      body: JSON.stringify({
+        data: [{
           id: PID, name: user.name, language: currentLang.toUpperCase(),
           s1_q1_ans: 0, s1_q1_pts: 0, s1_q2_ans: 0, s1_q2_pts: 0, s2_q1_ans: 0, s2_q1_pts: 0, s2_q2_ans: 0, s2_q2_pts: 0, s2_q3_ans: 0, s2_q3_pts: 0, s3_q1_ans: 0, s3_q1_pts: 0, s3_q2_ans: 0, s3_q2_pts: 0, s3_q3_ans: 0, s3_q3_pts: 0, s3_q4_ans: 0, s3_q4_pts: 0, s4_q1_ans: 0, s4_q1_pts: 0, s4_q2_ans: 0, s4_q2_pts: 0, s4_q3_ans: 0, s4_q3_pts: 0, s4_q4_ans: 0, s4_q4_pts: 0, s5_q1_ans: 0, s5_q1_pts: 0, s5_q2_ans: 0, s5_q2_pts: 0, s5_q3_ans: 0, s5_q3_pts: 0, s5_q4_ans: 0, s5_q4_pts: 0, s5_q5_ans: 0, s5_q5_pts: 0,
           total_score: 0, status: 'Аннулировано', error: reason, time: '-', date: new Date().toLocaleDateString('ru-RU')
-        }] 
+        }]
       })
     }).catch(e => console.log(e));
-    
+
     $('viol-r').textContent = reason;
     $('viol').classList.add('on');
     show('v-menu'); refreshMenu();
@@ -864,7 +887,7 @@ document.addEventListener('visibilitychange', () => { if (document.hidden) viola
 window.addEventListener('blur', () => violation('потеря фокуса'));
 document.addEventListener('fullscreenchange', () => { if (!document.fullscreenElement) violation('выход из полноэкранного режима'); });
 
-// Инициализация фоновых монет
+// Фоновые монеты
 (function () { const bg = $('bg'); for (let i = 0; i < 12; i++) { const c = document.createElement('div'), s = 24 + Math.random() * 28; c.className = 'coin'; c.textContent = '₸'; c.style.cssText = 'left:' + Math.random() * 96 + '%;width:' + s + 'px;height:' + s + 'px;font-size:' + s * .5 + 'px;animation-duration:' + (14 + Math.random() * 14) + 's;animation-delay:-' + Math.random() * 20 + 's'; bg.appendChild(c) } })();
 </script>
 </body>
