@@ -237,7 +237,7 @@ body[data-v="v-test"] #bg,body[data-v="v-prac"] #bg{display:none}
   <button class="btn y" onclick="show('v-menu');refreshMenu()">К заданиям / Тапсырмаларға</button>
 </div></section>
 
-<!-- Практика (содержимое рисует renderPrac) -->
+<!-- Практика -->
 <section id="v-prac" class="view" style="justify-content:flex-start">
   <div class="lang-switch">
     <button id="btn-lang-ru-prac" onclick="setLang('ru')" class="active">RU</button>
@@ -267,7 +267,7 @@ body[data-v="v-test"] #bg,body[data-v="v-prac"] #bg{display:none}
   <div class="nav" style="margin-bottom:0"><button class="btn b" onclick="show('v-start')">На главную</button></div>
 </div></section>
 
-<!-- Окна: правила теста, правила практики, нарушение, завершение -->
+<!-- Окна -->
 <div class="overlay" id="rules"><div class="card">
   <h2 style="font-size:22px">Правила тестирования</h2>
   <ul class="rl">
@@ -304,13 +304,137 @@ body[data-v="v-test"] #bg,body[data-v="v-prac"] #bg{display:none}
   <div class="nav" style="margin-bottom:0"><button class="btn o" onclick="$('ov').classList.remove('on')">Вернуться</button><button class="btn y" onclick="finishTest()">Завершить</button></div>
 </div></div>
 
-<!-- ПОДКЛЮЧЕНИЕ ФАЙЛОВ С ДАННЫМИ -->
+<!-- ПОДКЛЮЧЕНИЕ ФАЙЛОВ (Вопросы) -->
 <script src="questions_ru.js"></script>
 <script src="questions_kz.js"></script>
-<script src="practise_ru.js"></script>
-<script src="practise_kz.js"></script>
 
 <script>
+// ================= ДАННЫЕ ПРАКТИКИ (ВСТРОЕНЫ) =================
+const PRACTICE_DATA_RU = {
+  "stage1": {
+    "title": "Определение общего дохода семьи",
+    "tasks": [
+      { "id": "s1-q1", "text": "Рассчитайте общий ежемесячный доход семьи. (Введите число)", "correctAnswer": 1132000, "points": 8 },
+      { "id": "s1-q2", "text": "Определите, какую сумму составляют трудовые доходы семьи. (Введите число)", "correctAnswer": 1000000, "points": 7 }
+    ]
+  },
+  "stage2": {
+    "title": "Расчёт расходов и остатка бюджета",
+    "tasks": [
+      { "id": "s2-q1", "text": "Рассчитайте общую сумму ежемесячных расходов, включая накопления. (Введите число)", "correctAnswer": 678000, "points": 8 },
+      { "id": "s2-q2", "text": "Определите остаток денежных средств после всех запланированных расходов. (Введите число)", "correctAnswer": 454000, "points": 7 }
+    ]
+  },
+  "stage3": {
+    "title": "Анализ структуры семейного бюджета",
+    "tasks": [
+      { "id": "s3-q1", "text": "Рассчитайте, какой процент общего дохода составляют все запланированные расходы. (Ответ в %, округлите до сотых)", "correctAnswer": 59.89, "points": 10 },
+      { "id": "s3-q2", "text": "Определите долю накоплений в общем доходе семьи. (Ответ в %, округлите до сотых)", "correctAnswer": 7.07, "points": 10 }
+    ]
+  },
+  "stage4": {
+    "title": "Решение финансовой ситуации",
+    "tasks": [
+      { "id": "s4-q1", "text": "Какая сумма останется на депозите после снятия 120 000 тенге, если на нём было только 80 000 тенге? (Если не хватает, напишите -40000)", "correctAnswer": -40000, "points": 8 },
+      { "id": "s4-q2", "text": "На сколько увеличатся плановые расходы следующего месяца с учётом экскурсии? (Введите сумму в тенге)", "correctAnswer": 718000, "points": 8 },
+      { "id": "s4-q3", "text": "Какой остаток бюджета будет после включения экскурсии в расходы? (Введите сумму в тенге)", "correctAnswer": 414000, "points": 9 }
+    ]
+  },
+  "stage5": {
+    "title": "Разработка финансового плана семьи",
+    "tasks": [
+      { "id": "s5-q1", "text": "Какой остаток бюджета будет, если семья восстановит депозит на 120 000 тенге в следующем месяце? (Введите сумму в тенге)", "correctAnswer": 294000, "points": 10 },
+      { "id": "s5-q2", "text": "На сколько процентов можно сократить расходы на развлечения и транспорт, чтобы направить 20 000 тенге на сбережения? (Сумма сокращения в тенге)", "correctAnswer": 20000, "points": 7 },
+      { "id": "s5-q3", "text": "Какая сумма накоплений будет у семьи, если она будет откладывать 80 000 тенге ежемесячно в течение года? (Введите сумму в тенге)", "correctAnswer": 960000, "points": 8 }
+    ]
+  }
+};
+
+const PRACTICE_DATA_KZ = {
+  "stage1": {
+    "title": "Отбасының жалпы табысын анықтау",
+    "tasks": [
+      { "id": "s1-q1", "text": "Отбасының жалпы айлық кірісін есептеңіз. (Санды енгізіңіз)", "correctAnswer": 1132000, "points": 8 },
+      { "id": "s1-q2", "text": "Отбасының еңбек қызметінен түсетін кірісін анықтаңыз. (Санды енгізіңіз)", "correctAnswer": 1000000, "points": 7 }
+    ]
+  },
+  "stage2": {
+    "title": "Шығыстар мен бюджет қалдығын есептеу",
+    "tasks": [
+      { "id": "s2-q1", "text": "Жинақтарды қоса алғанда, жалпы айлық шығыстарды есептеңіз. (Санды енгізіңіз)", "correctAnswer": 678000, "points": 8 },
+      { "id": "s2-q2", "text": "Барлық жоспарланған шығыстардан кейін қалатын ақшалай қаражатты анықтаңыз. (Санды енгізіңіз)", "correctAnswer": 454000, "points": 7 }
+    ]
+  },
+  "stage3": {
+    "title": "Отбасы бюджетінің құрылымын талдау",
+    "tasks": [
+      { "id": "s3-q1", "text": "Барлық жоспарланған шығыстардың жалпы кірістегі үлесін пайызбен есептеңіз. (Жауапты %-бен, жүздікке дейін дөңгелектеңіз)", "correctAnswer": 59.89, "points": 10 },
+      { "id": "s3-q2", "text": "Жинақтардың отбасының жалпы кірісіндегі үлесін анықтаңыз. (Жауапты %-бен, жүздікке дейін дөңгелектеңіз)", "correctAnswer": 7.07, "points": 10 }
+    ]
+  },
+  "stage4": {
+    "title": "Қаржылық жағдайды шешу",
+    "tasks": [
+      { "id": "s4-q1", "text": "120 000 теңге алынғаннан кейін депозитте қанша қаражат қалады, егер онда тек 80 000 теңге болса? (Жетіспесе, -40000 деп жазыңыз)", "correctAnswer": -40000, "points": 8 },
+      { "id": "s4-q2", "text": "Экскурсия шығынын ескере отырып, келесі айдың жоспарланған шығындары қанша теңгеге артады? (Санды енгізіңіз)", "correctAnswer": 718000, "points": 8 },
+      { "id": "s4-q3", "text": "Экскурсияны шығындарға қосқаннан кейін бюджеттің қалдығы қанша болады? (Санды енгізіңіз)", "correctAnswer": 414000, "points": 9 }
+    ]
+  },
+  "stage5": {
+    "title": "Отбасының қаржылық жоспарын әзірлеу",
+    "tasks": [
+      { "id": "s5-q1", "text": "Егер отбасы келесі айда депозитті 120 000 теңгеге толықтырса, бюджеттің қалдығы қанша болады? (Санды енгізіңіз)", "correctAnswer": 294000, "points": 10 },
+      { "id": "s5-q2", "text": "Жинақтарға 20 000 теңге бағыттау үшін көңіл көтеру мен көлік шығындарын қанша теңгеге қысқартуға болады?", "correctAnswer": 20000, "points": 7 },
+      { "id": "s5-q3", "text": "Егер отбасы ай сайын 80 000 теңгеден жинаса, бір жылда қанша жинақ болады? (Санды енгізіңіз)", "correctAnswer": 960000, "points": 8 }
+    ]
+  }
+};
+
+// Функции для проверки ответов
+function calculatePracticeScoreRU(userAnswers) {
+  let totalScore = 0;
+  let details = [];
+  for (const stageKey in PRACTICE_DATA_RU) {
+    const stage = PRACTICE_DATA_RU[stageKey];
+    stage.tasks.forEach(task => {
+      const userAnswer = userAnswers[task.id];
+      let isCorrect = false;
+      if (userAnswer !== undefined && userAnswer !== null && userAnswer !== '') {
+        const cleanAnswer = String(userAnswer).replace(/\s/g, '').replace(',', '.');
+        const numAnswer = parseFloat(cleanAnswer);
+        if (Math.abs(numAnswer - task.correctAnswer) < 0.1) {
+          isCorrect = true;
+          totalScore += task.points;
+        }
+      }
+      details.push({ taskId: task.id, userAnswer: userAnswer, pointsEarned: isCorrect ? task.points : 0 });
+    });
+  }
+  return { totalScore, details };
+}
+
+function calculatePracticeScoreKZ(userAnswers) {
+  let totalScore = 0;
+  let details = [];
+  for (const stageKey in PRACTICE_DATA_KZ) {
+    const stage = PRACTICE_DATA_KZ[stageKey];
+    stage.tasks.forEach(task => {
+      const userAnswer = userAnswers[task.id];
+      let isCorrect = false;
+      if (userAnswer !== undefined && userAnswer !== null && userAnswer !== '') {
+        const cleanAnswer = String(userAnswer).replace(/\s/g, '').replace(',', '.');
+        const numAnswer = parseFloat(cleanAnswer);
+        if (Math.abs(numAnswer - task.correctAnswer) < 0.1) {
+          isCorrect = true;
+          totalScore += task.points;
+        }
+      }
+      details.push({ taskId: task.id, userAnswer: userAnswer, pointsEarned: isCorrect ? task.points : 0 });
+    });
+  }
+  return { totalScore, details };
+}
+
 // ================= НАСТРОЙКИ =================
 const API_PRACTICE = 'https://sheetdb.io/api/v1/30xavlcdm4804';
 const API_TEST = 'https://sheetdb.io/api/v1/moowfmuseogqe';
@@ -494,7 +618,7 @@ async function finishTest(isAuto = false) {
   refreshMenu(); show('v-res');
 }
 
-// ================= ПРАКТИКА: ДАННЫЕ =================
+// ================= ПРАКТИКА: ТЕКСТЫ =================
 const PM = {
   ru: {
     title: 'Практическое задание «Семейный бюджет семьи Сакеновых»',
