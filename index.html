@@ -120,11 +120,14 @@ body[data-v="v-test"] #bg,body[data-v="v-prac"] #bg{display:none}
 .task label{display:flex;gap:10px;font-weight:600;font-size:14px;line-height:1.5;margin-bottom:8px}
 .task label b{flex:0 0 26px;height:26px;border-radius:50%;background:var(--yellow);color:var(--on-yellow);display:grid;place-items:center;font-size:13px}
 .task input{min-height:40px;font-size:16px}
-.pt{width:100%;border-collapse:collapse;margin:14px 0;border:1px solid var(--line);border-radius:12px;overflow:hidden;font-size:14px}
+
+/* Обновлённые стили таблицы для практики */
+.pt{width:100%;border-collapse:collapse;margin:14px 0;border:1px solid var(--line);border-radius:12px;overflow:hidden;font-size:14px;background:var(--bg)}
 .pt th,.pt td{padding:10px 14px;border-bottom:1px solid var(--line);text-align:left}
-.pt th{background:rgba(255,215,0,.15)}
+.pt th{background:rgba(255,215,0,.15);color:var(--text);font-weight:700}
 .pt td:last-child,.pt th:last-child{text-align:right;font-variant-numeric:tabular-nums}
-.pt tr.tot td{font-weight:800;background:rgba(255,215,0,.12)}
+.pt tr.tot td{font-weight:800;background:rgba(255,215,0,.08)}
+.pt tr.tot input{width:100%;max-width:150px;padding:8px 12px;font-size:16px;border:2px solid var(--yellow);border-radius:8px;text-align:right;background:#fff}
 .rule{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0 14px}
 .rule span{padding:10px 16px;border-radius:12px;background:rgba(255,215,0,.18);font-weight:700;font-size:14px}
 .fm{margin:12px 0;padding:12px 16px;border-radius:10px;background:var(--bg);font-weight:600;font-size:14px;line-height:1.6;white-space:pre-line}
@@ -304,7 +307,7 @@ body[data-v="v-test"] #bg,body[data-v="v-prac"] #bg{display:none}
   <div class="nav" style="margin-bottom:0"><button class="btn o" onclick="$('ov').classList.remove('on')">Вернуться</button><button class="btn y" onclick="finishTest()">Завершить</button></div>
 </div></div>
 
-<!-- ПОДКЛЮЧЕНИЕ ФАЙЛОВ (Вопросы) -->
+<!-- ПОДКЛЮЧЕНИЕ ФАЙЛОВ -->
 <script src="questions_ru.js"></script>
 <script src="questions_kz.js"></script>
 
@@ -750,11 +753,30 @@ function renderPrac() {
       const w = E('div', 'tw'), t = E('table', 'pt'), h = E('tr');
       tb.th.forEach(x => h.append(E('th', null, x))); t.append(h);
       tb.rows.forEach(r => { const tr = E('tr'); r.forEach(x => tr.append(E('td', null, x))); t.append(tr); });
-      const tot = E('tr', 'tot'); tot.append(E('td', null, tb.tot), E('td', null, '?')); t.append(tot);
+      
+      // Блок для ввода ответа ВНУТРИ таблицы
+      const tot = E('tr', 'tot');
+      tot.append(E('td', null, tb.tot)); 
+      
+      const tdInp = E('td');
+      const inpTot = E('input'); inpTot.type = 'number'; inpTot.inputMode = 'decimal'; inpTot.id = 's'+k+'-tot';
+      inpTot.className = 'prac-input'; inpTot.placeholder = m.ph; inpTot.value = PA['s'+k+'-tot'] || '';
+      inpTot.style.width = '100%'; inpTot.style.maxWidth = '150px'; inpTot.style.padding = '8px'; inpTot.style.textAlign = 'right'; inpTot.style.border = '2px solid var(--yellow)';
+      inpTot.oninput = () => { PA['s'+k+'-tot'] = inpTot.value; };
+      
+      tdInp.append(inpTot);
+      tot.append(tdInp); 
+      t.append(tot); 
       w.append(t); c.append(w);
     }
+    
     if (m.fm[k]) c.append(E('div', 'fm', m.fm[k]));
+    
+    // Дополнительные поля для задач, если есть
     tasksOf(k).forEach((task, idx) => {
+      // Пропускаем задачи, которые мы уже встроили в таблицу (s1-q1, s1-q2, s2-q1, s2-q2)
+      if ((k===1 && (idx===0 || idx===1)) || (k===2 && (idx===0 || idx===1))) return; 
+      
       const d = E('div', 'task'), lb = E('label');
       lb.append(E('b', null, idx + 1), E('span', null, task.text));
       const inp = E('input'); inp.type = 'number'; inp.inputMode = 'decimal'; inp.id = task.id;
@@ -762,6 +784,7 @@ function renderPrac() {
       inp.oninput = () => { PA[task.id] = inp.value; };
       d.append(lb, inp); c.append(d);
     });
+    
     c.append(E('div', 'res', m.res[k - 1]));
   }
   root.append(c);
@@ -782,6 +805,16 @@ async function submitPractice(isAuto = false) {
   const answers = {};
   const _pd = currentLang === 'ru' ? PRACTICE_DATA_RU : PRACTICE_DATA_KZ;
   for (let k = 1; k <= 5; k++) ((_pd['stage' + k] || {}).tasks || []).forEach(t => { answers[t.id] = PA[t.id] || ''; });
+  
+  // Добавляем ответы из таблиц (если мы использовали поле sX-tot)
+  for (let k = 1; k <= 5; k++) {
+     if (PA['s'+k+'-tot']) {
+        // Привязываем эти ответы к первым задачам этапа
+        let tasks = (_pd['stage'+k] || {}).tasks || [];
+        if (tasks[0]) answers[tasks[0].id] = PA['s'+k+'-tot'];
+        if (tasks[1]) answers[tasks[1].id] = PA['s'+k+'-tot'];
+     }
+  }
 
   const calcFn = currentLang === 'ru' ? calculatePracticeScoreRU : calculatePracticeScoreKZ;
   const result = calcFn(answers);
