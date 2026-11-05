@@ -207,16 +207,39 @@ th{background:rgba(255,215,0,.15)}
 <div id="bg"><i class="bl a"></i><i class="bl b"></i><i class="bl c"></i></div>
 
 <!-- Старт -->
-<section id="v-start" class="view on"><div class="hero glass stg">
-  <div class="ring"><div>5<span style="color:var(--yellow)">0</span></div></div>
-  <h1>Республиканский конкурс</h1><h2 class="shine" style="font-size:34px">Финансовая грамотность</h2>
-  <div class="sub" style="margin-bottom:0">— Ключ к успеху —<br>среди обучающихся колледжей</div>
-  <div class="chips"><span>📝 20 вопросов</span><span>⏱ 30 минут</span><span>💼 5 этапов практики</span></div>
-  <div class="stack">
-    <button class="btn y" onclick="show('v-register')">Я участник</button>
-    <button class="btn o" onclick="show('v-alogin')">Я администратор</button>
+<section id="v-start" class="view on">
+  <div class="hero glass stg" style="padding: 0; overflow: hidden;">
+    
+    <!-- Логотип на пол блока -->
+    <div style="width: 100%; display: flex; justify-content: center; background: #fff; border-bottom: 1px solid var(--line);">
+      <img src="лого.jpeg" alt="Логотип" style="width: 100%; max-width: 100%; height: auto; display: block; object-fit: cover;">
+    </div>
+
+    <!-- Текстовая часть -->
+    <div style="padding: 30px 20px; text-align: center;">
+      <h1 style="font-size: 16px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; font-weight: 700; margin-bottom: 5px;">
+        Республиканский конкурс
+      </h1>
+      <h2 class="shine" style="font-size: 28px; line-height: 1.2; margin: 0 0 15px 0; text-transform: uppercase;">
+        ПО ФИНАНСОВОЙ ГРАМОТНОСТИ
+      </h2>
+      
+      <div class="sub" style="margin-bottom: 25px;">— Ключ к успеху —<br>среди обучающихся колледжей</div>
+      
+      <div class="chips" style="margin-bottom: 30px;">
+        <span>📝 20 вопросов</span>
+        <span>⏱ 30 минут</span>
+        <span>💼 5 этапов практики</span>
+      </div>
+      
+      <div class="stack">
+        <button class="btn y" onclick="show('v-register')">Я участник</button>
+        <button class="btn o" onclick="show('v-alogin')">Я администратор</button>
+      </div>
+    </div>
+
   </div>
-</div></section>
+</section>
 
 <!-- РЕГИСТРАЦИЯ УЧАСТНИКА -->
 <section id="v-register" class="view"><div class="card">
@@ -242,7 +265,7 @@ th{background:rgba(255,215,0,.15)}
     <div class="act" id="a-test" onclick="startTest()"><div class="ic">📝</div><h3>Тестирование</h3><p>20 вопросов по теории. Ограничение по времени — 30 минут. Прогресс сохраняется.</p><div class="go">Начать →</div></div>
     <div class="act" id="a-prac" onclick="startPrac()"><div class="ic">💼</div><h3>Практическое задание</h3><p>5 этапов: доходы, расходы, анализ бюджета и финансовый план семьи.</p><div class="go">Открыть →</div></div>
   </div>
-  <button class="back" onclick="finishAll()">Завершить и выйти</button>
+  <button class="back" onclick="show('v-start')">← На главную</button>
 </section>
 
 <!-- ТЕСТ -->
@@ -311,7 +334,7 @@ th{background:rgba(255,215,0,.15)}
   <div class="nav" style="margin-bottom:0"><button class="btn b" onclick="show('v-start')">На главную</button></div>
 </div></section>
 
-<!-- Оверлеи правил и нарушений (ВОССТАНОВЛЕНЫ) -->
+<!-- Оверлеи правил и нарушений -->
 <div class="overlay" id="rules"><div class="card">
   <h2 style="font-size:22px">Правила тестирования</h2>
   <ul class="rl">
@@ -570,8 +593,8 @@ function renderPrac() {
   
   const top = document.createElement('div'); top.className = 'pz-top';
   const title = document.createElement('h2'); title.textContent = currentLang === 'ru' ? 'Практическое задание' : 'Практикалық тапсырма';
-  const back = document.createElement('button'); back.className = 'btn o'; back.textContent = '← В меню / Мәзірге'; back.onclick = () => show('v-menu');
-  top.append(title, back); root.append(top);
+  top.append(title); 
+  root.append(top);
 
   const c = document.createElement('div'); c.className = 'pc';
   
@@ -655,8 +678,6 @@ async function submitPractice(isAuto = false) {
   
   refreshMenu(); show('v-res');
 }
-
-function finishAll() { show('v-start') }
 
 // ================= АДМИНКА =================
 let adminData = []; 
@@ -795,7 +816,6 @@ function violation(reason) {
       body: JSON.stringify({ data: [{ id: PID, name: user.name, variant: activeVariantName, score: 'Аннулировано', score_points: 0, correct: 0, incorrect: 0, time: '-', status: reason }] })
     }).catch(e => console.log(e));
     
-    // Показываем красивый экран ошибки
     $('viol-r').textContent = reason;
     $('viol').classList.add('on');
     show('v-menu'); refreshMenu();
