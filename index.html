@@ -163,60 +163,62 @@ body[data-v="v-test"] #bg,body[data-v="v-prac"] #bg{display:none}
       <img src="лого.jpeg" alt="Логотип" style="width:100%;max-width:100%;height:auto;display:block;object-fit:cover;">
     </div>
     <div style="padding:30px 20px;text-align:center;">
-      <h1 style="font-size:16px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;font-weight:700;margin-bottom:5px;">Республиканский конкурс</h1>
-      <h2 class="shine" style="font-size:28px;line-height:1.2;margin:0 0 15px 0;text-transform:uppercase;">ПО ФИНАНСОВОЙ ГРАМОТНОСТИ</h2>
-      <div class="sub" style="margin-bottom:25px;">— Ключ к успеху —<br>среди обучающихся колледжей</div>
+      <h1 id="title-start-1" style="font-size:16px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;font-weight:700;margin-bottom:5px;">Республиканский конкурс</h1>
+      <h2 id="title-start-2" class="shine" style="font-size:28px;line-height:1.2;margin:0 0 15px 0;text-transform:uppercase;">ПО ФИНАНСОВОЙ ГРАМОТНОСТИ</h2>
+      <div id="sub-start" class="sub" style="margin-bottom:25px;">— Ключ к успеху —<br>среди обучающихся колледжей</div>
       <div class="chips" style="margin-bottom:30px;">
-        <span>📝 20 вопросов</span><span>⏱ 30 минут</span><span>💼 5 этапов практики</span>
+        <span id="chip-1">📝 20 вопросов</span><span id="chip-2">⏱ 30 минут</span><span id="chip-3">💼 5 этапов практики</span>
       </div>
       <div class="stack">
-        <button class="btn y" onclick="show('v-register')">Я участник</button>
-        <button class="btn o" onclick="show('v-alogin')">Я администратор</button>
+        <button id="btn-start-part" class="btn y" onclick="show('v-register')">Я участник</button>
+        <button id="btn-start-admin" class="btn o" onclick="show('v-alogin')">Я администратор</button>
       </div>
     </div>
   </div>
 </section>
 
 <!-- Регистрация участника -->
-<section id="v-register" class="view"><div class="card">
-  <div class="ico">👤</div>
-  <h2>Вход для участника</h2>
-  <div class="sub">Пожалуйста, представьтесь перед началом конкурса</div>
-  <div class="stack">
-    <div>
-      <label class="f">ФИО (полностью)</label>
-      <input id="reg-name" type="text" placeholder="Иванов Иван Иванович" onkeydown="if(event.key==='Enter')registerParticipant()">
-    </div>
-    <div class="err" id="reg-err"></div>
-    <button class="btn y" onclick="registerParticipant()">Продолжить</button>
-    <button class="back" onclick="show('v-start')">← Назад</button>
+<section id="v-register" class="view">
+  <div class="lang-switch">
+    <button id="btn-lang-ru-reg" onclick="setLang('ru')" class="active">RU</button>
+    <button id="btn-lang-kz-reg" onclick="setLang('kz')">KZ</button>
   </div>
-</div></section>
+  <div class="card">
+    <div class="ico">👤</div>
+    <h2 id="title-reg">Вход для участника</h2>
+    <div id="sub-reg" class="sub">Пожалуйста, представьтесь перед началом конкурса</div>
+    <div class="stack">
+      <div>
+        <label id="label-reg-name" class="f">ФИО (полностью)</label>
+        <input id="reg-name" type="text" placeholder="Иванов Иван Иванович" onkeydown="if(event.key==='Enter')registerParticipant()">
+      </div>
+      <div class="err" id="reg-err"></div>
+      <button id="btn-reg-next" class="btn y" onclick="registerParticipant()">Продолжить</button>
+      <button id="btn-reg-back" class="back" onclick="show('v-start')">← Назад</button>
+    </div>
+  </div>
+</section>
 
 <!-- Меню участника -->
 <section id="v-menu" class="view stg">
-  <div style="text-align:center;margin-bottom:20px"><h2 class="shine" style="font-size:36px">Добро пожаловать!</h2><div class="sub" style="margin:6px 0 0">Выберите этап конкурса для прохождения</div></div>
+  <div style="text-align:center;margin-bottom:20px"><h2 id="title-menu" class="shine" style="font-size:36px">Добро пожаловать!</h2><div id="sub-menu" class="sub" style="margin:6px 0 0">Выберите этап конкурса для прохождения</div></div>
   <div class="mpw"><div class="mp"><i id="m-bar"></i></div><span id="m-lbl">Выполнено: 0 из 2</span></div>
   <div class="cards">
-    <div class="act" id="a-test" onclick="startTest()"><div class="ic">📝</div><h3>Тестирование</h3><p>20 вопросов по теории. Ограничение по времени — 30 минут. Прогресс сохраняется.</p><div class="go">Начать →</div></div>
-    <div class="act" id="a-prac" onclick="startPrac()"><div class="ic">💼</div><h3>Практическое задание</h3><p>5 этапов: доходы, расходы, анализ бюджета и финансовый план семьи.</p><div class="go">Открыть →</div></div>
+    <div class="act" id="a-test" onclick="startTest()"><div class="ic">📝</div><h3 id="act-test-h">Тестирование</h3><p id="act-test-p">20 вопросов по теории. Ограничение по времени — 30 минут. Прогресс сохраняется.</p><div id="act-test-go" class="go">Начать →</div></div>
+    <div class="act" id="a-prac" onclick="startPrac()"><div class="ic">💼</div><h3 id="act-prac-h">Практическое задание</h3><p id="act-prac-p">5 этапов: доходы, расходы, анализ бюджета и финансовый план семьи.</p><div id="act-prac-go" class="go">Открыть →</div></div>
   </div>
-  <button class="back" onclick="show('v-start')">← На главную</button>
+  <button id="btn-menu-back" class="back" onclick="show('v-start')">← На главную</button>
 </section>
 
 <!-- Тест -->
 <section id="v-test" class="view">
-  <div class="lang-switch">
-    <button id="btn-lang-ru-test" onclick="setLang('ru')" class="active">RU</button>
-    <button id="btn-lang-kz-test" onclick="setLang('kz')">KZ</button>
-  </div>
   <div class="pz">
     <div class="pz-top">
       <div>
         <h2 id="test-main-title">Тестирование · Финансовая грамотность</h2>
         <div style="font-size:13px;color:var(--muted);font-weight:600;margin-top:4px">
           <span id="test-user-name" style="color:var(--accent);font-weight:800;"></span><br>
-          Вопрос <span id="t-pos">1</span> из <span id="t-total">20</span>
+          <span id="text-question">Вопрос</span> <span id="t-pos">1</span> <span id="text-from">из</span> <span id="t-total">20</span>
         </div>
       </div>
       <div class="qt" id="t-timer">30:00</div>
@@ -228,7 +230,7 @@ body[data-v="v-test"] #bg,body[data-v="v-prac"] #bg{display:none}
       <h3 class="qq" id="q-t"></h3>
       <div id="q-o"></div>
     </div>
-    <div class="nav"><button class="btn o" onclick="go(-1)">← Назад</button><button class="btn y" id="t-next" onclick="go(1)">Далее →</button></div>
+    <div class="nav"><button id="btn-test-back" class="btn o" onclick="go(-1)">← Назад</button><button id="btn-test-next" class="btn y" id="t-next" onclick="go(1)">Далее →</button></div>
   </div>
 </section>
 
@@ -237,61 +239,63 @@ body[data-v="v-test"] #bg,body[data-v="v-prac"] #bg{display:none}
   <h2 id="res-h">Спасибо!</h2>
   <div class="big" id="res-score" style="font-size:24px;color:var(--ok);">Ваш результат отправлен</div>
   <div class="sub" id="res-note">Рахмет! Сіздің нәтижеңіз жіберілді</div>
-  <button class="btn y" onclick="show('v-menu');refreshMenu()">К заданиям / Тапсырмаларға</button>
+  <button id="btn-res-back" class="btn y" onclick="show('v-menu');refreshMenu()">К заданиям / Тапсырмаларға</button>
 </div></section>
 
-<!-- Практика -->
+<!-- Практика (содержимое рисует renderPrac) -->
 <section id="v-prac" class="view" style="justify-content:flex-start">
-  <div class="lang-switch">
-    <button id="btn-lang-ru-prac" onclick="setLang('ru')" class="active">RU</button>
-    <button id="btn-lang-kz-prac" onclick="setLang('kz')">KZ</button>
-  </div>
   <div class="pz" id="pz"></div>
   <div class="calc"><div class="cp" id="cp"><input id="cin" placeholder="520000+480000" oninput="calc()" autocomplete="off"><div id="cout">= …</div></div><button class="btn y" onclick="$('cp').classList.toggle('on')" title="Калькулятор">🧮</button></div>
 </section>
 
 <!-- Вход админа -->
-<section id="v-alogin" class="view"><div class="card">
-  <div class="ico">🔐</div><h2>Администратор</h2><div class="sub">Введите пароль</div>
-  <div class="stack"><input id="a-pass" type="password" placeholder="Пароль" onkeydown="if(event.key==='Enter')adminLogin()">
-  <div class="err" id="a-err"></div>
-  <button class="btn b" onclick="adminLogin()">Войти</button>
-  <button class="back" onclick="show('v-start')">← Назад</button></div>
-</div></section>
+<section id="v-alogin" class="view">
+  <div class="lang-switch">
+    <button id="btn-lang-ru-adm" onclick="setLang('ru')" class="active">RU</button>
+    <button id="btn-lang-kz-adm" onclick="setLang('kz')">KZ</button>
+  </div>
+  <div class="card">
+    <div class="ico">🔐</div><h2 id="title-adm">Администратор</h2><div id="sub-adm" class="sub">Введите пароль</div>
+    <div class="stack"><input id="a-pass" type="password" placeholder="Пароль" onkeydown="if(event.key==='Enter')adminLogin()">
+    <div class="err" id="a-err"></div>
+    <button id="btn-adm-login" class="btn b" onclick="adminLogin()">Войти</button>
+    <button id="btn-adm-back" class="back" onclick="show('v-start')">← Назад</button></div>
+  </div>
+</section>
 
 <!-- Админка -->
 <section id="v-admin" class="view"><div class="card wide" style="border-top-color:var(--accent)">
-  <h2>Панель администратора</h2>
+  <h2 id="title-admin">Панель администратора</h2>
   <div class="sub" id="a-src" style="margin-bottom:0">Данные из Google Таблиц</div>
   <div class="stats" id="a-stats"></div>
   <div class="steps" id="a-tabs"></div>
   <div class="err" id="a-msg" style="min-height:0;margin:6px 0"></div>
   <div class="tw"><table class="at" id="a-tbl"></table></div>
-  <div class="nav" style="margin-bottom:0"><button class="btn b" onclick="show('v-start')">На главную</button></div>
+  <div class="nav" style="margin-bottom:0"><button id="btn-admin-back" class="btn b" onclick="show('v-start')">На главную</button></div>
 </div></section>
 
 <!-- Окна -->
 <div class="overlay" id="rules"><div class="card">
   <h2 style="font-size:22px">Правила тестирования</h2>
-  <ul class="rl">
+  <ul class="rl" id="rules-text">
     <li>Тест проходит в полноэкранном режиме.</li>
     <li>Нельзя переключаться на другие вкладки, окна и приложения.</li>
     <li>Нельзя копировать вопросы и ответы, открывать контекстное меню, печатать страницу.</li>
     <li>Нельзя открывать консоль разработчика (F12, Ctrl+Shift+I/J/C, Ctrl+U).</li>
   </ul>
   <p style="font-size:14px;font-weight:700;color:var(--bad);margin-bottom:18px">При любом нарушении тест будет немедленно закрыт, а результат аннулирован.</p>
-  <div class="nav" style="margin:0"><button class="btn o" onclick="$('rules').classList.remove('on')">Отмена</button><button class="btn y" onclick="beginTest()">Согласен, начать</button></div>
+  <div class="nav" style="margin:0"><button id="btn-rules-cancel" class="btn o" onclick="$('rules').classList.remove('on')">Отмена</button><button id="btn-rules-start" class="btn y" onclick="beginTest()">Согласен, начать</button></div>
 </div></div>
 
 <div class="overlay" id="rules-prac"><div class="card">
   <h2 style="font-size:22px">Правила практики</h2>
-  <ul class="rl">
+  <ul class="rl" id="rules-prac-text">
     <li>Время на выполнение — 45 минут.</li>
     <li>Нельзя переключаться на другие вкладки, окна и приложения.</li>
     <li>Нельзя открывать консоль разработчика.</li>
   </ul>
   <p style="font-size:14px;font-weight:700;color:var(--bad);margin-bottom:18px">При любом нарушении результат будет аннулирован.</p>
-  <div class="nav" style="margin:0"><button class="btn o" onclick="$('rules-prac').classList.remove('on')">Отмена</button><button class="btn y" onclick="beginPrac()">Согласен, начать</button></div>
+  <div class="nav" style="margin:0"><button id="btn-rules-prac-cancel" class="btn o" onclick="$('rules-prac').classList.remove('on')">Отмена</button><button id="btn-rules-prac-start" class="btn y" onclick="beginPrac()">Согласен, начать</button></div>
 </div></div>
 
 <div class="overlay" id="viol"><div class="card" style="text-align:center;border-top-color:var(--bad)">
@@ -307,7 +311,7 @@ body[data-v="v-test"] #bg,body[data-v="v-prac"] #bg{display:none}
   <div class="nav" style="margin-bottom:0"><button class="btn o" onclick="$('ov').classList.remove('on')">Вернуться</button><button class="btn y" onclick="finishTest()">Завершить</button></div>
 </div></div>
 
-<!-- ПОДКЛЮЧЕНИЕ ФАЙЛОВ -->
+<!-- ПОДКЛЮЧЕНИЕ ФАЙЛОВ (Вопросы) -->
 <script src="questions_ru.js"></script>
 <script src="questions_kz.js"></script>
 
@@ -455,18 +459,209 @@ let PID = null;
 let armed = false, grace = 0;
 
 // ================= ПЕРЕКЛЮЧАТЕЛЬ ЯЗЫКА =================
+const UI_TEXT = {
+  ru: {
+    startTitle1: "Республиканский конкурс",
+    startTitle2: "ПО ФИНАНСОВОЙ ГРАМОТНОСТИ",
+    startSub: "— Ключ к успеху —<br>среди обучающихся колледжей",
+    chip1: "📝 20 вопросов",
+    chip2: "⏱ 30 минут",
+    chip3: "💼 5 этапов практики",
+    btnStartPart: "Я участник",
+    btnStartAdmin: "Я администратор",
+    regTitle: "Вход для участника",
+    regSub: "Пожалуйста, представьтесь перед началом конкурса",
+    regLabel: "ФИО (полностью)",
+    regNext: "Продолжить",
+    regBack: "← Назад",
+    menuTitle: "Добро пожаловать!",
+    menuSub: "Выберите этап конкурса для прохождения",
+    actTestH: "Тестирование",
+    actTestP: "20 вопросов по теории. Ограничение по времени — 30 минут. Прогресс сохраняется.",
+    actTestGo: "Начать →",
+    actPracH: "Практическое задание",
+    actPracP: "5 этапов: доходы, расходы, анализ бюджета и финансовый план семьи.",
+    actPracGo: "Открыть →",
+    menuBack: "← На главную",
+    testTitle: "Тестирование · Финансовая грамотность",
+    textQuestion: "Вопрос",
+    textFrom: "из",
+    testBack: "← Назад",
+    testNext: "Далее →",
+    resH: "Спасибо!",
+    resScore: "Ваш результат отправлен",
+    resNote: "Ожидайте результатов от организаторов.",
+    resBack: "К заданиям",
+    admTitle: "Администратор",
+    admSub: "Введите пароль",
+    admLogin: "Войти",
+    admBack: "← Назад",
+    adminTitle: "Панель администратора",
+    adminBack: "На главную",
+    rulesTitle: "Правила тестирования",
+    rulesList: "<li>Тест проходит в полноэкранном режиме.</li><li>Нельзя переключаться на другие вкладки, окна и приложения.</li><li>Нельзя копировать вопросы и ответы, открывать контекстное меню, печатать страницу.</li><li>Нельзя открывать консоль разработчика (F12, Ctrl+Shift+I/J/C, Ctrl+U).</li>",
+    rulesWarn: "При любом нарушении тест будет немедленно закрыт, а результат аннулирован.",
+    rulesCancel: "Отмена",
+    rulesStart: "Согласен, начать",
+    rulesPracTitle: "Правила практики",
+    rulesPracList: "<li>Время на выполнение — 45 минут.</li><li>Нельзя переключаться на другие вкладки, окна и приложения.</li><li>Нельзя открывать консоль разработчика.</li>",
+    rulesPracWarn: "При любом нарушении результат будет аннулирован.",
+    rulesPracCancel: "Отмена",
+    rulesPracStart: "Согласен, начать",
+    violTitle: "Нарушение правил",
+    violText: "Прохождение прекращено автоматически.<br>Обнаружено:",
+    violAnnulled: "Ваш результат аннулирован.",
+    violOk: "Понятно",
+    ovTitle: "Завершить тест?",
+    ovBack: "Вернуться",
+    ovFinish: "Завершить"
+  },
+  kz: {
+    startTitle1: "Республикалық конкурс",
+    startTitle2: "ҚАРЖЫЛЫҚ САУАТТЫЛЫҚ БОЙЫНША",
+    startSub: "— Табысқа жетудің кілті —<br>колледж студенттері арасында",
+    chip1: "📝 20 сұрақ",
+    chip2: "⏱ 30 минут",
+    chip3: "💼 5 кезең практика",
+    btnStartPart: "Мен қатысушымын",
+    btnStartAdmin: "Мен әкімшімін",
+    regTitle: "Қатысушы болып кіру",
+    regSub: "Конкурсқа кіріспес бұрын өзіңізді таныстырыңыз",
+    regLabel: "Аты-жөні (толық)",
+    regNext: "Жалғастыру",
+    regBack: "← Артқа",
+    menuTitle: "Қош келдіңіз!",
+    menuSub: "Өту үшін конкурс кезеңін таңдаңыз",
+    actTestH: "Тестілеу",
+    actTestP: "20 теориялық сұрақ. Уақыт шектеуі — 30 минут. Прогресс сақталады.",
+    actTestGo: "Бастау →",
+    actPracH: "Практикалық тапсырма",
+    actPracP: "5 кезең: кірістер, шығыстар, бюджетті талдау және отбасының қаржылық жоспары.",
+    actPracGo: "Ашу →",
+    menuBack: "← Басты бетке",
+    testTitle: "Тестілеу · Қаржылық сауаттылық",
+    textQuestion: "Сұрақ",
+    textFrom: "одан",
+    testBack: "← Артқа",
+    testNext: "Әрі қарай →",
+    resH: "Рақмет!",
+    resScore: "Сіздің нәтижеңіз жіберілді",
+    resNote: "Ұйымдастырушылардың нәтижелерін күтіңіз.",
+    resBack: "Тапсырмаларға",
+    admTitle: "Әкімші",
+    admSub: "Құпия сөзді енгізіңіз",
+    admLogin: "Кіру",
+    admBack: "← Артқа",
+    adminTitle: "Әкімші панелі",
+    adminBack: "Басты бетке",
+    rulesTitle: "Тестілеу ережелері",
+    rulesList: "<li>Тест толық экран режимінде өтеді.</li><li>Басқа қойындыларға, терезелерге және қолданбаларға ауысуға болмайды.</li><li>Сұрақтар мен жауаптарды көшіруге, контекстік мәзірді ашуға, бетті басып шығаруға болмайды.</li><li>Әзірлеуші консолін ашуға болмайды (F12, Ctrl+Shift+I/J/C, Ctrl+U).</li>",
+    rulesWarn: "Кез келген бұзушылық кезінде тест дереу жабылады, ал нәтиже жойылады.",
+    rulesCancel: "Болдырмау",
+    rulesStart: "Келісемін, бастау",
+    rulesPracTitle: "Практика ережелері",
+    rulesPracList: "<li>Орындау уақыты — 45 минут.</li><li>Басқа қойындыларға, терезелерге және қолданбаларға ауысуға болмайды.</li><li>Әзірлеуші консолін ашуға болмайды.</li>",
+    rulesPracWarn: "Кез келген бұзушылық кезінде нәтиже жойылады.",
+    rulesPracCancel: "Болдырмау",
+    rulesPracStart: "Келісемін, бастау",
+    violTitle: "Ережелерді бұзу",
+    violText: "Өту автоматты түрде тоқтатылды.<br>Анықталды:",
+    violAnnulled: "Сіздің нәтижеңіз жойылды.",
+    violOk: "Түсінікті",
+    ovTitle: "Тесті аяқтау керек пе?",
+    ovBack: "Қайту",
+    ovFinish: "Аяқтау"
+  }
+};
+
+function applyLang() {
+  const t = UI_TEXT[currentLang];
+  
+  // Старт
+  $('title-start-1').textContent = t.startTitle1;
+  $('title-start-2').textContent = t.startTitle2;
+  $('sub-start').innerHTML = t.startSub;
+  $('chip-1').textContent = t.chip1;
+  $('chip-2').textContent = t.chip2;
+  $('chip-3').textContent = t.chip3;
+  $('btn-start-part').textContent = t.btnStartPart;
+  $('btn-start-admin').textContent = t.btnStartAdmin;
+
+  // Регистрация
+  $('title-reg').textContent = t.regTitle;
+  $('sub-reg').textContent = t.regSub;
+  $('label-reg-name').textContent = t.regLabel;
+  $('btn-reg-next').textContent = t.regNext;
+  $('btn-reg-back').textContent = t.regBack;
+
+  // Меню
+  $('title-menu').textContent = t.menuTitle;
+  $('sub-menu').textContent = t.menuSub;
+  $('act-test-h').textContent = t.actTestH;
+  $('act-test-p').textContent = t.actTestP;
+  $('act-test-go').textContent = t.actTestGo;
+  $('act-prac-h').textContent = t.actPracH;
+  $('act-prac-p').textContent = t.actPracP;
+  $('act-prac-go').textContent = t.actPracGo;
+  $('btn-menu-back').textContent = t.menuBack;
+
+  // Тест
+  $('test-main-title').textContent = t.testTitle;
+  $('text-question').textContent = t.textQuestion;
+  $('text-from').textContent = t.textFrom;
+  $('btn-test-back').textContent = t.testBack;
+  $('btn-test-next').textContent = t.testNext;
+
+  // Результат
+  $('res-h').textContent = t.resH;
+  $('res-score').textContent = t.resScore;
+  $('res-note').textContent = t.resNote;
+  $('btn-res-back').textContent = t.resBack;
+
+  // Админ
+  $('title-adm').textContent = t.admTitle;
+  $('sub-adm').textContent = t.admSub;
+  $('btn-adm-login').textContent = t.admLogin;
+  $('btn-adm-back').textContent = t.admBack;
+  $('title-admin').textContent = t.adminTitle;
+  $('btn-admin-back').textContent = t.adminBack;
+
+  // Окна
+  $('rules').querySelector('h2').textContent = t.rulesTitle;
+  $('rules-text').innerHTML = t.rulesList;
+  $('rules').querySelector('p').textContent = t.rulesWarn;
+  $('btn-rules-cancel').textContent = t.rulesCancel;
+  $('btn-rules-start').textContent = t.rulesStart;
+  
+  $('rules-prac').querySelector('h2').textContent = t.rulesPracTitle;
+  $('rules-prac-text').innerHTML = t.rulesPracList;
+  $('rules-prac').querySelector('p').textContent = t.rulesPracWarn;
+  $('btn-rules-prac-cancel').textContent = t.rulesPracCancel;
+  $('btn-rules-prac-start').textContent = t.rulesPracStart;
+
+  $('viol').querySelector('h2').textContent = t.violTitle;
+  $('viol').querySelector('p').innerHTML = t.violText + ' <b id="viol-r"></b>.';
+  $('viol').querySelectorAll('p')[1].textContent = t.violAnnulled;
+  $('viol').querySelector('button').textContent = t.violOk;
+
+  $('ov').querySelector('h2').textContent = t.ovTitle;
+  $('ov').querySelectorAll('button')[0].textContent = t.ovBack;
+  $('ov').querySelectorAll('button')[1].textContent = t.ovFinish;
+
+  // Кнопки языков
+  if (currentLang === 'ru') {
+    $('btn-lang-ru-reg').classList.add('active'); $('btn-lang-kz-reg').classList.remove('active');
+    $('btn-lang-ru-adm').classList.add('active'); $('btn-lang-kz-adm').classList.remove('active');
+  } else {
+    $('btn-lang-kz-reg').classList.add('active'); $('btn-lang-ru-reg').classList.remove('active');
+    $('btn-lang-kz-adm').classList.add('active'); $('btn-lang-ru-adm').classList.remove('active');
+  }
+}
+
 function setLang(lang) {
   currentLang = lang;
-  if (lang === 'ru') {
-    $('btn-lang-ru-test').classList.add('active'); $('btn-lang-kz-test').classList.remove('active');
-    $('btn-lang-ru-prac').classList.add('active'); $('btn-lang-kz-prac').classList.remove('active');
-    $('test-main-title').textContent = "Тестирование · Финансовая грамотность";
-  } else {
-    $('btn-lang-kz-test').classList.add('active'); $('btn-lang-ru-test').classList.remove('active');
-    $('btn-lang-kz-prac').classList.add('active'); $('btn-lang-ru-prac').classList.remove('active');
-    $('test-main-title').textContent = "Тестілеу · Қаржылық сауаттылық";
-  }
-
+  applyLang();
+  
   if (Q.length > 0 && $('v-test').classList.contains('on')) {
     let rawData = [];
     if (lang === 'ru') rawData = ALL_VARIANTS.find(v => v.name === activeVariantName)?.data || ALL_VARIANTS[0].data;
@@ -502,7 +697,7 @@ function show(id) {
 function registerParticipant() {
   const name = $('reg-name').value.trim();
   if (name.length < 3) {
-    $('reg-err').textContent = 'Пожалуйста, введите ваше ФИО / Аты-жөніңізді енгізіңіз.';
+    $('reg-err').textContent = currentLang === 'ru' ? 'Пожалуйста, введите ваше ФИО.' : 'Аты-жөніңізді енгізіңіз.';
     return;
   }
 
@@ -511,7 +706,7 @@ function registerParticipant() {
     user = savedUser;
     PID = savedUser.id;
     mem = savedUser.mem || { test: null, prac: null };
-    alert("Вы уже зарегистрированы. Прогресс восстановлен.");
+    alert(currentLang === 'ru' ? "Вы уже зарегистрированы. Прогресс восстановлен." : "Сіз тіркелгенсіз. Прогресс қалпына келтірілді.");
   } else {
     user = { name: name };
     PID = generateID();
@@ -534,11 +729,11 @@ function registerParticipant() {
 }
 
 function saveProgress() { S.set('contest_user', { name: user.name, id: PID, mem: mem, variant: activeVariantName, lang: currentLang }); }
-function refreshMenu() { $('a-test').classList.toggle('done', !!mem.test); $('a-prac').classList.toggle('done', !!mem.prac); const n = (mem.test ? 1 : 0) + (mem.prac ? 1 : 0); $('m-bar').style.width = n * 50 + '%'; $('m-lbl').textContent = 'Выполнено: ' + n + ' из 2'; }
+function refreshMenu() { $('a-test').classList.toggle('done', !!mem.test); $('a-prac').classList.toggle('done', !!mem.prac); const n = (mem.test ? 1 : 0) + (mem.prac ? 1 : 0); $('m-bar').style.width = n * 50 + '%'; $('m-lbl').textContent = (currentLang === 'ru' ? 'Выполнено: ' : 'Орындалды: ') + n + (currentLang === 'ru' ? ' из 2' : ' / 2'); }
 
 // ================= ТЕСТ =================
 async function startTest() {
-  if (mem.test) { alert("Вы уже прошли тест!"); return; }
+  if (mem.test) { alert(currentLang === 'ru' ? "Вы уже прошли тест!" : "Сіз тесттен өттіңіз!"); return; }
   $('rules').classList.add('on');
 }
 
@@ -568,7 +763,7 @@ function renderQ() {
   $('q-n').textContent = (currentLang === 'ru' ? 'Вопрос ' : 'Сұрақ ') + (cur + 1);
   $('q-t').textContent = q.q;
   $('t-pos').textContent = cur + 1; $('t-bar').style.width = Object.keys(ans).length / Q.length * 100 + '%';
-  $('t-next').textContent = cur === Q.length - 1 ? (currentLang === 'ru' ? 'Завершить ✓' : 'Аяқтау ✓') : (currentLang === 'ru' ? 'Далее ›' : 'Келесі ›');
+  $('btn-test-next').textContent = cur === Q.length - 1 ? (currentLang === 'ru' ? 'Завершить ✓' : 'Аяқтау ✓') : (currentLang === 'ru' ? 'Далее ›' : 'Келесі ›');
 
   const box = $('q-o'); box.innerHTML = '';
   q.o.forEach((t, i) => {
@@ -686,7 +881,7 @@ let pracTimer = null, pracEnd = 0, pracArmed = false, pracGrace = 0;
 let PA = {}, pStep = 0;
 
 function startPrac() {
-  if (mem.prac) { alert("Вы уже прошли практику!"); return; }
+  if (mem.prac) { alert(currentLang === 'ru' ? "Вы уже прошли практику!" : "Сіз практикадан өттіңіз!"); return; }
   $('rules-prac').classList.add('on');
 }
 
@@ -754,7 +949,6 @@ function renderPrac() {
       tb.th.forEach(x => h.append(E('th', null, x))); t.append(h);
       tb.rows.forEach(r => { const tr = E('tr'); r.forEach(x => tr.append(E('td', null, x))); t.append(tr); });
       
-      // Блок для ввода ответа ВНУТРИ таблицы
       const tot = E('tr', 'tot');
       tot.append(E('td', null, tb.tot)); 
       
@@ -772,10 +966,9 @@ function renderPrac() {
     
     if (m.fm[k]) c.append(E('div', 'fm', m.fm[k]));
     
-    // Дополнительные поля для задач, если есть
     tasksOf(k).forEach((task, idx) => {
-      // Пропускаем задачи, которые мы уже встроили в таблицу (s1-q1, s1-q2, s2-q1, s2-q2)
-      if ((k===1 && (idx===0 || idx===1)) || (k===2 && (idx===0 || idx===1))) return; 
+      // Если это 1 или 2 этап, и мы уже использовали поле sX-tot для первой задачи, пропускаем дублирование ввода
+      if ((k===1 || k===2) && idx===0) return; 
       
       const d = E('div', 'task'), lb = E('label');
       lb.append(E('b', null, idx + 1), E('span', null, task.text));
@@ -804,17 +997,17 @@ async function submitPractice(isAuto = false) {
 
   const answers = {};
   const _pd = currentLang === 'ru' ? PRACTICE_DATA_RU : PRACTICE_DATA_KZ;
-  for (let k = 1; k <= 5; k++) ((_pd['stage' + k] || {}).tasks || []).forEach(t => { answers[t.id] = PA[t.id] || ''; });
   
-  // Добавляем ответы из таблиц (если мы использовали поле sX-tot)
+  // Собираем ответы из полей
   for (let k = 1; k <= 5; k++) {
-     if (PA['s'+k+'-tot']) {
-        // Привязываем эти ответы к первым задачам этапа
-        let tasks = (_pd['stage'+k] || {}).tasks || [];
-        if (tasks[0]) answers[tasks[0].id] = PA['s'+k+'-tot'];
-        if (tasks[1]) answers[tasks[1].id] = PA['s'+k+'-tot'];
-     }
+    ((_pd['stage' + k] || {}).tasks || []).forEach(t => { 
+       answers[t.id] = PA[t.id] || ''; 
+    });
   }
+  
+  // Если в таблице на 1-м и 2-м этапе был введен ответ (s1-tot, s2-tot), подставляем его в первую задачу
+  if (PA['s1-tot'] !== undefined && PA['s1-tot'] !== '') answers['s1-q1'] = PA['s1-tot'];
+  if (PA['s2-tot'] !== undefined && PA['s2-tot'] !== '') answers['s2-q1'] = PA['s2-tot'];
 
   const calcFn = currentLang === 'ru' ? calculatePracticeScoreRU : calculatePracticeScoreKZ;
   const result = calcFn(answers);
@@ -877,14 +1070,14 @@ let currentAdminTab = 'test';
 
 async function adminLogin() {
   const p = $('a-pass').value;
-  if (p !== 'admin123') { $('a-err').textContent = 'Неверный пароль'; return; }
+  if (p !== 'admin123') { $('a-err').textContent = currentLang === 'ru' ? 'Неверный пароль' : 'Қате құпия сөз'; return; }
   $('a-pass').value = ''; $('a-err').textContent = '';
   show('v-admin');
   loadAdmin();
 }
 
 async function loadAdmin() {
-  $('a-msg').textContent = 'Загрузка данных из Google Таблиц...';
+  $('a-msg').textContent = currentLang === 'ru' ? 'Загрузка данных...' : 'Деректер жүктелуде...';
   $('a-tbl').innerHTML = '';
 
   try {
@@ -893,7 +1086,7 @@ async function loadAdmin() {
       fetch(API_PRACTICE).then(r => r.json()).catch(() => [])
     ]);
 
-    $('a-msg').textContent = 'Обновлено: ' + new Date().toLocaleTimeString();
+    $('a-msg').textContent = (currentLang === 'ru' ? 'Обновлено: ' : 'Жаңартылды: ') + new Date().toLocaleTimeString();
 
     const tests = resTests || [];
     const pracs = resPracs || [];
@@ -902,21 +1095,21 @@ async function loadAdmin() {
     const avgPrac = pracs.length ? Math.round(pracs.reduce((acc, r) => acc + parseInt(r.total_score || 0), 0) / pracs.length) : 0;
 
     $('a-stats').innerHTML = `
-      <div class="stat"><b>${tests.length}</b><span>Тестов сдано</span></div>
-      <div class="stat"><b>${pracs.length}</b><span>Практик сдано</span></div>
-      <div class="stat"><b>${avgTest}</b><span>Ср. балл (Тест)</span></div>
-      <div class="stat"><b>${avgPrac}</b><span>Ср. балл (Практика)</span></div>
+      <div class="stat"><b>${tests.length}</b><span>${currentLang==='ru'?'Тестов сдано':'Тест тапсырылды'}</span></div>
+      <div class="stat"><b>${pracs.length}</b><span>${currentLang==='ru'?'Практик сдано':'Практика тапсырылды'}</span></div>
+      <div class="stat"><b>${avgTest}</b><span>${currentLang==='ru'?'Ср. балл (Тест)':'Орт. балл (Тест)'}</span></div>
+      <div class="stat"><b>${avgPrac}</b><span>${currentLang==='ru'?'Ср. балл (Практика)':'Орт. балл (Практика)'}</span></div>
     `;
 
     $('a-tabs').innerHTML = '';
     const btnTest = document.createElement('button');
     btnTest.className = 'st ' + (currentAdminTab === 'test' ? 'cur' : '');
-    btnTest.textContent = `Тесты (${tests.length})`;
+    btnTest.textContent = (currentLang==='ru'?'Тесты':'Тесттер') + ` (${tests.length})`;
     btnTest.onclick = () => { currentAdminTab = 'test'; loadAdmin(); };
 
     const btnPrac = document.createElement('button');
     btnPrac.className = 'st ' + (currentAdminTab === 'prac' ? 'cur' : '');
-    btnPrac.textContent = `Практика (${pracs.length})`;
+    btnPrac.textContent = (currentLang==='ru'?'Практика':'Практика') + ` (${pracs.length})`;
     btnPrac.onclick = () => { currentAdminTab = 'prac'; loadAdmin(); };
 
     $('a-tabs').append(btnTest, btnPrac);
@@ -929,10 +1122,14 @@ async function loadAdmin() {
     let dataToShow = [];
 
     if (currentAdminTab === 'test') {
-      headers = ['ID', 'ФИО', 'Вариант', 'Результат', 'Баллы', 'Прав.', 'Неправ.', 'Время', 'Статус'];
+      headers = currentLang==='ru' 
+        ? ['ID', 'ФИО', 'Вариант', 'Результат', 'Баллы', 'Прав.', 'Неправ.', 'Время', 'Статус']
+        : ['ID', 'Аты-жөні', 'Нұсқа', 'Нәтиже', 'Балл', 'Дұрыс', 'Қате', 'Уақыт', 'Мәртебе'];
       dataToShow = tests.sort((a, b) => (parseInt(b.score_points) || 0) - (parseInt(a.score_points) || 0));
     } else {
-      headers = ['ID', 'ФИО', 'Яз', 'Эт1(1)', 'Эт1(2)', 'Эт2(1)', 'Эт2(2)', 'Эт2(3)', 'Эт3(1)', 'Эт3(2)', 'Эт3(3)', 'Эт3(4)', 'Эт4(1)', 'Эт4(2)', 'Эт4(3)', 'Эт4(4)', 'Эт5(1)', 'Эт5(2)', 'Эт5(3)', 'Эт5(4)', 'Эт5(5)', 'ИТОГ', 'Статус', 'Ошибка'];
+      headers = currentLang==='ru'
+        ? ['ID', 'ФИО', 'Яз', 'Эт1(1)', 'Эт1(2)', 'Эт2(1)', 'Эт2(2)', 'Эт2(3)', 'Эт3(1)', 'Эт3(2)', 'Эт3(3)', 'Эт3(4)', 'Эт4(1)', 'Эт4(2)', 'Эт4(3)', 'Эт4(4)', 'Эт5(1)', 'Эт5(2)', 'Эт5(3)', 'Эт5(4)', 'Эт5(5)', 'ИТОГ', 'Статус', 'Ошибка']
+        : ['ID', 'Аты-жөні', 'Тіл', 'Кез1(1)', 'Кез1(2)', 'Кез2(1)', 'Кез2(2)', 'Кез2(3)', 'Кез3(1)', 'Кез3(2)', 'Кез3(3)', 'Кез3(4)', 'Кез4(1)', 'Кез4(2)', 'Кез4(3)', 'Кез4(4)', 'Кез5(1)', 'Кез5(2)', 'Кез5(3)', 'Кез5(4)', 'Кез5(5)', 'ҚОРЫТЫНДЫ', 'Мәртебе', 'Қате'];
       dataToShow = pracs.sort((a, b) => (parseInt(b.total_score) || 0) - (parseInt(a.total_score) || 0));
     }
 
@@ -985,7 +1182,7 @@ async function loadAdmin() {
     tbody.append(tb);
 
   } catch (e) {
-    $('a-msg').textContent = 'Ошибка загрузки. Проверьте подключение к SheetDB.';
+    $('a-msg').textContent = 'Ошибка / Қате';
     console.error(e);
   }
 }
@@ -1031,12 +1228,15 @@ function violation(reason) {
   }
 }
 
-document.addEventListener('visibilitychange', () => { if (document.hidden) violation('переключение на другую вкладку'); });
-window.addEventListener('blur', () => violation('потеря фокуса'));
-document.addEventListener('fullscreenchange', () => { if (!document.fullscreenElement) violation('выход из полноэкранного режима'); });
+document.addEventListener('visibilitychange', () => { if (document.hidden) violation(currentLang === 'ru' ? 'переключение на другую вкладку' : 'қойындыны ауыстыру'); });
+window.addEventListener('blur', () => violation(currentLang === 'ru' ? 'потеря фокуса' : 'фокусты жоғалту'));
+document.addEventListener('fullscreenchange', () => { if (!document.fullscreenElement) violation(currentLang === 'ru' ? 'выход из полноэкранного режима' : 'толық экраннан шығу'); });
 
 // Фоновые монеты
 (function () { const bg = $('bg'); for (let i = 0; i < 12; i++) { const c = document.createElement('div'), s = 24 + Math.random() * 28; c.className = 'coin'; c.textContent = '₸'; c.style.cssText = 'left:' + Math.random() * 96 + '%;width:' + s + 'px;height:' + s + 'px;font-size:' + s * .5 + 'px;animation-duration:' + (14 + Math.random() * 14) + 's;animation-delay:-' + Math.random() * 20 + 's'; bg.appendChild(c) } })();
+
+// Инициализация языка при загрузке
+applyLang();
 </script>
 </body>
 </html>
