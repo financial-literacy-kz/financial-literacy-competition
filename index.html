@@ -201,6 +201,10 @@ body[data-v="v-test"] #bg,body[data-v="v-prac"] #bg{display:none}
 
 <!-- Меню участника -->
 <section id="v-menu" class="view stg">
+  <div class="lang-switch">
+    <button id="btn-lang-ru-menu" onclick="setLang('ru')" class="active">RU</button>
+    <button id="btn-lang-kz-menu" onclick="setLang('kz')">KZ</button>
+  </div>
   <div style="text-align:center;margin-bottom:20px"><h2 id="title-menu" class="shine" style="font-size:36px">Добро пожаловать!</h2><div id="sub-menu" class="sub" style="margin:6px 0 0">Выберите этап конкурса для прохождения</div></div>
   <div class="mpw"><div class="mp"><i id="m-bar"></i></div><span id="m-lbl">Выполнено: 0 из 2</span></div>
   <div class="cards">
@@ -212,6 +216,10 @@ body[data-v="v-test"] #bg,body[data-v="v-prac"] #bg{display:none}
 
 <!-- Тест -->
 <section id="v-test" class="view">
+  <div class="lang-switch">
+    <button id="btn-lang-ru-test" onclick="setLang('ru')" class="active">RU</button>
+    <button id="btn-lang-kz-test" onclick="setLang('kz')">KZ</button>
+  </div>
   <div class="pz">
     <div class="pz-top">
       <div>
@@ -244,6 +252,10 @@ body[data-v="v-test"] #bg,body[data-v="v-prac"] #bg{display:none}
 
 <!-- Практика (содержимое рисует renderPrac) -->
 <section id="v-prac" class="view" style="justify-content:flex-start">
+  <div class="lang-switch">
+    <button id="btn-lang-ru-prac" onclick="setLang('ru')" class="active">RU</button>
+    <button id="btn-lang-kz-prac" onclick="setLang('kz')">KZ</button>
+  </div>
   <div class="pz" id="pz"></div>
   <div class="calc"><div class="cp" id="cp"><input id="cin" placeholder="520000+480000" oninput="calc()" autocomplete="off"><div id="cout">= …</div></div><button class="btn y" onclick="$('cp').classList.toggle('on')" title="Калькулятор">🧮</button></div>
 </section>
@@ -276,39 +288,39 @@ body[data-v="v-test"] #bg,body[data-v="v-prac"] #bg{display:none}
 
 <!-- Окна -->
 <div class="overlay" id="rules"><div class="card">
-  <h2 style="font-size:22px">Правила тестирования</h2>
+  <h2 style="font-size:22px" id="rules-h">Правила тестирования</h2>
   <ul class="rl" id="rules-text">
     <li>Тест проходит в полноэкранном режиме.</li>
     <li>Нельзя переключаться на другие вкладки, окна и приложения.</li>
     <li>Нельзя копировать вопросы и ответы, открывать контекстное меню, печатать страницу.</li>
     <li>Нельзя открывать консоль разработчика (F12, Ctrl+Shift+I/J/C, Ctrl+U).</li>
   </ul>
-  <p style="font-size:14px;font-weight:700;color:var(--bad);margin-bottom:18px">При любом нарушении тест будет немедленно закрыт, а результат аннулирован.</p>
+  <p style="font-size:14px;font-weight:700;color:var(--bad);margin-bottom:18px" id="rules-warn">При любом нарушении тест будет немедленно закрыт, а результат аннулирован.</p>
   <div class="nav" style="margin:0"><button id="btn-rules-cancel" class="btn o" onclick="$('rules').classList.remove('on')">Отмена</button><button id="btn-rules-start" class="btn y" onclick="beginTest()">Согласен, начать</button></div>
 </div></div>
 
 <div class="overlay" id="rules-prac"><div class="card">
-  <h2 style="font-size:22px">Правила практики</h2>
+  <h2 style="font-size:22px" id="rules-prac-h">Правила практики</h2>
   <ul class="rl" id="rules-prac-text">
     <li>Время на выполнение — 45 минут.</li>
     <li>Нельзя переключаться на другие вкладки, окна и приложения.</li>
     <li>Нельзя открывать консоль разработчика.</li>
   </ul>
-  <p style="font-size:14px;font-weight:700;color:var(--bad);margin-bottom:18px">При любом нарушении результат будет аннулирован.</p>
+  <p style="font-size:14px;font-weight:700;color:var(--bad);margin-bottom:18px" id="rules-prac-warn">При любом нарушении результат будет аннулирован.</p>
   <div class="nav" style="margin:0"><button id="btn-rules-prac-cancel" class="btn o" onclick="$('rules-prac').classList.remove('on')">Отмена</button><button id="btn-rules-prac-start" class="btn y" onclick="beginPrac()">Согласен, начать</button></div>
 </div></div>
 
 <div class="overlay" id="viol"><div class="card" style="text-align:center;border-top-color:var(--bad)">
   <div class="ico" style="font-size:56px">⛔</div>
-  <h2 style="font-size:22px;color:var(--bad)">Нарушение правил</h2>
-  <p style="line-height:1.6;margin:12px 0">Прохождение прекращено автоматически.<br>Обнаружено: <b id="viol-r"></b>.</p>
-  <p style="font-weight:700;margin-bottom:20px">Ваш результат аннулирован.</p>
-  <button class="btn b" onclick="$('viol').classList.remove('on')">Понятно</button>
+  <h2 style="font-size:22px;color:var(--bad)" id="viol-h">Нарушение правил</h2>
+  <p style="line-height:1.6;margin:12px 0" id="viol-text">Прохождение прекращено автоматически.<br>Обнаружено: <b id="viol-r"></b>.</p>
+  <p style="font-weight:700;margin-bottom:20px" id="viol-annulled">Ваш результат аннулирован.</p>
+  <button class="btn b" onclick="$('viol').classList.remove('on')" id="viol-ok">Понятно</button>
 </div></div>
 
 <div class="overlay" id="ov"><div class="card" style="text-align:center">
-  <h2 style="font-size:22px">Завершить тест?</h2><div class="sub" id="ov-t"></div>
-  <div class="nav" style="margin-bottom:0"><button class="btn o" onclick="$('ov').classList.remove('on')">Вернуться</button><button class="btn y" onclick="finishTest()">Завершить</button></div>
+  <h2 style="font-size:22px" id="ov-h">Завершить тест?</h2><div class="sub" id="ov-t"></div>
+  <div class="nav" style="margin-bottom:0"><button class="btn o" onclick="$('ov').classList.remove('on')" id="ov-back">Вернуться</button><button class="btn y" onclick="finishTest()" id="ov-finish">Завершить</button></div>
 </div></div>
 
 <!-- ПОДКЛЮЧЕНИЕ ФАЙЛОВ (Вопросы) -->
@@ -321,38 +333,38 @@ const PRACTICE_DATA_RU = {
   "stage1": {
     "title": "Определение общего дохода семьи",
     "tasks": [
-      { "id": "s1-q1", "text": "Рассчитайте общий ежемесячный доход семьи. (Введите число)", "correctAnswer": 1132000, "points": 8 },
-      { "id": "s1-q2", "text": "Определите, какую сумму составляют трудовые доходы семьи. (Введите число)", "correctAnswer": 1000000, "points": 7 }
+      { "id": "s1-q1", "text": "1. Рассчитайте общий ежемесячный доход семьи. (Введите число)", "correctAnswer": 1132000, "points": 8 },
+      { "id": "s1-q2", "text": "2. Определите, какую сумму составляют трудовые доходы семьи и какую — дополнительные поступления. (Введите сумму трудовых доходов)", "correctAnswer": 1000000, "points": 7 }
     ]
   },
   "stage2": {
     "title": "Расчёт расходов и остатка бюджета",
     "tasks": [
-      { "id": "s2-q1", "text": "Рассчитайте общую сумму ежемесячных расходов, включая накопления. (Введите число)", "correctAnswer": 678000, "points": 8 },
-      { "id": "s2-q2", "text": "Определите остаток денежных средств после всех запланированных расходов. (Введите число)", "correctAnswer": 454000, "points": 7 }
+      { "id": "s2-q1", "text": "1. Рассчитайте общую сумму ежемесячных расходов, включая накопления. (Введите число)", "correctAnswer": 678000, "points": 8 },
+      { "id": "s2-q2", "text": "2. Определите остаток денежных средств после всех запланированных расходов. (Введите число)", "correctAnswer": 454000, "points": 7 }
     ]
   },
   "stage3": {
     "title": "Анализ структуры семейного бюджета",
     "tasks": [
-      { "id": "s3-q1", "text": "Рассчитайте, какой процент общего дохода составляют все запланированные расходы. (Ответ в %, округлите до сотых)", "correctAnswer": 59.89, "points": 10 },
-      { "id": "s3-q2", "text": "Определите долю накоплений в общем доходе семьи. (Ответ в %, округлите до сотых)", "correctAnswer": 7.07, "points": 10 }
+      { "id": "s3-q1", "text": "1. Рассчитайте, какой процент общего дохода составляют все запланированные расходы. (Ответ в %, округлите до сотых)", "correctAnswer": 59.89, "points": 10 },
+      { "id": "s3-q2", "text": "2. Определите долю накоплений в общем доходе семьи. (Ответ в %, округлите до сотых)", "correctAnswer": 7.07, "points": 10 }
     ]
   },
   "stage4": {
     "title": "Решение финансовой ситуации",
     "tasks": [
-      { "id": "s4-q1", "text": "Какая сумма останется на депозите после снятия 120 000 тенге, если на нём было только 80 000 тенге? (Если не хватает, напишите -40000)", "correctAnswer": -40000, "points": 8 },
-      { "id": "s4-q2", "text": "На сколько увеличатся плановые расходы следующего месяца с учётом экскурсии? (Введите сумму в тенге)", "correctAnswer": 718000, "points": 8 },
-      { "id": "s4-q3", "text": "Какой остаток бюджета будет после включения экскурсии в расходы? (Введите сумму в тенге)", "correctAnswer": 414000, "points": 9 }
+      { "id": "s4-q1", "text": "1. Рассчитайте, какая сумма останется на депозите после снятия 120 000 тенге, если исходить из того, что до покупки на нём находились только накопления, сформированные за один месяц в размере 80 000 тенге. (Если не хватает, напишите -40000)", "correctAnswer": -40000, "points": 8 },
+      { "id": "s4-q2", "text": "2. Определите, на сколько увеличатся плановые расходы следующего месяца с учётом экскурсии. (Введите сумму в тенге)", "correctAnswer": 718000, "points": 8 },
+      { "id": "s4-q3", "text": "3. Какой остаток бюджета будет после включения экскурсии в расходы? (Введите сумму в тенге)", "correctAnswer": 414000, "points": 9 }
     ]
   },
   "stage5": {
     "title": "Разработка финансового плана семьи",
     "tasks": [
-      { "id": "s5-q1", "text": "Какой остаток бюджета будет, если семья восстановит депозит на 120 000 тенге в следующем месяце? (Введите сумму в тенге)", "correctAnswer": 294000, "points": 10 },
-      { "id": "s5-q2", "text": "На сколько процентов можно сократить расходы на развлечения и транспорт, чтобы направить 20 000 тенге на сбережения? (Сумма сокращения в тенге)", "correctAnswer": 20000, "points": 7 },
-      { "id": "s5-q3", "text": "Какая сумма накоплений будет у семьи, если она будет откладывать 80 000 тенге ежемесячно в течение года? (Введите сумму в тенге)", "correctAnswer": 960000, "points": 8 }
+      { "id": "s5-q1", "text": "1. Составьте обновлённый бюджет на следующий месяц. Какой остаток бюджета будет, если семья восстановит депозит на 120 000 тенге? (Введите сумму в тенге)", "correctAnswer": 294000, "points": 10 },
+      { "id": "s5-q2", "text": "2. На сколько процентов можно сократить расходы на развлечения и транспорт, чтобы направить 20 000 тенге на сбережения? (Сумма сокращения в тенге)", "correctAnswer": 20000, "points": 7 },
+      { "id": "s5-q3", "text": "3. Какая сумма накоплений будет у семьи, если она будет откладывать 80 000 тенге ежемесячно в течение года? (Введите сумму в тенге)", "correctAnswer": 960000, "points": 8 }
     ]
   }
 };
@@ -361,38 +373,38 @@ const PRACTICE_DATA_KZ = {
   "stage1": {
     "title": "Отбасының жалпы табысын анықтау",
     "tasks": [
-      { "id": "s1-q1", "text": "Отбасының жалпы айлық кірісін есептеңіз. (Санды енгізіңіз)", "correctAnswer": 1132000, "points": 8 },
-      { "id": "s1-q2", "text": "Отбасының еңбек қызметінен түсетін кірісін анықтаңыз. (Санды енгізіңіз)", "correctAnswer": 1000000, "points": 7 }
+      { "id": "s1-q1", "text": "1. Отбасының жалпы айлық кірісін есептеңіз. (Санды енгізіңіз)", "correctAnswer": 1132000, "points": 8 },
+      { "id": "s1-q2", "text": "2. Отбасының еңбек қызметінен түсетін кірісін және қосымша түсімдерін анықтаңыз. (Еңбек кірісінің сомасын енгізіңіз)", "correctAnswer": 1000000, "points": 7 }
     ]
   },
   "stage2": {
     "title": "Шығыстар мен бюджет қалдығын есептеу",
     "tasks": [
-      { "id": "s2-q1", "text": "Жинақтарды қоса алғанда, жалпы айлық шығыстарды есептеңіз. (Санды енгізіңіз)", "correctAnswer": 678000, "points": 8 },
-      { "id": "s2-q2", "text": "Барлық жоспарланған шығыстардан кейін қалатын ақшалай қаражатты анықтаңыз. (Санды енгізіңіз)", "correctAnswer": 454000, "points": 7 }
+      { "id": "s2-q1", "text": "1. Жинақтарды қоса алғанда, жалпы айлық шығыстарды есептеңіз. (Санды енгізіңіз)", "correctAnswer": 678000, "points": 8 },
+      { "id": "s2-q2", "text": "2. Барлық жоспарланған шығыстардан кейін қалатын ақшалай қаражатты анықтаңыз. (Санды енгізіңіз)", "correctAnswer": 454000, "points": 7 }
     ]
   },
   "stage3": {
     "title": "Отбасы бюджетінің құрылымын талдау",
     "tasks": [
-      { "id": "s3-q1", "text": "Барлық жоспарланған шығыстардың жалпы кірістегі үлесін пайызбен есептеңіз. (Жауапты %-бен, жүздікке дейін дөңгелектеңіз)", "correctAnswer": 59.89, "points": 10 },
-      { "id": "s3-q2", "text": "Жинақтардың отбасының жалпы кірісіндегі үлесін анықтаңыз. (Жауапты %-бен, жүздікке дейін дөңгелектеңіз)", "correctAnswer": 7.07, "points": 10 }
+      { "id": "s3-q1", "text": "1. Барлық жоспарланған шығыстардың жалпы кірістегі үлесін пайызбен есептеңіз. (Жауапты %-бен, жүздікке дейін дөңгелектеңіз)", "correctAnswer": 59.89, "points": 10 },
+      { "id": "s3-q2", "text": "2. Жинақтардың отбасының жалпы кірісіндегі үлесін анықтаңыз. (Жауапты %-бен, жүздікке дейін дөңгелектеңіз)", "correctAnswer": 7.07, "points": 10 }
     ]
   },
   "stage4": {
     "title": "Қаржылық жағдайды шешу",
     "tasks": [
-      { "id": "s4-q1", "text": "120 000 теңге алынғаннан кейін депозитте қанша қаражат қалады, егер онда тек 80 000 теңге болса? (Жетіспесе, -40000 деп жазыңыз)", "correctAnswer": -40000, "points": 8 },
-      { "id": "s4-q2", "text": "Экскурсия шығынын ескере отырып, келесі айдың жоспарланған шығындары қанша теңгеге артады? (Санды енгізіңіз)", "correctAnswer": 718000, "points": 8 },
-      { "id": "s4-q3", "text": "Экскурсияны шығындарға қосқаннан кейін бюджеттің қалдығы қанша болады? (Санды енгізіңіз)", "correctAnswer": 414000, "points": 9 }
+      { "id": "s4-q1", "text": "1. Сатып алуға дейін депозитте тек бір ай ішінде жиналған 80 000 теңге болды деп есептеп, 120 000 теңге алынғаннан кейін депозитте қанша қаражат қалатынын есептеңіз. (Жетіспесе, -40000 деп жазыңыз)", "correctAnswer": -40000, "points": 8 },
+      { "id": "s4-q2", "text": "2. Экскурсия шығынын ескере отырып, келесі айдың жоспарланған шығындары қанша теңгеге артатынын анықтаңыз. (Санды енгізіңіз)", "correctAnswer": 718000, "points": 8 },
+      { "id": "s4-q3", "text": "3. Экскурсияны шығындарға қосқаннан кейін бюджеттің қалдығы қанша болады? (Санды енгізіңіз)", "correctAnswer": 414000, "points": 9 }
     ]
   },
   "stage5": {
     "title": "Отбасының қаржылық жоспарын әзірлеу",
     "tasks": [
-      { "id": "s5-q1", "text": "Егер отбасы келесі айда депозитті 120 000 теңгеге толықтырса, бюджеттің қалдығы қанша болады? (Санды енгізіңіз)", "correctAnswer": 294000, "points": 10 },
-      { "id": "s5-q2", "text": "Жинақтарға 20 000 теңге бағыттау үшін көңіл көтеру мен көлік шығындарын қанша теңгеге қысқартуға болады?", "correctAnswer": 20000, "points": 7 },
-      { "id": "s5-q3", "text": "Егер отбасы ай сайын 80 000 теңгеден жинаса, бір жылда қанша жинақ болады? (Санды енгізіңіз)", "correctAnswer": 960000, "points": 8 }
+      { "id": "s5-q1", "text": "1. Келесі айға арналған жаңартылған бюджетті құрастырыңыз. Егер отбасы депозитті 120 000 теңгеге толықтырса, бюджеттің қалдығы қанша болады? (Санды енгізіңіз)", "correctAnswer": 294000, "points": 10 },
+      { "id": "s5-q2", "text": "2. Отбасының өмір сүру сапасын айтарлықтай төмендетпей, қандай шығындарды қысқартуға болатынын анықтаңыз. (20 000 теңге бағыттау үшін қысқарту сомасын енгізіңіз)", "correctAnswer": 20000, "points": 7 },
+      { "id": "s5-q3", "text": "3. Экскурсия құнын бюджетке қосқаннан кейін жинақтауға болатын қаражат мөлшерін есептеңіз. (Егер ай сайын 80 000 теңгеден жинаса, бір жылда қанша болады?)", "correctAnswer": 960000, "points": 8 }
     ]
   }
 };
@@ -525,7 +537,7 @@ const UI_TEXT = {
     chip3: "💼 5 кезең практика",
     btnStartPart: "Мен қатысушымын",
     btnStartAdmin: "Мен әкімшімін",
-    regTitle: "Қатысушы болып кіру",
+    regTitle: "Қатысушы кіруі",
     regSub: "Конкурсқа кіріспес бұрын өзіңізді таныстырыңыз",
     regLabel: "Аты-жөні (толық)",
     regNext: "Жалғастыру",
@@ -627,33 +639,39 @@ function applyLang() {
   $('btn-admin-back').textContent = t.adminBack;
 
   // Окна
-  $('rules').querySelector('h2').textContent = t.rulesTitle;
+  $('rules-h').textContent = t.rulesTitle;
   $('rules-text').innerHTML = t.rulesList;
-  $('rules').querySelector('p').textContent = t.rulesWarn;
+  $('rules-warn').textContent = t.rulesWarn;
   $('btn-rules-cancel').textContent = t.rulesCancel;
   $('btn-rules-start').textContent = t.rulesStart;
   
-  $('rules-prac').querySelector('h2').textContent = t.rulesPracTitle;
+  $('rules-prac-h').textContent = t.rulesPracTitle;
   $('rules-prac-text').innerHTML = t.rulesPracList;
-  $('rules-prac').querySelector('p').textContent = t.rulesPracWarn;
+  $('rules-prac-warn').textContent = t.rulesPracWarn;
   $('btn-rules-prac-cancel').textContent = t.rulesPracCancel;
   $('btn-rules-prac-start').textContent = t.rulesPracStart;
 
-  $('viol').querySelector('h2').textContent = t.violTitle;
-  $('viol').querySelector('p').innerHTML = t.violText + ' <b id="viol-r"></b>.';
-  $('viol').querySelectorAll('p')[1].textContent = t.violAnnulled;
-  $('viol').querySelector('button').textContent = t.violOk;
+  $('viol-h').textContent = t.violTitle;
+  $('viol-text').innerHTML = t.violText + ' <b id="viol-r"></b>.';
+  $('viol-annulled').textContent = t.violAnnulled;
+  $('viol-ok').textContent = t.violOk;
 
-  $('ov').querySelector('h2').textContent = t.ovTitle;
-  $('ov').querySelectorAll('button')[0].textContent = t.ovBack;
-  $('ov').querySelectorAll('button')[1].textContent = t.ovFinish;
+  $('ov-h').textContent = t.ovTitle;
+  $('ov-back').textContent = t.ovBack;
+  $('ov-finish').textContent = t.ovFinish;
 
   // Кнопки языков
   if (currentLang === 'ru') {
     $('btn-lang-ru-reg').classList.add('active'); $('btn-lang-kz-reg').classList.remove('active');
+    $('btn-lang-ru-menu').classList.add('active'); $('btn-lang-kz-menu').classList.remove('active');
+    $('btn-lang-ru-test').classList.add('active'); $('btn-lang-kz-test').classList.remove('active');
+    $('btn-lang-ru-prac').classList.add('active'); $('btn-lang-kz-prac').classList.remove('active');
     $('btn-lang-ru-adm').classList.add('active'); $('btn-lang-kz-adm').classList.remove('active');
   } else {
     $('btn-lang-kz-reg').classList.add('active'); $('btn-lang-ru-reg').classList.remove('active');
+    $('btn-lang-kz-menu').classList.add('active'); $('btn-lang-ru-menu').classList.remove('active');
+    $('btn-lang-kz-test').classList.add('active'); $('btn-lang-ru-test').classList.remove('active');
+    $('btn-lang-kz-prac').classList.add('active'); $('btn-lang-ru-prac').classList.remove('active');
     $('btn-lang-kz-adm').classList.add('active'); $('btn-lang-ru-adm').classList.remove('active');
   }
 }
