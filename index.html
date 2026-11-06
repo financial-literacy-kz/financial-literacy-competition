@@ -81,6 +81,12 @@ body[data-v="v-test"] #bg,body[data-v="v-prac"] #bg{display:none}
 .act .go{margin-top:16px;font-weight:700;font-size:13px;color:var(--accent);position:relative}
 .act.done{opacity:.7}.act.done .ic{background:linear-gradient(135deg,#6be39b,#00a650)}
 .act.done::after{content:"✓";position:absolute;top:12px;right:16px;font-size:18px;font-weight:700;color:var(--ok)}
+
+/* Визуальная блокировка карточек до начала времени */
+.act.locked { opacity: 0.6; cursor: not-allowed; filter: grayscale(0.5); }
+.act.locked:hover { transform: none; box-shadow: 0 6px 22px rgba(0,0,0,.08); border-bottom-color: transparent; }
+.act.locked .go { color: var(--bad); }
+
 .mpw{display:flex;align-items:center;gap:12px;margin-bottom:26px;font-size:13px;font-weight:700;color:var(--muted)}
 .mp{width:200px;height:8px;border-radius:99px;background:var(--line);overflow:hidden}.mp i{display:block;height:100%;width:0;background:linear-gradient(90deg,#ffd700,#00c853);transition:width .7s}
 
@@ -355,8 +361,6 @@ let PR = { mode: null, grace: 0 };
 function armProctor(mode) { PR.mode = mode; PR.grace = Date.now() + 3000; }
 
 // ================= ПРАКТИКА: ВОПРОСЫ (RU / KZ) =================
-// kind: 'num' — поле для числа, 'text' — поле для развёрнутого ответа
-// correct — допустимые значения для автопроверки; без correct задание проверяет жюри
 const PRACTICE_DATA_RU = {
   stage1: { title: 'Определение общего дохода семьи', tasks: [
     { id: 's1-q1', kind: 'num', correct: [1132000], points: 8, text: 'Рассчитайте общий ежемесячный доход семьи.' },
@@ -421,13 +425,11 @@ const PRACTICE_DATA_KZ = {
 
 const TASK_KEYS = ['s1_q1', 's1_q2', 's2_q1', 's2_q2', 's2_q3', 's3_q1', 's3_q2', 's3_q3', 's3_q4', 's4_q1', 's4_q2', 's4_q3', 's4_q4', 's5_q1', 's5_q2', 's5_q3', 's5_q4', 's5_q5'];
 
-// Все числа из ответа: «1 132 000», «59,89%», «−40 000» → [1132000], [59.89], [-40000]
 function numsIn(s) {
   s = String(s == null ? '' : s).replace(/[−–—]/g, '-').replace(/(\d)[\s\u00a0](?=\d{3}(?!\d))/g, '$1').replace(/,/g, '.');
   return (s.match(/-?\d+(?:\.\d+)?/g) || []).map(Number);
 }
 
-// Автопроверка: задания с correct проверяются сразу, остальные оценивает жюри (в таблице pts = '')
 function scorePractice(userAnswers, D) {
   let totalScore = 0; const details = [];
   for (let k = 1; k <= 5; k++) {
@@ -473,7 +475,8 @@ const UI_TEXT = {
     violTitle: "Нарушение правил", violText: "Прохождение прекращено автоматически.<br>Обнаружено:",
     violAnnulled: "Ваш результат аннулирован.", violOk: "Понятно",
     ovTitle: "Завершить тест?", ovBack: "Вернуться", ovFinish: "Завершить",
-    ovpTitle: "Отправить ответы?", ovpSub: "После отправки изменить ответы будет нельзя.", ovpBack: "Вернуться", ovpSend: "Отправить"
+    ovpTitle: "Отправить ответы?", ovpSub: "После отправки изменить ответы будет нельзя.", ovpBack: "Вернуться", ovpSend: "Отправить",
+    lockedTest: "Откроется 10.11.2026 в 13:00", lockedPrac: "Откроется 10.11.2026 в 16:00"
   },
   kz: {
     startTitle1: "Республикалық конкурс", startTitle2: "ҚАРЖЫЛЫҚ САУАТТЫЛЫҚ БОЙЫНША",
@@ -502,7 +505,8 @@ const UI_TEXT = {
     violTitle: "Ережелерді бұзу", violText: "Өту автоматты түрде тоқтатылды.<br>Анықталды:",
     violAnnulled: "Сіздің нәтижеңіз жойылды.", violOk: "Түсінікті",
     ovTitle: "Тесті аяқтау керек пе?", ovBack: "Қайту", ovFinish: "Аяқтау",
-    ovpTitle: "Жауаптарды жіберу керек пе?", ovpSub: "Жібергеннен кейін жауаптарды өзгертуге болмайды.", ovpBack: "Қайту", ovpSend: "Жіберу"
+    ovpTitle: "Жауаптарды жіберу керек пе?", ovpSub: "Жібергеннен кейін жауаптарды өзгертуге болмайды.", ovpBack: "Қайту", ovpSend: "Жіберу",
+    lockedTest: "10.11.2026 сағат 13:00-де ашылады", lockedPrac: "10.11.2026 сағат 16:00-де ашылады"
   }
 };
 
@@ -514,8 +518,7 @@ function applyLang() {
   set('btn-start-part', t.btnStartPart); set('btn-start-admin', t.btnStartAdmin);
   set('title-reg', t.regTitle); set('sub-reg', t.regSub); set('label-reg-name', t.regLabel); set('btn-reg-next', t.regNext); set('btn-reg-back', t.regBack);
   set('title-menu', t.menuTitle); set('sub-menu', t.menuSub);
-  set('act-test-h', t.actTestH); set('act-test-p', t.actTestP); set('act-test-go', t.actTestGo);
-  set('act-prac-h', t.actPracH); set('act-prac-p', t.actPracP); set('act-prac-go', t.actPracGo); set('btn-menu-back', t.menuBack);
+  set('act-test-h', t.actTestH); set('act-test-p', t.actTestP); set('act-prac-h', t.actPracH); set('act-prac-p', t.actPracP); set('btn-menu-back', t.menuBack);
   set('test-main-title', t.testTitle); set('text-question', t.textQuestion); set('text-from', t.textFrom);
   set('btn-test-back', t.testBack); set('btn-test-next', t.testNext);
   set('res-h', t.resH); set('res-score', t.resScore); set('res-note', t.resNote); set('btn-res-back', t.resBack);
@@ -529,17 +532,19 @@ function applyLang() {
   set('ov-h', t.ovTitle); set('ov-back', t.ovBack); set('ov-finish', t.ovFinish);
   set('ovp-h', t.ovpTitle); set('ovp-t', t.ovpSub); set('ovp-back', t.ovpBack); set('ovp-send', t.ovpSend);
 
+  // Обновление визуальной блокировки карточек
+  updateCardStates();
+
   ['start', 'reg', 'menu', 'test', 'prac', 'adm'].forEach(s => {
     const ru = $('btn-lang-ru-' + s), kz = $('btn-lang-kz-' + s);
     if (ru && kz) { ru.classList.toggle('active', currentLang === 'ru'); kz.classList.toggle('active', currentLang === 'kz'); }
   });
 }
 
-// Язык можно менять в любой момент, в том числе во время теста и практики
 function setLang(lang) {
   currentLang = lang;
   applyLang();
-  if (Q.length > 0) {                                  // тот же порядок вопросов и вариантов, ответы сохраняются
+  if (Q.length > 0) {
     buildQuestions(rawFor(lang));
     if ($('v-test').classList.contains('on')) renderQ();
   }
@@ -565,6 +570,40 @@ function show(id) {
   $(id).classList.add('on');
   document.body.dataset.v = id;
   window.scrollTo(0, 0);
+  
+  // При показе меню проверяем доступность карточек
+  if (id === 'v-menu') {
+    updateCardStates();
+  }
+}
+
+// Функция для визуальной блокировки карточек
+function updateCardStates() {
+  const t = UI_TEXT[currentLang];
+  const testCard = $('a-test');
+  const pracCard = $('a-prac');
+  const testGo = $('act-test-go');
+  const pracGo = $('act-prac-go');
+  
+  if (Date.now() < TEST_START_TIME) {
+    testCard.classList.add('locked');
+    testGo.textContent = t.lockedTest;
+    testGo.style.fontSize = '11px';
+  } else {
+    testCard.classList.remove('locked');
+    testGo.textContent = t.actTestGo;
+    testGo.style.fontSize = '13px';
+  }
+
+  if (Date.now() < PRAC_START_TIME) {
+    pracCard.classList.add('locked');
+    pracGo.textContent = t.lockedPrac;
+    pracGo.style.fontSize = '11px';
+  } else {
+    pracCard.classList.remove('locked');
+    pracGo.textContent = t.actPracGo;
+    pracGo.style.fontSize = '13px';
+  }
 }
 
 // ================= РЕГИСТРАЦИЯ =================
@@ -599,7 +638,7 @@ function refreshMenu() { $('a-test').classList.toggle('done', !!mem.test); $('a-
 // ================= ТЕСТ =================
 function startTest() {
   if (mem.test) { alert(tr("Вы уже прошли тест!", "Сіз тесттен өттіңіз!")); return; }
-  // ПРОВЕРКА ВРЕМЕНИ ДЛЯ ТЕСТА
+  // ПРОВЕРКА ВРЕМЕНИ
   if (Date.now() < TEST_START_TIME) {
     alert(tr("Тестирование откроется 10.11.2026 в 13:00.", "Тестілеу 10.11.2026 жылы сағат 13:00-де ашылады."));
     return;
@@ -747,11 +786,11 @@ const PM = {
 
 // ================= ПРАКТИКА: ЛОГИКА =================
 let pracTimer = null, pracEnd = 0;
-let PA = {}, pStep = 0;   // PA — введённые ответы (id задания → текст), pStep — вкладка (0 = Введение)
+let PA = {}, pStep = 0;
 
 function startPrac() {
   if (mem.prac) { alert(tr("Вы уже прошли практику!", "Сіз практикадан өттіңіз!")); return; }
-  // ПРОВЕРКА ВРЕМЕНИ ДЛЯ ПРАКТИКИ
+  // ПРОВЕРКА ВРЕМЕНИ
   if (Date.now() < PRAC_START_TIME) {
     alert(tr("Практика откроется 10.11.2026 в 16:00.", "Практика 10.11.2026 жылы сағат 16:00-де ашылады."));
     return;
@@ -765,7 +804,6 @@ function beginPrac() {
   $('rules-prac').classList.remove('on');
   try { const r = document.documentElement.requestFullscreen && document.documentElement.requestFullscreen(); if (r && r.catch) r.catch(() => { }) } catch (e) { }
 
-  // Таймер хранится как момент окончания — не сбрасывается при обновлении страницы
   const saved = S.get('progress_prac_' + PID, null);
   if (saved) { pracEnd = saved.end; PA = saved.a || {}; }
   else { pracEnd = Date.now() + DUR_PRAC * 1000; PA = {}; savePrac(); }
@@ -796,11 +834,9 @@ function renderPrac() {
   const done = k => tasksOf(k).some(t => (PA[t.id] || '').trim() !== '') || (PA['s' + k + '-tot'] || '') !== '';
   const goTo = i => { pStep = i; renderPrac(); window.scrollTo(0, 0); };
 
-  // Шапка: заголовок + таймер
   const top = E('div', 'pz-top'); top.append(E('h2', null, m.title));
   const tm = E('div', 'qt', '--:--'); tm.id = 'p-timer'; top.append(tm); root.append(top);
 
-  // Вкладки: Введение, Этап 1–5
   const st = E('div', 'steps');
   [m.tabIntro].concat([1, 2, 3, 4, 5].map(k => m.stage + ' ' + k)).forEach((t, i) => {
     const ok = i > 0 && done(i);
@@ -811,7 +847,6 @@ function renderPrac() {
 
   const c = E('div', 'pc');
   if (pStep === 0) {
-    // ----- Введение -----
     c.append(E('h3', null, m.tabIntro));
     m.head.forEach(([b, t]) => { const p = E('p'); p.append(E('b', null, b), document.createTextNode(t)); c.append(p); });
     [1, 2, 3, 4, 5].forEach(k => {
@@ -822,14 +857,12 @@ function renderPrac() {
     });
     const hint = E('p', null, m.hint); hint.style.cssText = 'margin-top:16px;color:var(--muted);font-size:13px'; c.append(hint);
   } else {
-    // ----- Этап -----
     const k = pStep, sd = D['stage' + k] || {}, li = m.lvOf[k - 1];
     c.append(E('span', 'lv lv' + li, m.lv[li]), E('h3', null, m.stage + ' ' + k + '. ' + (sd.title || m.names[k - 1])));
     [].concat(sd.intro || m.intro[k - 1]).forEach(t => c.append(E('p', null, t)));
     if (k === 3) { const r = E('div', 'rule'); m.rule.forEach(x => r.append(E('span', null, x))); c.append(r); }
     if (k === 5) { const u = E('ul', 'rl'); m.list.forEach(x => u.append(E('li', null, x))); c.append(u); }
 
-    // Таблица (как была): исходные данные + поле для итога
     const tb = m.tbl[k];
     if (tb) {
       const w = E('div', 'tw'), t = E('table', 'pt'), h = E('tr');
@@ -846,7 +879,6 @@ function renderPrac() {
 
     if (m.fm[k]) c.append(E('div', 'fm', m.fm[k]));
 
-    // Все вопросы этапа: вопрос + поле для ответа под ним
     tasksOf(k).forEach((task, idx) => {
       const d = E('div', 'task'), lb = E('label');
       lb.append(E('b', null, idx + 1), E('span', null, task.text));
@@ -864,7 +896,6 @@ function renderPrac() {
   }
   root.append(c);
 
-  // Навигация
   const nav = E('div', 'nav'), pv = E('button', 'btn o', m.back),
         nx = E('button', 'btn y', pStep === 5 ? m.send : pStep === 0 ? m.start : m.next);
   pv.disabled = pStep === 0; pv.onclick = () => goTo(pStep - 1);
@@ -874,7 +905,7 @@ function renderPrac() {
 }
 
 async function submitPractice(isAuto = false) {
-  if (mem.prac) return;                       // уже отправлено или аннулировано
+  if (mem.prac) return;
   $('ovp').classList.remove('on');
   PR.mode = null; clearInterval(pracTimer); S.del('progress_prac_' + PID);
   try { document.fullscreenElement && document.exitFullscreen() } catch (e) { }
@@ -883,7 +914,6 @@ async function submitPractice(isAuto = false) {
   const answers = {};
   for (let k = 1; k <= 5; k++) ((D['stage' + k] || {}).tasks || []).forEach(t => { answers[t.id] = (PA[t.id] || '').trim(); });
 
-  // Итог из таблицы этапов 1 и 2 засчитывается вместе с ответом на первый вопрос этапа
   ['s1', 's2'].forEach(p => {
     const tot = (PA[p + '-tot'] || '').trim();
     if (tot) answers[p + '-q1'] = answers[p + '-q1'] ? answers[p + '-q1'] + ' | ' + tot : tot;
@@ -1071,11 +1101,9 @@ function violation(reason) {
   show('v-menu'); refreshMenu();
 }
 
-// Вкладки, окна, полноэкранный режим
 document.addEventListener('visibilitychange', () => { if (document.hidden) violation(tr('переключение на другую вкладку', 'қойындыны ауыстыру')); });
 window.addEventListener('blur', () => violation(tr('потеря фокуса окна (другое окно или приложение)', 'терезе фокусын жоғалту (басқа терезе немесе қолданба)')));
 
-// Копирование, контекстное меню, выделение
 ['copy', 'cut'].forEach(t => document.addEventListener(t, e => { if (PR.mode) { e.preventDefault(); violation(tr('попытка копирования', 'көшіру әрекеті')); } }));
 document.addEventListener('paste', e => { if (PR.mode) e.preventDefault(); });
 document.addEventListener('contextmenu', e => { if (PR.mode) { e.preventDefault(); violation(tr('попытка открыть контекстное меню', 'контекстік мәзірді ашу әрекеті')); } });
@@ -1086,7 +1114,6 @@ document.addEventListener('contextmenu', e => { if (PR.mode) { e.preventDefault(
   e.preventDefault();
 }));
 
-// Горячие клавиши: консоль разработчика, копирование, печать
 document.addEventListener('keydown', e => {
   if (!PR.mode) return;
   const c = e.ctrlKey || e.metaKey, k = e.code;
@@ -1100,7 +1127,6 @@ document.addEventListener('keyup', e => {
   if (PR.mode && e.key === 'PrintScreen') { try { navigator.clipboard.writeText(''); } catch (x) { } violation(tr('попытка сделать снимок экрана', 'скриншот жасау әрекеті')); }
 });
 
-// Консоль, открытая через меню браузера (только компьютер, не во встроенном окне)
 setInterval(() => {
   if (!PR.mode || window.top !== window.self || /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent)) return;
   if (window.outerWidth - window.innerWidth > 200 || window.outerHeight - window.innerHeight > 200) violation(tr('открыта консоль разработчика (DevTools)', 'әзірлеуші консолі ашық (DevTools)'));
