@@ -80,7 +80,7 @@ body[data-v="v-test"] #bg,body[data-v="v-prac"] #bg{display:none}
 .act h3{color:var(--accent);margin-bottom:8px;position:relative}.act p{font-size:14px;color:var(--muted);line-height:1.5;position:relative}
 .act .go{margin-top:16px;font-weight:700;font-size:13px;color:var(--accent);position:relative}
 .act.done{opacity:.7}.act.done .ic{background:linear-gradient(135deg,#6be39b,#00a650)}
-.act.done::after{content:"✓ Выполнено";position:absolute;top:12px;right:14px;font-size:12px;font-weight:700;color:var(--ok)}
+.act.done::after{content:"✓";position:absolute;top:12px;right:16px;font-size:18px;font-weight:700;color:var(--ok)}
 .mpw{display:flex;align-items:center;gap:12px;margin-bottom:26px;font-size:13px;font-weight:700;color:var(--muted)}
 .mp{width:200px;height:8px;border-radius:99px;background:var(--line);overflow:hidden}.mp i{display:block;height:100%;width:0;background:linear-gradient(90deg,#ffd700,#00c853);transition:width .7s}
 
@@ -96,8 +96,9 @@ body[data-v="v-test"] #bg,body[data-v="v-prac"] #bg{display:none}
 .qo:hover{border-color:var(--yellow)}.qo .l{flex:0 0 30px;height:30px;border-radius:50%;background:var(--line);display:grid;place-items:center;font-weight:700;font-size:13px}
 .qo.sel{border-color:var(--yellow);background:rgba(255,215,0,.15)}.qo.sel .l{background:var(--yellow);color:var(--on-yellow)}
 .pc h3.qq{font-size:19px;line-height:1.5;color:var(--text);margin:6px 0 18px}
-#v-test,#v-test *{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
-@media print{#v-test{display:none!important}}
+#v-test,#v-test *,#v-prac,#v-prac *{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+#v-prac input,#v-prac textarea{-webkit-user-select:text;user-select:text}
+@media print{#v-test,#v-prac{display:none!important}}
 
 /* ===== СТИЛИ ПРАКТИКИ ===== */
 .pz{width:100%;max-width:940px;animation:rise .4s ease}
@@ -116,23 +117,24 @@ body[data-v="v-test"] #bg,body[data-v="v-prac"] #bg{display:none}
 .lv1{background:rgba(255,170,0,.2);color:#c98a00}
 .lv2{background:rgba(217,58,58,.15);color:var(--bad)}
 .ov{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid var(--line);font-size:14px}
-.task{margin-top:18px}
+.task{margin-top:20px}
 .task label{display:flex;gap:10px;font-weight:600;font-size:14px;line-height:1.5;margin-bottom:8px}
 .task label b{flex:0 0 26px;height:26px;border-radius:50%;background:var(--yellow);color:var(--on-yellow);display:grid;place-items:center;font-size:13px}
+.task .hintx{font-size:12px;color:var(--muted);margin:-2px 0 8px 36px;font-weight:600}
 .task input{min-height:40px;font-size:16px}
+.task textarea{min-height:96px;font-size:15px;resize:vertical}
 
-/* Обновлённые стили таблицы для практики */
+/* Таблицы практики */
 .pt{width:100%;border-collapse:collapse;margin:14px 0;border:1px solid var(--line);border-radius:12px;overflow:hidden;font-size:14px;background:var(--bg)}
 .pt th,.pt td{padding:10px 14px;border-bottom:1px solid var(--line);text-align:left}
 .pt th{background:rgba(255,215,0,.15);color:var(--text);font-weight:700}
 .pt td:last-child,.pt th:last-child{text-align:right;font-variant-numeric:tabular-nums}
 .pt tr.tot td{font-weight:800;background:rgba(255,215,0,.08)}
-.pt tr.tot input{width:100%;max-width:150px;padding:8px 12px;font-size:16px;border:2px solid var(--yellow);border-radius:8px;text-align:right;background:#fff}
 .rule{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0 14px}
 .rule span{padding:10px 16px;border-radius:12px;background:rgba(255,215,0,.18);font-weight:700;font-size:14px}
 .fm{margin:12px 0;padding:12px 16px;border-radius:10px;background:var(--bg);font-weight:600;font-size:14px;line-height:1.6;white-space:pre-line}
 .res{margin-top:20px;padding:12px 16px;border-left:4px solid var(--yellow);background:rgba(255,215,0,.1);border-radius:8px;font-size:13px;font-weight:600;line-height:1.5}
-@media(max-width:640px){.pc{padding:20px}.pz-top{flex-direction:column;align-items:flex-start}}
+@media(max-width:640px){.pc{padding:20px}.pz-top{flex-direction:column;align-items:flex-start}.task .hintx{margin-left:0}}
 .calc{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:40;display:flex;flex-direction:column;align-items:flex-end}
 .cp{display:none;background:var(--card);padding:14px;border-radius:14px;box-shadow:0 8px 30px rgba(0,0,0,.3);margin-bottom:10px;width:260px}.cp.on{display:block}.cp input{margin-bottom:8px}#cout{font-weight:800;font-size:18px}
 .lang-switch{display:flex;gap:10px;justify-content:flex-end;width:100%;max-width:940px;margin-bottom:15px}
@@ -146,6 +148,7 @@ body[data-v="v-test"] #bg,body[data-v="v-prac"] #bg{display:none}
 .stat b{display:block;font-size:30px;color:var(--accent)}.stat span{font-size:12px;font-weight:600;color:var(--muted)}
 .at{width:100%;border-collapse:collapse;margin:8px 0;font-size:14px}
 .at th,.at td{padding:12px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+.at td{max-width:260px;white-space:pre-wrap;word-break:break-word}
 .at th{background:rgba(255,215,0,.15);white-space:nowrap}
 .at tbody tr:hover td{background:rgba(255,215,0,.08)}
 .cf{position:fixed;top:-24px;width:10px;height:16px;border-radius:2px;z-index:60;pointer-events:none;animation:fall linear forwards}
@@ -163,6 +166,10 @@ body[data-v="v-test"] #bg,body[data-v="v-prac"] #bg{display:none}
       <img src="лого.jpeg" alt="Логотип" style="width:100%;max-width:100%;height:auto;display:block;object-fit:cover;">
     </div>
     <div style="padding:30px 20px;text-align:center;">
+      <div class="lang-switch" style="margin-bottom:10px">
+        <button id="btn-lang-ru-start" onclick="setLang('ru')" class="active">RU</button>
+        <button id="btn-lang-kz-start" onclick="setLang('kz')">KZ</button>
+      </div>
       <h1 id="title-start-1" style="font-size:16px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;font-weight:700;margin-bottom:5px;">Республиканский конкурс</h1>
       <h2 id="title-start-2" class="shine" style="font-size:28px;line-height:1.2;margin:0 0 15px 0;text-transform:uppercase;">ПО ФИНАНСОВОЙ ГРАМОТНОСТИ</h2>
       <div id="sub-start" class="sub" style="margin-bottom:25px;">— Ключ к успеху —<br>среди обучающихся колледжей</div>
@@ -238,7 +245,7 @@ body[data-v="v-test"] #bg,body[data-v="v-prac"] #bg{display:none}
       <h3 class="qq" id="q-t"></h3>
       <div id="q-o"></div>
     </div>
-    <div class="nav"><button id="btn-test-back" class="btn o" onclick="go(-1)">← Назад</button><button id="btn-test-next" class="btn y" id="t-next" onclick="go(1)">Далее →</button></div>
+    <div class="nav"><button id="btn-test-back" class="btn o" onclick="go(-1)">← Назад</button><button id="btn-test-next" class="btn y" onclick="go(1)">Далее →</button></div>
   </div>
 </section>
 
@@ -246,8 +253,8 @@ body[data-v="v-test"] #bg,body[data-v="v-prac"] #bg{display:none}
 <section id="v-res" class="view"><div class="card" style="text-align:center">
   <h2 id="res-h">Спасибо!</h2>
   <div class="big" id="res-score" style="font-size:24px;color:var(--ok);">Ваш результат отправлен</div>
-  <div class="sub" id="res-note">Рахмет! Сіздің нәтижеңіз жіберілді</div>
-  <button id="btn-res-back" class="btn y" onclick="show('v-menu');refreshMenu()">К заданиям / Тапсырмаларға</button>
+  <div class="sub" id="res-note">Ожидайте результатов от организаторов.</div>
+  <button id="btn-res-back" class="btn y" onclick="show('v-menu');refreshMenu()">К заданиям</button>
 </div></section>
 
 <!-- Практика (содержимое рисует renderPrac) -->
@@ -278,7 +285,7 @@ body[data-v="v-test"] #bg,body[data-v="v-prac"] #bg{display:none}
 <!-- Админка -->
 <section id="v-admin" class="view"><div class="card wide" style="border-top-color:var(--accent)">
   <h2 id="title-admin">Панель администратора</h2>
-  <div class="sub" id="a-src" style="margin-bottom:0">Данные из Google Таблиц</div>
+  <div class="sub" id="a-src" style="margin-bottom:0">Google Sheets</div>
   <div class="stats" id="a-stats"></div>
   <div class="steps" id="a-tabs"></div>
   <div class="err" id="a-msg" style="min-height:0;margin:6px 0"></div>
@@ -289,24 +296,15 @@ body[data-v="v-test"] #bg,body[data-v="v-prac"] #bg{display:none}
 <!-- Окна -->
 <div class="overlay" id="rules"><div class="card">
   <h2 style="font-size:22px" id="rules-h">Правила тестирования</h2>
-  <ul class="rl" id="rules-text">
-    <li>Тест проходит в полноэкранном режиме.</li>
-    <li>Нельзя переключаться на другие вкладки, окна и приложения.</li>
-    <li>Нельзя копировать вопросы и ответы, открывать контекстное меню, печатать страницу.</li>
-    <li>Нельзя открывать консоль разработчика (F12, Ctrl+Shift+I/J/C, Ctrl+U).</li>
-  </ul>
-  <p style="font-size:14px;font-weight:700;color:var(--bad);margin-bottom:18px" id="rules-warn">При любом нарушении тест будет немедленно закрыт, а результат аннулирован.</p>
+  <ul class="rl" id="rules-text"></ul>
+  <p style="font-size:14px;font-weight:700;color:var(--bad);margin-bottom:18px" id="rules-warn"></p>
   <div class="nav" style="margin:0"><button id="btn-rules-cancel" class="btn o" onclick="$('rules').classList.remove('on')">Отмена</button><button id="btn-rules-start" class="btn y" onclick="beginTest()">Согласен, начать</button></div>
 </div></div>
 
 <div class="overlay" id="rules-prac"><div class="card">
   <h2 style="font-size:22px" id="rules-prac-h">Правила практики</h2>
-  <ul class="rl" id="rules-prac-text">
-    <li>Время на выполнение — 45 минут.</li>
-    <li>Нельзя переключаться на другие вкладки, окна и приложения.</li>
-    <li>Нельзя открывать консоль разработчика.</li>
-  </ul>
-  <p style="font-size:14px;font-weight:700;color:var(--bad);margin-bottom:18px" id="rules-prac-warn">При любом нарушении результат будет аннулирован.</p>
+  <ul class="rl" id="rules-prac-text"></ul>
+  <p style="font-size:14px;font-weight:700;color:var(--bad);margin-bottom:18px" id="rules-prac-warn"></p>
   <div class="nav" style="margin:0"><button id="btn-rules-prac-cancel" class="btn o" onclick="$('rules-prac').classList.remove('on')">Отмена</button><button id="btn-rules-prac-start" class="btn y" onclick="beginPrac()">Согласен, начать</button></div>
 </div></div>
 
@@ -323,383 +321,237 @@ body[data-v="v-test"] #bg,body[data-v="v-prac"] #bg{display:none}
   <div class="nav" style="margin-bottom:0"><button class="btn o" onclick="$('ov').classList.remove('on')" id="ov-back">Вернуться</button><button class="btn y" onclick="finishTest()" id="ov-finish">Завершить</button></div>
 </div></div>
 
-<!-- ПОДКЛЮЧЕНИЕ ФАЙЛОВ (Вопросы) -->
+<div class="overlay" id="ovp"><div class="card" style="text-align:center">
+  <h2 style="font-size:22px" id="ovp-h">Отправить ответы?</h2><div class="sub" id="ovp-t">После отправки изменить ответы будет нельзя.</div>
+  <div class="nav" style="margin-bottom:0"><button class="btn o" onclick="$('ovp').classList.remove('on')" id="ovp-back">Вернуться</button><button class="btn y" onclick="submitPractice(false)" id="ovp-send">Отправить</button></div>
+</div></div>
+
+<!-- ПОДКЛЮЧЕНИЕ ФАЙЛОВ (Вопросы теста) -->
 <script src="questions_ru.js"></script>
 <script src="questions_kz.js"></script>
 
 <script>
-// ================= ДАННЫЕ ПРАКТИКИ (ВСТРОЕНЫ) =================
-const PRACTICE_DATA_RU = {
-  "stage1": {
-    "title": "Определение общего дохода семьи",
-    "tasks": [
-      { "id": "s1-q1", "text": "1. Рассчитайте общий ежемесячный доход семьи. (Введите число)", "correctAnswer": 1132000, "points": 8 },
-      { "id": "s1-q2", "text": "2. Определите, какую сумму составляют трудовые доходы семьи и какую — дополнительные поступления. (Введите сумму трудовых доходов)", "correctAnswer": 1000000, "points": 7 }
-    ]
-  },
-  "stage2": {
-    "title": "Расчёт расходов и остатка бюджета",
-    "tasks": [
-      { "id": "s2-q1", "text": "1. Рассчитайте общую сумму ежемесячных расходов, включая накопления. (Введите число)", "correctAnswer": 678000, "points": 8 },
-      { "id": "s2-q2", "text": "2. Определите остаток денежных средств после всех запланированных расходов. (Введите число)", "correctAnswer": 454000, "points": 7 }
-    ]
-  },
-  "stage3": {
-    "title": "Анализ структуры семейного бюджета",
-    "tasks": [
-      { "id": "s3-q1", "text": "1. Рассчитайте, какой процент общего дохода составляют все запланированные расходы. (Ответ в %, округлите до сотых)", "correctAnswer": 59.89, "points": 10 },
-      { "id": "s3-q2", "text": "2. Определите долю накоплений в общем доходе семьи. (Ответ в %, округлите до сотых)", "correctAnswer": 7.07, "points": 10 }
-    ]
-  },
-  "stage4": {
-    "title": "Решение финансовой ситуации",
-    "tasks": [
-      { "id": "s4-q1", "text": "1. Рассчитайте, какая сумма останется на депозите после снятия 120 000 тенге, если исходить из того, что до покупки на нём находились только накопления, сформированные за один месяц в размере 80 000 тенге. (Если не хватает, напишите -40000)", "correctAnswer": -40000, "points": 8 },
-      { "id": "s4-q2", "text": "2. Определите, на сколько увеличатся плановые расходы следующего месяца с учётом экскурсии. (Введите сумму в тенге)", "correctAnswer": 718000, "points": 8 },
-      { "id": "s4-q3", "text": "3. Какой остаток бюджета будет после включения экскурсии в расходы? (Введите сумму в тенге)", "correctAnswer": 414000, "points": 9 }
-    ]
-  },
-  "stage5": {
-    "title": "Разработка финансового плана семьи",
-    "tasks": [
-      { "id": "s5-q1", "text": "1. Составьте обновлённый бюджет на следующий месяц. Какой остаток бюджета будет, если семья восстановит депозит на 120 000 тенге? (Введите сумму в тенге)", "correctAnswer": 294000, "points": 10 },
-      { "id": "s5-q2", "text": "2. На сколько процентов можно сократить расходы на развлечения и транспорт, чтобы направить 20 000 тенге на сбережения? (Сумма сокращения в тенге)", "correctAnswer": 20000, "points": 7 },
-      { "id": "s5-q3", "text": "3. Какая сумма накоплений будет у семьи, если она будет откладывать 80 000 тенге ежемесячно в течение года? (Введите сумму в тенге)", "correctAnswer": 960000, "points": 8 }
-    ]
-  }
-};
-
-const PRACTICE_DATA_KZ = {
-  "stage1": {
-    "title": "Отбасының жалпы табысын анықтау",
-    "tasks": [
-      { "id": "s1-q1", "text": "1. Отбасының жалпы айлық кірісін есептеңіз. (Санды енгізіңіз)", "correctAnswer": 1132000, "points": 8 },
-      { "id": "s1-q2", "text": "2. Отбасының еңбек қызметінен түсетін кірісін және қосымша түсімдерін анықтаңыз. (Еңбек кірісінің сомасын енгізіңіз)", "correctAnswer": 1000000, "points": 7 }
-    ]
-  },
-  "stage2": {
-    "title": "Шығыстар мен бюджет қалдығын есептеу",
-    "tasks": [
-      { "id": "s2-q1", "text": "1. Жинақтарды қоса алғанда, жалпы айлық шығыстарды есептеңіз. (Санды енгізіңіз)", "correctAnswer": 678000, "points": 8 },
-      { "id": "s2-q2", "text": "2. Барлық жоспарланған шығыстардан кейін қалатын ақшалай қаражатты анықтаңыз. (Санды енгізіңіз)", "correctAnswer": 454000, "points": 7 }
-    ]
-  },
-  "stage3": {
-    "title": "Отбасы бюджетінің құрылымын талдау",
-    "tasks": [
-      { "id": "s3-q1", "text": "1. Барлық жоспарланған шығыстардың жалпы кірістегі үлесін пайызбен есептеңіз. (Жауапты %-бен, жүздікке дейін дөңгелектеңіз)", "correctAnswer": 59.89, "points": 10 },
-      { "id": "s3-q2", "text": "2. Жинақтардың отбасының жалпы кірісіндегі үлесін анықтаңыз. (Жауапты %-бен, жүздікке дейін дөңгелектеңіз)", "correctAnswer": 7.07, "points": 10 }
-    ]
-  },
-  "stage4": {
-    "title": "Қаржылық жағдайды шешу",
-    "tasks": [
-      { "id": "s4-q1", "text": "1. Сатып алуға дейін депозитте тек бір ай ішінде жиналған 80 000 теңге болды деп есептеп, 120 000 теңге алынғаннан кейін депозитте қанша қаражат қалатынын есептеңіз. (Жетіспесе, -40000 деп жазыңыз)", "correctAnswer": -40000, "points": 8 },
-      { "id": "s4-q2", "text": "2. Экскурсия шығынын ескере отырып, келесі айдың жоспарланған шығындары қанша теңгеге артатынын анықтаңыз. (Санды енгізіңіз)", "correctAnswer": 718000, "points": 8 },
-      { "id": "s4-q3", "text": "3. Экскурсияны шығындарға қосқаннан кейін бюджеттің қалдығы қанша болады? (Санды енгізіңіз)", "correctAnswer": 414000, "points": 9 }
-    ]
-  },
-  "stage5": {
-    "title": "Отбасының қаржылық жоспарын әзірлеу",
-    "tasks": [
-      { "id": "s5-q1", "text": "1. Келесі айға арналған жаңартылған бюджетті құрастырыңыз. Егер отбасы депозитті 120 000 теңгеге толықтырса, бюджеттің қалдығы қанша болады? (Санды енгізіңіз)", "correctAnswer": 294000, "points": 10 },
-      { "id": "s5-q2", "text": "2. Отбасының өмір сүру сапасын айтарлықтай төмендетпей, қандай шығындарды қысқартуға болатынын анықтаңыз. (20 000 теңге бағыттау үшін қысқарту сомасын енгізіңіз)", "correctAnswer": 20000, "points": 7 },
-      { "id": "s5-q3", "text": "3. Экскурсия құнын бюджетке қосқаннан кейін жинақтауға болатын қаражат мөлшерін есептеңіз. (Егер ай сайын 80 000 теңгеден жинаса, бір жылда қанша болады?)", "correctAnswer": 960000, "points": 8 }
-    ]
-  }
-};
-
-// Функции для проверки ответов
-function calculatePracticeScoreRU(userAnswers) {
-  let totalScore = 0;
-  let details = [];
-  for (const stageKey in PRACTICE_DATA_RU) {
-    const stage = PRACTICE_DATA_RU[stageKey];
-    stage.tasks.forEach(task => {
-      const userAnswer = userAnswers[task.id];
-      let isCorrect = false;
-      if (userAnswer !== undefined && userAnswer !== null && userAnswer !== '') {
-        const cleanAnswer = String(userAnswer).replace(/\s/g, '').replace(',', '.');
-        const numAnswer = parseFloat(cleanAnswer);
-        if (Math.abs(numAnswer - task.correctAnswer) < 0.1) {
-          isCorrect = true;
-          totalScore += task.points;
-        }
-      }
-      details.push({ taskId: task.id, userAnswer: userAnswer, pointsEarned: isCorrect ? task.points : 0 });
-    });
-  }
-  return { totalScore, details };
-}
-
-function calculatePracticeScoreKZ(userAnswers) {
-  let totalScore = 0;
-  let details = [];
-  for (const stageKey in PRACTICE_DATA_KZ) {
-    const stage = PRACTICE_DATA_KZ[stageKey];
-    stage.tasks.forEach(task => {
-      const userAnswer = userAnswers[task.id];
-      let isCorrect = false;
-      if (userAnswer !== undefined && userAnswer !== null && userAnswer !== '') {
-        const cleanAnswer = String(userAnswer).replace(/\s/g, '').replace(',', '.');
-        const numAnswer = parseFloat(cleanAnswer);
-        if (Math.abs(numAnswer - task.correctAnswer) < 0.1) {
-          isCorrect = true;
-          totalScore += task.points;
-        }
-      }
-      details.push({ taskId: task.id, userAnswer: userAnswer, pointsEarned: isCorrect ? task.points : 0 });
-    });
-  }
-  return { totalScore, details };
-}
-
-// ================= НАСТРОЙКИ =================
-const API_PRACTICE = 'https://sheetdb.io/api/v1/30xavlcdm4804';
-const API_TEST = 'https://sheetdb.io/api/v1/moowfmuseogqe';
+// ================= НАСТРОЙКИ (API Google Таблиц через SheetDB) =================
+const API_PRACTICE = 'https://sheetdb.io/api/v1/30xavlcdm4804';   // практика
+const API_TEST     = 'https://sheetdb.io/api/v1/moowfmuseogqe';    // тестирование
 const DUR_TEST = 30 * 60;
 const DUR_PRAC = 45 * 60;
 const L = ['A', 'B', 'C', 'D', 'E'];
 const $ = id => document.getElementById(id);
 const S = { get(k, d) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d } catch (e) { return d } }, set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)) } catch (e) { } }, del(k) { try { localStorage.removeItem(k) } catch (e) { } } };
+const tr = (ru, kz) => currentLang === 'ru' ? ru : kz;
 
 let currentLang = 'ru';
 let Q = [];
-let activeVariantName = "";
+let activeVariantName = "", variantIdx = 0, perm = null;
 let user = null, cur = 0, ans = {}, end = 0, tick = null, mem = { test: null, prac: null };
 let PID = null;
-let armed = false, grace = 0;
+// Единое состояние прокторинга: mode = 'test' | 'prac' | null
+let PR = { mode: null, grace: 0 };
+function armProctor(mode) { PR.mode = mode; PR.grace = Date.now() + 3000; }
 
-// ================= ПЕРЕКЛЮЧАТЕЛЬ ЯЗЫКА =================
+// ================= ПРАКТИКА: ВОПРОСЫ (RU / KZ) =================
+// kind: 'num' — поле для числа, 'text' — поле для развёрнутого ответа
+// correct — допустимые значения для автопроверки; без correct задание проверяет жюри
+const PRACTICE_DATA_RU = {
+  stage1: { title: 'Определение общего дохода семьи', tasks: [
+    { id: 's1-q1', kind: 'num', correct: [1132000], points: 8, text: 'Рассчитайте общий ежемесячный доход семьи.' },
+    { id: 's1-q2', kind: 'text', correct: [1000000], points: 7, text: 'Определите, какую сумму составляют трудовые доходы семьи и какую — дополнительные поступления.', hint: 'Укажите обе суммы в тенге' }
+  ]},
+  stage2: { title: 'Расчёт расходов и остатка бюджета', tasks: [
+    { id: 's2-q1', kind: 'num', correct: [678000], points: 5, text: 'Рассчитайте общую сумму ежемесячных расходов, включая накопления.' },
+    { id: 's2-q2', kind: 'num', correct: [454000], points: 5, text: 'Определите остаток денежных средств после всех запланированных расходов.' },
+    { id: 's2-q3', kind: 'text', points: 5, text: 'Установите, имеет ли семья свободные средства для покрытия дополнительных затрат.' }
+  ]},
+  stage3: { title: 'Анализ структуры семейного бюджета', tasks: [
+    { id: 's3-q1', kind: 'num', correct: [59.89], points: 5, text: 'Рассчитайте, какой процент общего дохода составляют все запланированные расходы.', hint: 'Ответ в %, округлите до сотых' },
+    { id: 's3-q2', kind: 'num', correct: [7.07], points: 5, text: 'Определите долю накоплений в общем доходе семьи.', hint: 'Ответ в %, округлите до сотых' },
+    { id: 's3-q3', kind: 'text', points: 5, text: 'Сравните фактическую структуру бюджета с правилом «70/20/10».' },
+    { id: 's3-q4', kind: 'text', points: 5, text: 'Сделайте вывод: соблюдает ли семья это правило? Если нет, какие категории необходимо пересмотреть?' }
+  ]},
+  stage4: { title: 'Решение финансовой ситуации', tasks: [
+    { id: 's4-q1', kind: 'text', correct: [-40000], points: 6, text: 'Рассчитайте, какая сумма останется на депозите после снятия 120 000 тенге, если исходить из того, что до покупки на нём находились только накопления, сформированные за один месяц в размере 80 000 тенге. Объясните, почему для точного расчёта фактического остатка необходимо знать начальный баланс депозита.', hint: 'Если средств не хватает, укажите отрицательное число, например -40000' },
+    { id: 's4-q2', kind: 'num', correct: [40000, 718000], points: 6, text: 'Определите, на сколько увеличатся плановые расходы следующего месяца с учётом экскурсии.' },
+    { id: 's4-q3', kind: 'text', points: 6, text: 'Предложите два варианта финансирования поездки без оформления нового кредита.' },
+    { id: 's4-q4', kind: 'text', points: 7, text: 'Выберите наиболее рациональный вариант и обоснуйте его с учётом необходимости сохранять финансовую подушку безопасности.' }
+  ]},
+  stage5: { title: 'Разработка финансового плана семьи', tasks: [
+    { id: 's5-q1', kind: 'text', points: 5, text: 'Составьте обновлённый бюджет на следующий месяц.', hint: 'Перечислите статьи бюджета и суммы' },
+    { id: 's5-q2', kind: 'text', points: 5, text: 'Определите, какие расходы можно сократить без существенного ухудшения качества жизни семьи.' },
+    { id: 's5-q3', kind: 'text', points: 5, text: 'Рассчитайте возможную сумму накоплений после включения стоимости экскурсии в бюджет.' },
+    { id: 's5-q4', kind: 'text', points: 5, text: 'Предложите стратегию восстановления средств на депозите после покупки стиральной машины.' },
+    { id: 's5-q5', kind: 'text', points: 5, text: 'Сформулируйте три рекомендации семье по повышению финансовой устойчивости.' }
+  ]}
+};
+
+const PRACTICE_DATA_KZ = {
+  stage1: { title: 'Отбасының жалпы табысын анықтау', tasks: [
+    { id: 's1-q1', kind: 'num', correct: [1132000], points: 8, text: 'Отбасының жалпы айлық кірісін есептеңіз.' },
+    { id: 's1-q2', kind: 'text', correct: [1000000], points: 7, text: 'Отбасының еңбек қызметінен түсетін кірісін және қосымша түсімдерін анықтаңыз.', hint: 'Екі соманы да теңгемен көрсетіңіз' }
+  ]},
+  stage2: { title: 'Шығыстар мен бюджет қалдығын есептеу', tasks: [
+    { id: 's2-q1', kind: 'num', correct: [678000], points: 5, text: 'Жинақтарды қоса алғанда, жалпы айлық шығыстарды есептеңіз.' },
+    { id: 's2-q2', kind: 'num', correct: [454000], points: 5, text: 'Барлық жоспарланған шығыстардан кейін қалатын ақшалай қаражатты анықтаңыз.' },
+    { id: 's2-q3', kind: 'text', points: 5, text: 'Отбасында қосымша шығындарды өтеуге жеткілікті бос қаражат бар-жоғын анықтаңыз.' }
+  ]},
+  stage3: { title: 'Отбасы бюджетінің құрылымын талдау', tasks: [
+    { id: 's3-q1', kind: 'num', correct: [59.89], points: 5, text: 'Барлық жоспарланған шығыстардың жалпы кірістегі үлесін пайызбен есептеңіз.', hint: 'Жауапты %-бен жазыңыз, жүздікке дейін дөңгелектеңіз' },
+    { id: 's3-q2', kind: 'num', correct: [7.07], points: 5, text: 'Жинақтардың отбасының жалпы кірісіндегі үлесін анықтаңыз.', hint: 'Жауапты %-бен жазыңыз, жүздікке дейін дөңгелектеңіз' },
+    { id: 's3-q3', kind: 'text', points: 5, text: 'Бюджеттің нақты құрылымын «70/20/10» қағидасымен салыстырыңыз.' },
+    { id: 's3-q4', kind: 'text', points: 5, text: 'Қорытынды жасаңыз: отбасы бұл қағиданы сақтай ма? Егер сақтамаса, қандай шығыс санаттарын қайта қарастыру қажет?' }
+  ]},
+  stage4: { title: 'Қаржылық жағдайды шешу', tasks: [
+    { id: 's4-q1', kind: 'text', correct: [-40000], points: 6, text: 'Сатып алуға дейін депозитте тек бір ай ішінде жиналған 80 000 теңге болды деп есептеп, 120 000 теңге алынғаннан кейін депозитте қанша қаражат қалатынын есептеңіз. Қалған ақшаның нақты мөлшерін есептеу үшін депозиттің бастапқы қалдығын білу неліктен қажет екенін түсіндіріңіз.', hint: 'Қаражат жетпесе, теріс санды жазыңыз, мысалы -40000' },
+    { id: 's4-q2', kind: 'num', correct: [40000, 718000], points: 6, text: 'Экскурсия шығынын ескере отырып, келесі айдың жоспарланған шығындары қанша теңгеге артатынын анықтаңыз.' },
+    { id: 's4-q3', kind: 'text', points: 6, text: 'Жаңа несие рәсімдемей, сапарды қаржыландырудың екі нұсқасын ұсыныңыз.' },
+    { id: 's4-q4', kind: 'text', points: 7, text: 'Ең тиімді нұсқаны таңдап, оны отбасының қаржылық қауіпсіздік қорын сақтау қажеттілігін ескере отырып негіздеңіз.' }
+  ]},
+  stage5: { title: 'Отбасының қаржылық жоспарын әзірлеу', tasks: [
+    { id: 's5-q1', kind: 'text', points: 5, text: 'Келесі айға арналған жаңартылған бюджетті құрастырыңыз.', hint: 'Бюджет баптары мен сомаларын көрсетіңіз' },
+    { id: 's5-q2', kind: 'text', points: 5, text: 'Отбасының өмір сүру сапасын айтарлықтай төмендетпей, қандай шығындарды қысқартуға болатынын анықтаңыз.' },
+    { id: 's5-q3', kind: 'text', points: 5, text: 'Экскурсия құнын бюджетке қосқаннан кейін жинақтауға болатын қаражат мөлшерін есептеңіз.' },
+    { id: 's5-q4', kind: 'text', points: 5, text: 'Кір жуғыш машинаны сатып алғаннан кейін депозиттегі қаражатты қалпына келтіру стратегиясын ұсыныңыз.' },
+    { id: 's5-q5', kind: 'text', points: 5, text: 'Отбасының қаржылық тұрақтылығын арттыру бойынша үш ұсыныс жасаңыз.' }
+  ]}
+};
+
+const TASK_KEYS = ['s1_q1', 's1_q2', 's2_q1', 's2_q2', 's2_q3', 's3_q1', 's3_q2', 's3_q3', 's3_q4', 's4_q1', 's4_q2', 's4_q3', 's4_q4', 's5_q1', 's5_q2', 's5_q3', 's5_q4', 's5_q5'];
+
+// Все числа из ответа: «1 132 000», «59,89%», «−40 000» → [1132000], [59.89], [-40000]
+function numsIn(s) {
+  s = String(s == null ? '' : s).replace(/[−–—]/g, '-').replace(/(\d)[\s\u00a0](?=\d{3}(?!\d))/g, '$1').replace(/,/g, '.');
+  return (s.match(/-?\d+(?:\.\d+)?/g) || []).map(Number);
+}
+
+// Автопроверка: задания с correct проверяются сразу, остальные оценивает жюри (в таблице pts = '')
+function scorePractice(userAnswers, D) {
+  let totalScore = 0; const details = [];
+  for (let k = 1; k <= 5; k++) {
+    ((D['stage' + k] || {}).tasks || []).forEach(task => {
+      const a = userAnswers[task.id];
+      let pts = '';
+      if (task.correct) {
+        const ok = numsIn(a).some(n => task.correct.some(c => Math.abs(n - c) < 0.1));
+        pts = ok ? task.points : 0; totalScore += pts;
+      }
+      details.push({ taskId: task.id, userAnswer: a, pointsEarned: pts });
+    });
+  }
+  return { totalScore, details };
+}
+
+// ================= ЯЗЫК ИНТЕРФЕЙСА =================
 const UI_TEXT = {
   ru: {
-    startTitle1: "Республиканский конкурс",
-    startTitle2: "ПО ФИНАНСОВОЙ ГРАМОТНОСТИ",
+    startTitle1: "Республиканский конкурс", startTitle2: "ПО ФИНАНСОВОЙ ГРАМОТНОСТИ",
     startSub: "— Ключ к успеху —<br>среди обучающихся колледжей",
-    chip1: "📝 20 вопросов",
-    chip2: "⏱ 30 минут",
-    chip3: "💼 5 этапов практики",
-    btnStartPart: "Я участник",
-    btnStartAdmin: "Я администратор",
-    regTitle: "Вход для участника",
-    regSub: "Пожалуйста, представьтесь перед началом конкурса",
-    regLabel: "ФИО (полностью)",
-    regNext: "Продолжить",
-    regBack: "← Назад",
-    menuTitle: "Добро пожаловать!",
-    menuSub: "Выберите этап конкурса для прохождения",
-    actTestH: "Тестирование",
-    actTestP: "20 вопросов по теории. Ограничение по времени — 30 минут. Прогресс сохраняется.",
-    actTestGo: "Начать →",
-    actPracH: "Практическое задание",
-    actPracP: "5 этапов: доходы, расходы, анализ бюджета и финансовый план семьи.",
-    actPracGo: "Открыть →",
+    chip1: "📝 20 вопросов", chip2: "⏱ 30 минут", chip3: "💼 5 этапов практики",
+    btnStartPart: "Я участник", btnStartAdmin: "Я администратор",
+    regTitle: "Вход для участника", regSub: "Пожалуйста, представьтесь перед началом конкурса",
+    regLabel: "ФИО (полностью)", regNext: "Продолжить", regBack: "← Назад",
+    menuTitle: "Добро пожаловать!", menuSub: "Выберите этап конкурса для прохождения",
+    actTestH: "Тестирование", actTestP: "20 вопросов по теории. Ограничение по времени — 30 минут. Прогресс сохраняется.", actTestGo: "Начать →",
+    actPracH: "Практическое задание", actPracP: "5 этапов: доходы, расходы, анализ бюджета и финансовый план семьи.", actPracGo: "Открыть →",
     menuBack: "← На главную",
-    testTitle: "Тестирование · Финансовая грамотность",
-    textQuestion: "Вопрос",
-    textFrom: "из",
-    testBack: "← Назад",
-    testNext: "Далее →",
-    resH: "Спасибо!",
-    resScore: "Ваш результат отправлен",
-    resNote: "Ожидайте результатов от организаторов.",
-    resBack: "К заданиям",
-    admTitle: "Администратор",
-    admSub: "Введите пароль",
-    admLogin: "Войти",
-    admBack: "← Назад",
-    adminTitle: "Панель администратора",
-    adminBack: "На главную",
+    testTitle: "Тестирование · Финансовая грамотность", textQuestion: "Вопрос", textFrom: "из",
+    testBack: "← Назад", testNext: "Далее →",
+    resH: "Спасибо!", resScore: "Ваш результат отправлен", resNote: "Ожидайте результатов от организаторов.", resBack: "К заданиям",
+    admTitle: "Администратор", admSub: "Введите пароль", admLogin: "Войти", admBack: "← Назад",
+    adminTitle: "Панель администратора", adminBack: "На главную",
     rulesTitle: "Правила тестирования",
     rulesList: "<li>Тест проходит в полноэкранном режиме.</li><li>Нельзя переключаться на другие вкладки, окна и приложения.</li><li>Нельзя копировать вопросы и ответы, открывать контекстное меню, печатать страницу.</li><li>Нельзя открывать консоль разработчика (F12, Ctrl+Shift+I/J/C, Ctrl+U).</li>",
     rulesWarn: "При любом нарушении тест будет немедленно закрыт, а результат аннулирован.",
-    rulesCancel: "Отмена",
-    rulesStart: "Согласен, начать",
+    rulesCancel: "Отмена", rulesStart: "Согласен, начать",
     rulesPracTitle: "Правила практики",
-    rulesPracList: "<li>Время на выполнение — 45 минут.</li><li>Нельзя переключаться на другие вкладки, окна и приложения.</li><li>Нельзя открывать консоль разработчика.</li>",
+    rulesPracList: "<li>Время на выполнение — 45 минут. Таймер не сбрасывается при обновлении страницы.</li><li>Нельзя переключаться на другие вкладки, окна и приложения.</li><li>Нельзя копировать задание, открывать контекстное меню, печатать страницу.</li><li>Нельзя открывать консоль разработчика (F12, Ctrl+Shift+I/J/C, Ctrl+U).</li>",
     rulesPracWarn: "При любом нарушении результат будет аннулирован.",
-    rulesPracCancel: "Отмена",
-    rulesPracStart: "Согласен, начать",
-    violTitle: "Нарушение правил",
-    violText: "Прохождение прекращено автоматически.<br>Обнаружено:",
-    violAnnulled: "Ваш результат аннулирован.",
-    violOk: "Понятно",
-    ovTitle: "Завершить тест?",
-    ovBack: "Вернуться",
-    ovFinish: "Завершить"
+    rulesPracCancel: "Отмена", rulesPracStart: "Согласен, начать",
+    violTitle: "Нарушение правил", violText: "Прохождение прекращено автоматически.<br>Обнаружено:",
+    violAnnulled: "Ваш результат аннулирован.", violOk: "Понятно",
+    ovTitle: "Завершить тест?", ovBack: "Вернуться", ovFinish: "Завершить",
+    ovpTitle: "Отправить ответы?", ovpSub: "После отправки изменить ответы будет нельзя.", ovpBack: "Вернуться", ovpSend: "Отправить"
   },
   kz: {
-    startTitle1: "Республикалық конкурс",
-    startTitle2: "ҚАРЖЫЛЫҚ САУАТТЫЛЫҚ БОЙЫНША",
+    startTitle1: "Республикалық конкурс", startTitle2: "ҚАРЖЫЛЫҚ САУАТТЫЛЫҚ БОЙЫНША",
     startSub: "— Табысқа жетудің кілті —<br>колледж студенттері арасында",
-    chip1: "📝 20 сұрақ",
-    chip2: "⏱ 30 минут",
-    chip3: "💼 5 кезең практика",
-    btnStartPart: "Мен қатысушымын",
-    btnStartAdmin: "Мен әкімшімін",
-    regTitle: "Қатысушы кіруі",
-    regSub: "Конкурсқа кіріспес бұрын өзіңізді таныстырыңыз",
-    regLabel: "Аты-жөні (толық)",
-    regNext: "Жалғастыру",
-    regBack: "← Артқа",
-    menuTitle: "Қош келдіңіз!",
-    menuSub: "Өту үшін конкурс кезеңін таңдаңыз",
-    actTestH: "Тестілеу",
-    actTestP: "20 теориялық сұрақ. Уақыт шектеуі — 30 минут. Прогресс сақталады.",
-    actTestGo: "Бастау →",
-    actPracH: "Практикалық тапсырма",
-    actPracP: "5 кезең: кірістер, шығыстар, бюджетті талдау және отбасының қаржылық жоспары.",
-    actPracGo: "Ашу →",
+    chip1: "📝 20 сұрақ", chip2: "⏱ 30 минут", chip3: "💼 5 кезең практика",
+    btnStartPart: "Мен қатысушымын", btnStartAdmin: "Мен әкімшімін",
+    regTitle: "Қатысушы болып кіру", regSub: "Конкурсқа кіріспес бұрын өзіңізді таныстырыңыз",
+    regLabel: "Аты-жөні (толық)", regNext: "Жалғастыру", regBack: "← Артқа",
+    menuTitle: "Қош келдіңіз!", menuSub: "Өту үшін конкурс кезеңін таңдаңыз",
+    actTestH: "Тестілеу", actTestP: "20 теориялық сұрақ. Уақыт шектеуі — 30 минут. Прогресс сақталады.", actTestGo: "Бастау →",
+    actPracH: "Практикалық тапсырма", actPracP: "5 кезең: кірістер, шығыстар, бюджетті талдау және отбасының қаржылық жоспары.", actPracGo: "Ашу →",
     menuBack: "← Басты бетке",
-    testTitle: "Тестілеу · Қаржылық сауаттылық",
-    textQuestion: "Сұрақ",
-    textFrom: "одан",
-    testBack: "← Артқа",
-    testNext: "Әрі қарай →",
-    resH: "Рақмет!",
-    resScore: "Сіздің нәтижеңіз жіберілді",
-    resNote: "Ұйымдастырушылардың нәтижелерін күтіңіз.",
-    resBack: "Тапсырмаларға",
-    admTitle: "Әкімші",
-    admSub: "Құпия сөзді енгізіңіз",
-    admLogin: "Кіру",
-    admBack: "← Артқа",
-    adminTitle: "Әкімші панелі",
-    adminBack: "Басты бетке",
+    testTitle: "Тестілеу · Қаржылық сауаттылық", textQuestion: "Сұрақ", textFrom: "/",
+    testBack: "← Артқа", testNext: "Әрі қарай →",
+    resH: "Рақмет!", resScore: "Сіздің нәтижеңіз жіберілді", resNote: "Ұйымдастырушылардың нәтижелерін күтіңіз.", resBack: "Тапсырмаларға",
+    admTitle: "Әкімші", admSub: "Құпия сөзді енгізіңіз", admLogin: "Кіру", admBack: "← Артқа",
+    adminTitle: "Әкімші панелі", adminBack: "Басты бетке",
     rulesTitle: "Тестілеу ережелері",
     rulesList: "<li>Тест толық экран режимінде өтеді.</li><li>Басқа қойындыларға, терезелерге және қолданбаларға ауысуға болмайды.</li><li>Сұрақтар мен жауаптарды көшіруге, контекстік мәзірді ашуға, бетті басып шығаруға болмайды.</li><li>Әзірлеуші консолін ашуға болмайды (F12, Ctrl+Shift+I/J/C, Ctrl+U).</li>",
     rulesWarn: "Кез келген бұзушылық кезінде тест дереу жабылады, ал нәтиже жойылады.",
-    rulesCancel: "Болдырмау",
-    rulesStart: "Келісемін, бастау",
+    rulesCancel: "Болдырмау", rulesStart: "Келісемін, бастау",
     rulesPracTitle: "Практика ережелері",
-    rulesPracList: "<li>Орындау уақыты — 45 минут.</li><li>Басқа қойындыларға, терезелерге және қолданбаларға ауысуға болмайды.</li><li>Әзірлеуші консолін ашуға болмайды.</li>",
+    rulesPracList: "<li>Орындау уақыты — 45 минут. Бетті жаңартқанда таймер қайта басталмайды.</li><li>Басқа қойындыларға, терезелерге және қолданбаларға ауысуға болмайды.</li><li>Тапсырманы көшіруге, контекстік мәзірді ашуға, бетті басып шығаруға болмайды.</li><li>Әзірлеуші консолін ашуға болмайды (F12, Ctrl+Shift+I/J/C, Ctrl+U).</li>",
     rulesPracWarn: "Кез келген бұзушылық кезінде нәтиже жойылады.",
-    rulesPracCancel: "Болдырмау",
-    rulesPracStart: "Келісемін, бастау",
-    violTitle: "Ережелерді бұзу",
-    violText: "Өту автоматты түрде тоқтатылды.<br>Анықталды:",
-    violAnnulled: "Сіздің нәтижеңіз жойылды.",
-    violOk: "Түсінікті",
-    ovTitle: "Тесті аяқтау керек пе?",
-    ovBack: "Қайту",
-    ovFinish: "Аяқтау"
+    rulesPracCancel: "Болдырмау", rulesPracStart: "Келісемін, бастау",
+    violTitle: "Ережелерді бұзу", violText: "Өту автоматты түрде тоқтатылды.<br>Анықталды:",
+    violAnnulled: "Сіздің нәтижеңіз жойылды.", violOk: "Түсінікті",
+    ovTitle: "Тесті аяқтау керек пе?", ovBack: "Қайту", ovFinish: "Аяқтау",
+    ovpTitle: "Жауаптарды жіберу керек пе?", ovpSub: "Жібергеннен кейін жауаптарды өзгертуге болмайды.", ovpBack: "Қайту", ovpSend: "Жіберу"
   }
 };
 
 function applyLang() {
   const t = UI_TEXT[currentLang];
-  
-  // Старт
-  $('title-start-1').textContent = t.startTitle1;
-  $('title-start-2').textContent = t.startTitle2;
-  $('sub-start').innerHTML = t.startSub;
-  $('chip-1').textContent = t.chip1;
-  $('chip-2').textContent = t.chip2;
-  $('chip-3').textContent = t.chip3;
-  $('btn-start-part').textContent = t.btnStartPart;
-  $('btn-start-admin').textContent = t.btnStartAdmin;
+  const set = (id, v, html) => { const e = $(id); if (e) { if (html) e.innerHTML = v; else e.textContent = v; } };
+  set('title-start-1', t.startTitle1); set('title-start-2', t.startTitle2); set('sub-start', t.startSub, true);
+  set('chip-1', t.chip1); set('chip-2', t.chip2); set('chip-3', t.chip3);
+  set('btn-start-part', t.btnStartPart); set('btn-start-admin', t.btnStartAdmin);
+  set('title-reg', t.regTitle); set('sub-reg', t.regSub); set('label-reg-name', t.regLabel); set('btn-reg-next', t.regNext); set('btn-reg-back', t.regBack);
+  set('title-menu', t.menuTitle); set('sub-menu', t.menuSub);
+  set('act-test-h', t.actTestH); set('act-test-p', t.actTestP); set('act-test-go', t.actTestGo);
+  set('act-prac-h', t.actPracH); set('act-prac-p', t.actPracP); set('act-prac-go', t.actPracGo); set('btn-menu-back', t.menuBack);
+  set('test-main-title', t.testTitle); set('text-question', t.textQuestion); set('text-from', t.textFrom);
+  set('btn-test-back', t.testBack); set('btn-test-next', t.testNext);
+  set('res-h', t.resH); set('res-score', t.resScore); set('res-note', t.resNote); set('btn-res-back', t.resBack);
+  set('title-adm', t.admTitle); set('sub-adm', t.admSub); set('btn-adm-login', t.admLogin); set('btn-adm-back', t.admBack);
+  set('title-admin', t.adminTitle); set('btn-admin-back', t.adminBack);
+  set('rules-h', t.rulesTitle); set('rules-text', t.rulesList, true); set('rules-warn', t.rulesWarn);
+  set('btn-rules-cancel', t.rulesCancel); set('btn-rules-start', t.rulesStart);
+  set('rules-prac-h', t.rulesPracTitle); set('rules-prac-text', t.rulesPracList, true); set('rules-prac-warn', t.rulesPracWarn);
+  set('btn-rules-prac-cancel', t.rulesPracCancel); set('btn-rules-prac-start', t.rulesPracStart);
+  set('viol-h', t.violTitle); set('viol-text', t.violText + ' <b id="viol-r"></b>.', true); set('viol-annulled', t.violAnnulled); set('viol-ok', t.violOk);
+  set('ov-h', t.ovTitle); set('ov-back', t.ovBack); set('ov-finish', t.ovFinish);
+  set('ovp-h', t.ovpTitle); set('ovp-t', t.ovpSub); set('ovp-back', t.ovpBack); set('ovp-send', t.ovpSend);
 
-  // Регистрация
-  $('title-reg').textContent = t.regTitle;
-  $('sub-reg').textContent = t.regSub;
-  $('label-reg-name').textContent = t.regLabel;
-  $('btn-reg-next').textContent = t.regNext;
-  $('btn-reg-back').textContent = t.regBack;
-
-  // Меню
-  $('title-menu').textContent = t.menuTitle;
-  $('sub-menu').textContent = t.menuSub;
-  $('act-test-h').textContent = t.actTestH;
-  $('act-test-p').textContent = t.actTestP;
-  $('act-test-go').textContent = t.actTestGo;
-  $('act-prac-h').textContent = t.actPracH;
-  $('act-prac-p').textContent = t.actPracP;
-  $('act-prac-go').textContent = t.actPracGo;
-  $('btn-menu-back').textContent = t.menuBack;
-
-  // Тест
-  $('test-main-title').textContent = t.testTitle;
-  $('text-question').textContent = t.textQuestion;
-  $('text-from').textContent = t.textFrom;
-  $('btn-test-back').textContent = t.testBack;
-  $('btn-test-next').textContent = t.testNext;
-
-  // Результат
-  $('res-h').textContent = t.resH;
-  $('res-score').textContent = t.resScore;
-  $('res-note').textContent = t.resNote;
-  $('btn-res-back').textContent = t.resBack;
-
-  // Админ
-  $('title-adm').textContent = t.admTitle;
-  $('sub-adm').textContent = t.admSub;
-  $('btn-adm-login').textContent = t.admLogin;
-  $('btn-adm-back').textContent = t.admBack;
-  $('title-admin').textContent = t.adminTitle;
-  $('btn-admin-back').textContent = t.adminBack;
-
-  // Окна
-  $('rules-h').textContent = t.rulesTitle;
-  $('rules-text').innerHTML = t.rulesList;
-  $('rules-warn').textContent = t.rulesWarn;
-  $('btn-rules-cancel').textContent = t.rulesCancel;
-  $('btn-rules-start').textContent = t.rulesStart;
-  
-  $('rules-prac-h').textContent = t.rulesPracTitle;
-  $('rules-prac-text').innerHTML = t.rulesPracList;
-  $('rules-prac-warn').textContent = t.rulesPracWarn;
-  $('btn-rules-prac-cancel').textContent = t.rulesPracCancel;
-  $('btn-rules-prac-start').textContent = t.rulesPracStart;
-
-  $('viol-h').textContent = t.violTitle;
-  $('viol-text').innerHTML = t.violText + ' <b id="viol-r"></b>.';
-  $('viol-annulled').textContent = t.violAnnulled;
-  $('viol-ok').textContent = t.violOk;
-
-  $('ov-h').textContent = t.ovTitle;
-  $('ov-back').textContent = t.ovBack;
-  $('ov-finish').textContent = t.ovFinish;
-
-  // Кнопки языков
-  if (currentLang === 'ru') {
-    $('btn-lang-ru-reg').classList.add('active'); $('btn-lang-kz-reg').classList.remove('active');
-    $('btn-lang-ru-menu').classList.add('active'); $('btn-lang-kz-menu').classList.remove('active');
-    $('btn-lang-ru-test').classList.add('active'); $('btn-lang-kz-test').classList.remove('active');
-    $('btn-lang-ru-prac').classList.add('active'); $('btn-lang-kz-prac').classList.remove('active');
-    $('btn-lang-ru-adm').classList.add('active'); $('btn-lang-kz-adm').classList.remove('active');
-  } else {
-    $('btn-lang-kz-reg').classList.add('active'); $('btn-lang-ru-reg').classList.remove('active');
-    $('btn-lang-kz-menu').classList.add('active'); $('btn-lang-ru-menu').classList.remove('active');
-    $('btn-lang-kz-test').classList.add('active'); $('btn-lang-ru-test').classList.remove('active');
-    $('btn-lang-kz-prac').classList.add('active'); $('btn-lang-ru-prac').classList.remove('active');
-    $('btn-lang-kz-adm').classList.add('active'); $('btn-lang-ru-adm').classList.remove('active');
-  }
+  ['start', 'reg', 'menu', 'test', 'prac', 'adm'].forEach(s => {
+    const ru = $('btn-lang-ru-' + s), kz = $('btn-lang-kz-' + s);
+    if (ru && kz) { ru.classList.toggle('active', currentLang === 'ru'); kz.classList.toggle('active', currentLang === 'kz'); }
+  });
 }
 
+// Язык можно менять в любой момент, в том числе во время теста и практики
 function setLang(lang) {
   currentLang = lang;
   applyLang();
-  
-  if (Q.length > 0 && $('v-test').classList.contains('on')) {
-    let rawData = [];
-    if (lang === 'ru') rawData = ALL_VARIANTS.find(v => v.name === activeVariantName)?.data || ALL_VARIANTS[0].data;
-    else rawData = ALL_VARIANTS_KZ.find(v => v.name === activeVariantName)?.data || ALL_VARIANTS_KZ[0].data;
-    prepareQuestions(rawData);
-    renderQ();
+  if (Q.length > 0) {                                  // тот же порядок вопросов и вариантов, ответы сохраняются
+    buildQuestions(rawFor(lang));
+    if ($('v-test').classList.contains('on')) renderQ();
   }
-
-  if ($('v-prac').classList.contains('on')) renderPrac();
+  if ($('v-prac').classList.contains('on')) { renderPrac(); }
+  if ($('v-menu').classList.contains('on')) refreshMenu();
+  if ($('v-admin').classList.contains('on')) loadAdmin();
 }
 
-// ================= ПОДГОТОВКА ВОПРОСОВ =================
-function prepareQuestions(questionsArray) {
-  let temp = JSON.parse(JSON.stringify(questionsArray));
-  temp.forEach(q => {
-    const correctText = q.o[q.a];
-    q.o.sort(() => Math.random() - 0.5);
-    q.a = q.o.indexOf(correctText);
-  });
-  Q = temp.sort(() => Math.random() - 0.5);
+// ================= ВОПРОСЫ ТЕСТА: ПЕРЕМЕШИВАНИЕ С СОХРАНЕНИЕМ ПОРЯДКА =================
+function shuffleIdx(n) { const a = [...Array(n).keys()]; for (let i = n - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+function variantsFor(lang) { return (lang === 'kz' && typeof ALL_VARIANTS_KZ !== 'undefined') ? ALL_VARIANTS_KZ : ALL_VARIANTS; }
+function rawFor(lang) { const vs = variantsFor(lang); return vs[variantIdx % vs.length].data; }
+function permValid(raw, p) { return p && p.q && p.q.length === raw.length && raw.every((q, i) => p.o[i] && p.o[i].length === q.o.length); }
+function buildQuestions(raw) {
+  if (!permValid(raw, perm)) perm = { q: shuffleIdx(raw.length), o: raw.map(q => shuffleIdx(q.o.length)) };
+  Q = perm.q.map(qi => { const s = raw[qi], ord = perm.o[qi]; return { q: s.q, o: ord.map(i => s.o[i]), a: ord.indexOf(s.a) }; });
 }
 
 function generateID() { return 'PART-' + Math.floor(Math.random() * 9000 + 1000); }
@@ -714,30 +566,21 @@ function show(id) {
 // ================= РЕГИСТРАЦИЯ =================
 function registerParticipant() {
   const name = $('reg-name').value.trim();
-  if (name.length < 3) {
-    $('reg-err').textContent = currentLang === 'ru' ? 'Пожалуйста, введите ваше ФИО.' : 'Аты-жөніңізді енгізіңіз.';
-    return;
-  }
+  if (name.length < 3) { $('reg-err').textContent = tr('Пожалуйста, введите ваше ФИО.', 'Аты-жөніңізді енгізіңіз.'); return; }
 
   const savedUser = S.get('contest_user', null);
   if (savedUser && savedUser.name === name) {
-    user = savedUser;
-    PID = savedUser.id;
+    user = savedUser; PID = savedUser.id;
     mem = savedUser.mem || { test: null, prac: null };
-    alert(currentLang === 'ru' ? "Вы уже зарегистрированы. Прогресс восстановлен." : "Сіз тіркелгенсіз. Прогресс қалпына келтірілді.");
+    variantIdx = savedUser.variantIdx || 0; activeVariantName = savedUser.variant || ''; perm = savedUser.perm || null;
+    alert(tr("Вы уже зарегистрированы. Прогресс восстановлен.", "Сіз тіркелгенсіз. Прогресс қалпына келтірілді."));
   } else {
-    user = { name: name };
-    PID = generateID();
+    user = { name: name }; PID = generateID();
     mem = { test: null, prac: null };
-
-    let variants = currentLang === 'ru' ? ALL_VARIANTS : ALL_VARIANTS_KZ;
-    const randomIndex = Math.floor(Math.random() * variants.length);
-    const selectedVariant = variants[randomIndex];
-    activeVariantName = selectedVariant.name;
-
-    prepareQuestions(selectedVariant.data);
-    S.set('contest_user', { name: name, id: PID, mem: mem, variant: activeVariantName, lang: currentLang });
+    variantIdx = Math.floor(Math.random() * ALL_VARIANTS.length); perm = null;
+    activeVariantName = ALL_VARIANTS[variantIdx].name;
   }
+  buildQuestions(rawFor(currentLang)); saveProgress();
 
   ans = {};
   $('reg-err').textContent = '';
@@ -746,17 +589,18 @@ function registerParticipant() {
   refreshMenu(); show('v-menu');
 }
 
-function saveProgress() { S.set('contest_user', { name: user.name, id: PID, mem: mem, variant: activeVariantName, lang: currentLang }); }
-function refreshMenu() { $('a-test').classList.toggle('done', !!mem.test); $('a-prac').classList.toggle('done', !!mem.prac); const n = (mem.test ? 1 : 0) + (mem.prac ? 1 : 0); $('m-bar').style.width = n * 50 + '%'; $('m-lbl').textContent = (currentLang === 'ru' ? 'Выполнено: ' : 'Орындалды: ') + n + (currentLang === 'ru' ? ' из 2' : ' / 2'); }
+function saveProgress() { S.set('contest_user', { name: user.name, id: PID, mem: mem, variant: activeVariantName, variantIdx: variantIdx, perm: perm, lang: currentLang }); }
+function refreshMenu() { $('a-test').classList.toggle('done', !!mem.test); $('a-prac').classList.toggle('done', !!mem.prac); const n = (mem.test ? 1 : 0) + (mem.prac ? 1 : 0); $('m-bar').style.width = n * 50 + '%'; $('m-lbl').textContent = tr('Выполнено: ', 'Орындалды: ') + n + tr(' из 2', ' / 2'); }
 
 // ================= ТЕСТ =================
-async function startTest() {
-  if (mem.test) { alert(currentLang === 'ru' ? "Вы уже прошли тест!" : "Сіз тесттен өттіңіз!"); return; }
+function startTest() {
+  if (mem.test) { alert(tr("Вы уже прошли тест!", "Сіз тесттен өттіңіз!")); return; }
   $('rules').classList.add('on');
 }
 
-async function beginTest() {
+function beginTest() {
   $('rules').classList.remove('on');
+  buildQuestions(rawFor(currentLang));
   $('t-total').textContent = Q.length;
   try { const r = document.documentElement.requestFullscreen && document.documentElement.requestFullscreen(); if (r && r.catch) r.catch(() => { }) } catch (e) { }
 
@@ -764,8 +608,8 @@ async function beginTest() {
   if (saved) { ans = saved.ans; end = saved.end; cur = 0 } else { ans = {}; end = Date.now() + DUR_TEST * 1000; S.set('progress_test_' + PID, { ans, end }) }
 
   show('v-test'); renderQ();
+  armProctor('test');
   clearInterval(tick); tick = setInterval(tock, 500); tock();
-  grace = Date.now() + 3000; armed = true;
 }
 
 function tock() {
@@ -778,10 +622,11 @@ function tock() {
 function renderQ() {
   if (Q.length === 0) return;
   const q = Q[cur];
-  $('q-n').textContent = (currentLang === 'ru' ? 'Вопрос ' : 'Сұрақ ') + (cur + 1);
+  $('q-n').textContent = tr('Вопрос ', 'Сұрақ ') + (cur + 1);
   $('q-t').textContent = q.q;
+  $('t-total').textContent = Q.length;
   $('t-pos').textContent = cur + 1; $('t-bar').style.width = Object.keys(ans).length / Q.length * 100 + '%';
-  $('btn-test-next').textContent = cur === Q.length - 1 ? (currentLang === 'ru' ? 'Завершить ✓' : 'Аяқтау ✓') : (currentLang === 'ru' ? 'Далее ›' : 'Келесі ›');
+  $('btn-test-next').textContent = cur === Q.length - 1 ? tr('Завершить ✓', 'Аяқтау ✓') : tr('Далее ›', 'Келесі ›');
 
   const box = $('q-o'); box.innerHTML = '';
   q.o.forEach((t, i) => {
@@ -800,7 +645,7 @@ function go(d) {
 }
 
 async function finishTest(isAuto = false) {
-  $('ov').classList.remove('on'); clearInterval(tick); armed = false;
+  $('ov').classList.remove('on'); clearInterval(tick); PR.mode = null;
   try { document.fullscreenElement && document.exitFullscreen() } catch (e) { }
 
   let sc = 0; Q.forEach((q, i) => { if (ans[i] === q.a) sc++ });
@@ -809,9 +654,6 @@ async function finishTest(isAuto = false) {
 
   mem.test = { score: sc, spent: spentSec, points: scorePoints };
   saveProgress(); S.del('progress_test_' + PID);
-
-  $('res-score').textContent = currentLang === 'ru' ? 'Ваш результат отправлен!' : 'Сіздің нәтижеңіз жіберілді!';
-  $('res-note').textContent = currentLang === 'ru' ? 'Ожидайте результатов от организаторов.' : 'Ұйымдастырушылардың нәтижелерін күтіңіз.';
 
   fetch(API_TEST, {
     method: 'POST',
@@ -831,10 +673,10 @@ async function finishTest(isAuto = false) {
     })
   }).catch(err => console.error('Ошибка:', err));
 
-  refreshMenu(); show('v-res');
+  applyLang(); refreshMenu(); show('v-res');
 }
 
-// ================= ПРАКТИКА: ТЕКСТЫ =================
+// ================= ПРАКТИКА: ТЕКСТЫ КЕЙСА =================
 const PM = {
   ru: {
     title: 'Практическое задание «Семейный бюджет семьи Сакеновых»',
@@ -847,7 +689,7 @@ const PM = {
       ['Инструкция: ', 'изучите кейс семьи Сакеновых и последовательно выполните пять этапов задания. Каждый следующий этап основывается на результатах предыдущего. Ответы необходимо обосновать расчётами.']
     ],
     hint: 'Калькулятор в правом нижнем углу поможет с расчётами. Ответы сохраняются при переходе между этапами.',
-    back: '← Назад', next: 'Далее →', start: 'Начать →', send: 'Отправить ответы ✓', ph: 'Введите число…',
+    back: '← Назад', next: 'Далее →', start: 'Начать →', send: 'Отправить ответы ✓', ph: 'Введите число…', phText: 'Введите ваш ответ и расчёты…', task: 'Задание',
     intro: [
       ['Семья Сакеновых получает несколько видов дохода: заработную плату родителей, дополнительный доход от репетиторства, детское пособие и проценты по банковскому вкладу.'],
       ['Используя рассчитанный на первом этапе общий доход, определите, сколько денег семья расходует в течение месяца и какая сумма остаётся после запланированных расходов.'],
@@ -857,7 +699,7 @@ const PM = {
     ],
     rule: ['70% — необходимые расходы', '20% — накопления и финансовые цели', '10% — развлечения и личные желания'],
     list: ['общий ежемесячный доход семьи;', 'регулярные расходы и обязательный платёж по автокредиту;', 'ежемесячные накопления;', 'экскурсию Дамира стоимостью 40 000 тенге;', 'последствия покупки стиральной машины;', 'необходимость поддержания финансовой подушки безопасности.'],
-    fm: { 2: 'Общие расходы = сумма всех указанных категорий\nОстаток бюджета = общий доход − общие расходы', 3: 'Для расчёта используйте формулу:\nДоля категории = (Сумма категории / Общий доход) × 100%' },
+    fm: { 2: 'Общие расходы = сумма всех указанных категорий\nОстаток бюджета = общий доход − общие расходы', 3: 'Для расчёта используйте формулу:\nДоля категории = (Сумма категории / Общий доход) * 100%' },
     tbl: {
       1: { th: ['Источник дохода', 'Сумма, тенге'], tot: 'Общий доход семьи', rows: [['Зарплата Нурлана', '520 000'], ['Зарплата Айгерим', '480 000'], ['Доход от репетиторства', '60 000'], ['Детское пособие', '63 000'], ['Проценты по банковскому вкладу', '9 000']] },
       2: { th: ['Категория', 'Сумма, тенге'], tot: 'Общая сумма', rows: [['Продукты питания', '220 000'], ['Коммунальные услуги', '35 000'], ['Транспорт Нурлана', '50 000'], ['Транспорт Айгерим', '10 000'], ['Кредит за автомобиль', '100 000'], ['Интернет и мобильная связь', '18 000'], ['Образование детей', '40 000'], ['Одежда и обувь', '45 000'], ['Медицинские расходы', '25 000'], ['Развлечения и отдых', '55 000'], ['Накопления и сбережения', '80 000']] }
@@ -875,7 +717,7 @@ const PM = {
       ['Нұсқаулық: ', 'Сакеновтер отбасының кейсін зерттеп, тапсырманың бес кезеңін ретімен орындаңыз. Әр келесі кезең алдыңғысының нәтижелеріне негізделеді. Жауаптарды есептеулермен негіздеу қажет.']
     ],
     hint: 'Оң жақ төменгі бұрыштағы калькулятор есептеуге көмектеседі. Жауаптар кезеңдер арасында ауысқанда сақталады.',
-    back: '← Артқа', next: 'Әрі қарай →', start: 'Бастау →', send: 'Жауаптарды жіберу ✓', ph: 'Санды енгізіңіз…',
+    back: '← Артқа', next: 'Әрі қарай →', start: 'Бастау →', send: 'Жауаптарды жіберу ✓', ph: 'Санды енгізіңіз…', phText: 'Жауабыңыз бен есептеулеріңізді енгізіңіз…', task: 'Тапсырма',
     intro: [
       ['Сакеновтер отбасы бірнеше түрлі табыс алады: ата-аналардың жалақысы, репетиторлықтан қосымша табыс, балалар жәрдемақысы және банктік депозит бойынша пайыздар.'],
       ['Бірінші кезеңде есептелген жалпы табысты пайдаланып, отбасы бір айда қанша ақша жұмсайтынын және жоспарланған шығыстардан кейін қанша сома қалатынын анықтаңыз.'],
@@ -885,7 +727,7 @@ const PM = {
     ],
     rule: ['70% — қажетті шығыстар', '20% — жинақ және қаржылық мақсаттар', '10% — ойын-сауық және жеке қалаулар'],
     list: ['отбасының жалпы айлық табысы;', 'тұрақты шығыстар және автокредит бойынша міндетті төлем;', 'ай сайынғы жинақтар;', 'Дамирдің 40 000 теңгелік экскурсиясы;', 'кір жуатын машина сатып алудың салдары;', 'қаржылық қауіпсіздік жастығын ұстап тұру қажеттілігі.'],
-    fm: { 2: 'Жалпы шығыстар = көрсетілген барлық санаттардың қосындысы\nБюджет қалдығы = жалпы табыс − жалпы шығыстар', 3: 'Есептеу үшін формуланы қолданыңыз:\nСанат үлесі = (Санат сомасы / Жалпы табыс) × 100%' },
+    fm: { 2: 'Жалпы шығыстар = көрсетілген барлық санаттардың қосындысы\nБюджет қалдығы = жалпы табыс − жалпы шығыстар', 3: 'Есептеу үшін формуланы пайдаланыңыз:\nСанаттың үлесі = (Санат сомасы / Жалпы табыс) × 100%' },
     tbl: {
       1: { th: ['Табыс көзі', 'Сома, теңге'], tot: 'Отбасының жалпы табысы', rows: [['Нұрланның жалақысы', '520 000'], ['Айгерімнің жалақысы', '480 000'], ['Репетиторлықтан түскен табыс', '60 000'], ['Балалар жәрдемақысы', '63 000'], ['Банктік депозит бойынша пайыздар', '9 000']] },
       2: { th: ['Санат', 'Сома, теңге'], tot: 'Жалпы сома', rows: [['Азық-түлік', '220 000'], ['Коммуналдық қызметтер', '35 000'], ['Нұрланның көлік шығыстары', '50 000'], ['Айгерімнің көлік шығыстары', '10 000'], ['Автокөлік бойынша кредит', '100 000'], ['Интернет және ұялы байланыс', '18 000'], ['Балалардың білімі', '40 000'], ['Киім және аяқ киім', '45 000'], ['Медициналық шығыстар', '25 000'], ['Көңіл көтеру және демалыс', '55 000'], ['Жинақ пен қор', '80 000']] }
@@ -895,47 +737,56 @@ const PM = {
 };
 
 // ================= ПРАКТИКА: ЛОГИКА =================
-let pracTimer = null, pracEnd = 0, pracArmed = false, pracGrace = 0;
-let PA = {}, pStep = 0;
+let pracTimer = null, pracEnd = 0;
+let PA = {}, pStep = 0;   // PA — введённые ответы (id задания → текст), pStep — вкладка (0 = Введение)
 
 function startPrac() {
-  if (mem.prac) { alert(currentLang === 'ru' ? "Вы уже прошли практику!" : "Сіз практикадан өттіңіз!"); return; }
+  if (mem.prac) { alert(tr("Вы уже прошли практику!", "Сіз практикадан өттіңіз!")); return; }
   $('rules-prac').classList.add('on');
 }
+
+function savePrac() { S.set('progress_prac_' + PID, { end: pracEnd, a: PA }); }
 
 function beginPrac() {
   $('rules-prac').classList.remove('on');
   try { const r = document.documentElement.requestFullscreen && document.documentElement.requestFullscreen(); if (r && r.catch) r.catch(() => { }) } catch (e) { }
 
-  pracEnd = Date.now() + DUR_PRAC * 1000;
-  PA = {}; pStep = 0;
+  // Таймер хранится как момент окончания — не сбрасывается при обновлении страницы
+  const saved = S.get('progress_prac_' + PID, null);
+  if (saved) { pracEnd = saved.end; PA = saved.a || {}; }
+  else { pracEnd = Date.now() + DUR_PRAC * 1000; PA = {}; savePrac(); }
+  pStep = 0;
+
   show('v-prac'); renderPrac();
-
-  clearInterval(pracTimer);
-  pracTimer = setInterval(() => {
-    const left = Math.max(0, Math.round((pracEnd - Date.now()) / 1000));
-    const t = $('p-timer');
-    if (t) {
-      t.textContent = String(Math.floor(left / 60)).padStart(2, '0') + ':' + String(left % 60).padStart(2, '0');
-      t.classList.toggle('low', left < 300);
-    }
-    if (left <= 0) { clearInterval(pracTimer); submitPractice(true); }
-  }, 1000);
-
-  pracGrace = Date.now() + 3000; pracArmed = true;
+  armProctor('prac');
+  clearInterval(pracTimer); pracTimer = setInterval(pracTick, 500); pracTick();
 }
+
+function updPracTimer() {
+  const t = $('p-timer'); if (!t) return;
+  const left = Math.max(0, Math.round((pracEnd - Date.now()) / 1000));
+  t.textContent = String(Math.floor(left / 60)).padStart(2, '0') + ':' + String(left % 60).padStart(2, '0');
+  t.classList.toggle('low', left < 300);
+}
+function pracTick() {
+  updPracTimer();
+  if (pracEnd - Date.now() <= 0) { clearInterval(pracTimer); submitPractice(true); }
+}
+function askSubmit() { $('ovp').classList.add('on'); }
 
 function renderPrac() {
   const m = PM[currentLang], D = currentLang === 'ru' ? PRACTICE_DATA_RU : PRACTICE_DATA_KZ, root = $('pz');
   root.innerHTML = '';
   const E = (t, c, x) => { const e = document.createElement(t); if (c) e.className = c; if (x != null) e.textContent = x; return e; };
   const tasksOf = k => ((D['stage' + k] || {}).tasks || []);
-  const done = k => tasksOf(k).some(t => (PA[t.id] || '') !== '');
+  const done = k => tasksOf(k).some(t => (PA[t.id] || '').trim() !== '') || (PA['s' + k + '-tot'] || '') !== '';
   const goTo = i => { pStep = i; renderPrac(); window.scrollTo(0, 0); };
 
+  // Шапка: заголовок + таймер
   const top = E('div', 'pz-top'); top.append(E('h2', null, m.title));
   const tm = E('div', 'qt', '--:--'); tm.id = 'p-timer'; top.append(tm); root.append(top);
 
+  // Вкладки: Введение, Этап 1–5
   const st = E('div', 'steps');
   [m.tabIntro].concat([1, 2, 3, 4, 5].map(k => m.stage + ' ' + k)).forEach((t, i) => {
     const ok = i > 0 && done(i);
@@ -946,6 +797,7 @@ function renderPrac() {
 
   const c = E('div', 'pc');
   if (pStep === 0) {
+    // ----- Введение -----
     c.append(E('h3', null, m.tabIntro));
     m.head.forEach(([b, t]) => { const p = E('p'); p.append(E('b', null, b), document.createTextNode(t)); c.append(p); });
     [1, 2, 3, 4, 5].forEach(k => {
@@ -956,84 +808,78 @@ function renderPrac() {
     });
     const hint = E('p', null, m.hint); hint.style.cssText = 'margin-top:16px;color:var(--muted);font-size:13px'; c.append(hint);
   } else {
+    // ----- Этап -----
     const k = pStep, sd = D['stage' + k] || {}, li = m.lvOf[k - 1];
     c.append(E('span', 'lv lv' + li, m.lv[li]), E('h3', null, m.stage + ' ' + k + '. ' + (sd.title || m.names[k - 1])));
     [].concat(sd.intro || m.intro[k - 1]).forEach(t => c.append(E('p', null, t)));
     if (k === 3) { const r = E('div', 'rule'); m.rule.forEach(x => r.append(E('span', null, x))); c.append(r); }
     if (k === 5) { const u = E('ul', 'rl'); m.list.forEach(x => u.append(E('li', null, x))); c.append(u); }
+
+    // Таблица (как была): исходные данные + поле для итога
     const tb = m.tbl[k];
     if (tb) {
       const w = E('div', 'tw'), t = E('table', 'pt'), h = E('tr');
       tb.th.forEach(x => h.append(E('th', null, x))); t.append(h);
-      tb.rows.forEach(r => { const tr = E('tr'); r.forEach(x => tr.append(E('td', null, x))); t.append(tr); });
-      
-      const tot = E('tr', 'tot');
-      tot.append(E('td', null, tb.tot)); 
-      
-      const tdInp = E('td');
-      const inpTot = E('input'); inpTot.type = 'number'; inpTot.inputMode = 'decimal'; inpTot.id = 's'+k+'-tot';
-      inpTot.className = 'prac-input'; inpTot.placeholder = m.ph; inpTot.value = PA['s'+k+'-tot'] || '';
-      inpTot.style.width = '100%'; inpTot.style.maxWidth = '150px'; inpTot.style.padding = '8px'; inpTot.style.textAlign = 'right'; inpTot.style.border = '2px solid var(--yellow)';
-      inpTot.oninput = () => { PA['s'+k+'-tot'] = inpTot.value; };
-      
-      tdInp.append(inpTot);
-      tot.append(tdInp); 
-      t.append(tot); 
-      w.append(t); c.append(w);
+      tb.rows.forEach(r => { const tr2 = E('tr'); r.forEach(x => tr2.append(E('td', null, x))); t.append(tr2); });
+      const tot = E('tr', 'tot'), tdInp = E('td'), inpTot = E('input');
+      tot.append(E('td', null, tb.tot));
+      inpTot.type = 'text'; inpTot.inputMode = 'decimal'; inpTot.id = 's' + k + '-tot'; inpTot.placeholder = m.ph;
+      inpTot.value = PA['s' + k + '-tot'] || '';
+      inpTot.style.cssText = 'width:100%;max-width:170px;padding:8px 12px;text-align:right;border:2px solid var(--yellow);font-size:16px';
+      inpTot.oninput = () => { PA['s' + k + '-tot'] = inpTot.value; savePrac(); };
+      tdInp.append(inpTot); tot.append(tdInp); t.append(tot); w.append(t); c.append(w);
     }
-    
+
     if (m.fm[k]) c.append(E('div', 'fm', m.fm[k]));
-    
+
+    // Все вопросы этапа: вопрос + поле для ответа под ним
     tasksOf(k).forEach((task, idx) => {
-      // Если это 1 или 2 этап, и мы уже использовали поле sX-tot для первой задачи, пропускаем дублирование ввода
-      if ((k===1 || k===2) && idx===0) return; 
-      
       const d = E('div', 'task'), lb = E('label');
       lb.append(E('b', null, idx + 1), E('span', null, task.text));
-      const inp = E('input'); inp.type = 'number'; inp.inputMode = 'decimal'; inp.id = task.id;
-      inp.className = 'prac-input'; inp.placeholder = m.ph; inp.value = PA[task.id] || '';
-      inp.oninput = () => { PA[task.id] = inp.value; };
-      d.append(lb, inp); c.append(d);
+      d.append(lb);
+      if (task.hint) d.append(E('div', 'hintx', task.hint));
+      let inp;
+      if (task.kind === 'num') { inp = E('input'); inp.type = 'text'; inp.inputMode = 'decimal'; inp.placeholder = m.ph; }
+      else { inp = E('textarea'); inp.placeholder = m.phText; }
+      inp.id = task.id; inp.className = 'prac-input'; inp.value = PA[task.id] || '';
+      inp.oninput = () => { PA[task.id] = inp.value; savePrac(); };
+      d.append(inp); c.append(d);
     });
-    
+
     c.append(E('div', 'res', m.res[k - 1]));
   }
   root.append(c);
 
+  // Навигация
   const nav = E('div', 'nav'), pv = E('button', 'btn o', m.back),
         nx = E('button', 'btn y', pStep === 5 ? m.send : pStep === 0 ? m.start : m.next);
   pv.disabled = pStep === 0; pv.onclick = () => goTo(pStep - 1);
-  nx.onclick = () => { if (pStep === 5) submitPractice(false); else goTo(pStep + 1); };
+  nx.onclick = () => { if (pStep === 5) askSubmit(); else goTo(pStep + 1); };
   nav.append(pv, nx); root.append(nav);
+  updPracTimer();
 }
 
 async function submitPractice(isAuto = false) {
-  if (!isAuto && !confirm(currentLang === 'ru' ? 'Отправить ответы?' : 'Жауаптарды жіберу?')) return;
-
-  clearInterval(pracTimer); pracArmed = false;
+  if (mem.prac) return;                       // уже отправлено или аннулировано
+  $('ovp').classList.remove('on');
+  PR.mode = null; clearInterval(pracTimer); S.del('progress_prac_' + PID);
   try { document.fullscreenElement && document.exitFullscreen() } catch (e) { }
 
+  const D = currentLang === 'ru' ? PRACTICE_DATA_RU : PRACTICE_DATA_KZ;
   const answers = {};
-  const _pd = currentLang === 'ru' ? PRACTICE_DATA_RU : PRACTICE_DATA_KZ;
-  
-  // Собираем ответы из полей
-  for (let k = 1; k <= 5; k++) {
-    ((_pd['stage' + k] || {}).tasks || []).forEach(t => { 
-       answers[t.id] = PA[t.id] || ''; 
-    });
-  }
-  
-  // Если в таблице на 1-м и 2-м этапе был введен ответ (s1-tot, s2-tot), подставляем его в первую задачу
-  if (PA['s1-tot'] !== undefined && PA['s1-tot'] !== '') answers['s1-q1'] = PA['s1-tot'];
-  if (PA['s2-tot'] !== undefined && PA['s2-tot'] !== '') answers['s2-q1'] = PA['s2-tot'];
+  for (let k = 1; k <= 5; k++) ((D['stage' + k] || {}).tasks || []).forEach(t => { answers[t.id] = (PA[t.id] || '').trim(); });
 
-  const calcFn = currentLang === 'ru' ? calculatePracticeScoreRU : calculatePracticeScoreKZ;
-  const result = calcFn(answers);
+  // Итог из таблицы этапов 1 и 2 засчитывается вместе с ответом на первый вопрос этапа
+  ['s1', 's2'].forEach(p => {
+    const tot = (PA[p + '-tot'] || '').trim();
+    if (tot) answers[p + '-q1'] = answers[p + '-q1'] ? answers[p + '-q1'] + ' | ' + tot : tot;
+  });
 
+  const result = scorePractice(answers, D);
   mem.prac = { score: result.totalScore };
   saveProgress();
 
-  let dataToSend = {
+  const dataToSend = {
     id: PID,
     name: user.name,
     language: currentLang.toUpperCase(),
@@ -1043,11 +889,10 @@ async function submitPractice(isAuto = false) {
     date: new Date().toLocaleDateString('ru-RU'),
     total_score: result.totalScore
   };
-
-  result.details.forEach((detail) => {
-    const colName = detail.taskId.replace('-', '_');
-    dataToSend[colName + '_ans'] = detail.userAnswer || '';
-    dataToSend[colName + '_pts'] = detail.pointsEarned;
+  result.details.forEach(d => {
+    const col = d.taskId.replace('-', '_');
+    dataToSend[col + '_ans'] = d.userAnswer || '';
+    dataToSend[col + '_pts'] = d.pointsEarned;
   });
 
   fetch(API_PRACTICE, {
@@ -1056,10 +901,7 @@ async function submitPractice(isAuto = false) {
     body: JSON.stringify({ data: [dataToSend] })
   }).catch(err => console.error(err));
 
-  $('res-score').textContent = currentLang === 'ru' ? 'Ваш результат отправлен!' : 'Сіздің нәтижеңіз жіберілді!';
-  $('res-note').textContent = currentLang === 'ru' ? 'Ожидайте результатов от организаторов.' : 'Ұйымдастырушылардың нәтижелерін күтіңіз.';
-
-  refreshMenu(); show('v-res');
+  applyLang(); refreshMenu(); show('v-res');
 }
 
 // ================= КАЛЬКУЛЯТОР =================
@@ -1085,17 +927,18 @@ function calc() {
 
 // ================= АДМИНКА =================
 let currentAdminTab = 'test';
+const pcell = (r, k) => { const a = r[k + '_ans'], p = r[k + '_pts']; return (a === undefined || a === '' ? '-' : a) + ' (' + (p === undefined || p === '' ? '?' : p) + ')'; };
 
 async function adminLogin() {
   const p = $('a-pass').value;
-  if (p !== 'admin123') { $('a-err').textContent = currentLang === 'ru' ? 'Неверный пароль' : 'Қате құпия сөз'; return; }
+  if (p !== 'admin123') { $('a-err').textContent = tr('Неверный пароль', 'Қате құпия сөз'); return; }
   $('a-pass').value = ''; $('a-err').textContent = '';
   show('v-admin');
   loadAdmin();
 }
 
 async function loadAdmin() {
-  $('a-msg').textContent = currentLang === 'ru' ? 'Загрузка данных...' : 'Деректер жүктелуде...';
+  $('a-msg').textContent = tr('Загрузка данных...', 'Деректер жүктелуде...');
   $('a-tbl').innerHTML = '';
 
   try {
@@ -1104,30 +947,30 @@ async function loadAdmin() {
       fetch(API_PRACTICE).then(r => r.json()).catch(() => [])
     ]);
 
-    $('a-msg').textContent = (currentLang === 'ru' ? 'Обновлено: ' : 'Жаңартылды: ') + new Date().toLocaleTimeString();
+    $('a-msg').textContent = tr('Обновлено: ', 'Жаңартылды: ') + new Date().toLocaleTimeString();
 
-    const tests = resTests || [];
-    const pracs = resPracs || [];
+    const tests = Array.isArray(resTests) ? resTests : [];
+    const pracs = Array.isArray(resPracs) ? resPracs : [];
 
     const avgTest = tests.length ? Math.round(tests.reduce((acc, r) => acc + parseInt(r.score_points || 0), 0) / tests.length) : 0;
     const avgPrac = pracs.length ? Math.round(pracs.reduce((acc, r) => acc + parseInt(r.total_score || 0), 0) / pracs.length) : 0;
 
     $('a-stats').innerHTML = `
-      <div class="stat"><b>${tests.length}</b><span>${currentLang==='ru'?'Тестов сдано':'Тест тапсырылды'}</span></div>
-      <div class="stat"><b>${pracs.length}</b><span>${currentLang==='ru'?'Практик сдано':'Практика тапсырылды'}</span></div>
-      <div class="stat"><b>${avgTest}</b><span>${currentLang==='ru'?'Ср. балл (Тест)':'Орт. балл (Тест)'}</span></div>
-      <div class="stat"><b>${avgPrac}</b><span>${currentLang==='ru'?'Ср. балл (Практика)':'Орт. балл (Практика)'}</span></div>
+      <div class="stat"><b>${tests.length}</b><span>${tr('Тестов сдано', 'Тест тапсырылды')}</span></div>
+      <div class="stat"><b>${pracs.length}</b><span>${tr('Практик сдано', 'Практика тапсырылды')}</span></div>
+      <div class="stat"><b>${avgTest}</b><span>${tr('Ср. балл (Тест)', 'Орт. балл (Тест)')}</span></div>
+      <div class="stat"><b>${avgPrac}</b><span>${tr('Ср. балл (авто, Практика)', 'Орт. балл (авто, Практика)')}</span></div>
     `;
 
     $('a-tabs').innerHTML = '';
     const btnTest = document.createElement('button');
     btnTest.className = 'st ' + (currentAdminTab === 'test' ? 'cur' : '');
-    btnTest.textContent = (currentLang==='ru'?'Тесты':'Тесттер') + ` (${tests.length})`;
+    btnTest.textContent = tr('Тесты', 'Тесттер') + ` (${tests.length})`;
     btnTest.onclick = () => { currentAdminTab = 'test'; loadAdmin(); };
 
     const btnPrac = document.createElement('button');
     btnPrac.className = 'st ' + (currentAdminTab === 'prac' ? 'cur' : '');
-    btnPrac.textContent = (currentLang==='ru'?'Практика':'Практика') + ` (${pracs.length})`;
+    btnPrac.textContent = tr('Практика', 'Практика') + ` (${pracs.length})`;
     btnPrac.onclick = () => { currentAdminTab = 'prac'; loadAdmin(); };
 
     $('a-tabs').append(btnTest, btnPrac);
@@ -1136,119 +979,119 @@ async function loadAdmin() {
     const thead = document.createElement('thead');
     const hRow = document.createElement('tr');
 
-    let headers = [];
-    let dataToShow = [];
-
+    let headers = [], dataToShow = [];
     if (currentAdminTab === 'test') {
-      headers = currentLang==='ru' 
+      headers = currentLang === 'ru'
         ? ['ID', 'ФИО', 'Вариант', 'Результат', 'Баллы', 'Прав.', 'Неправ.', 'Время', 'Статус']
         : ['ID', 'Аты-жөні', 'Нұсқа', 'Нәтиже', 'Балл', 'Дұрыс', 'Қате', 'Уақыт', 'Мәртебе'];
       dataToShow = tests.sort((a, b) => (parseInt(b.score_points) || 0) - (parseInt(a.score_points) || 0));
     } else {
-      headers = currentLang==='ru'
-        ? ['ID', 'ФИО', 'Яз', 'Эт1(1)', 'Эт1(2)', 'Эт2(1)', 'Эт2(2)', 'Эт2(3)', 'Эт3(1)', 'Эт3(2)', 'Эт3(3)', 'Эт3(4)', 'Эт4(1)', 'Эт4(2)', 'Эт4(3)', 'Эт4(4)', 'Эт5(1)', 'Эт5(2)', 'Эт5(3)', 'Эт5(4)', 'Эт5(5)', 'ИТОГ', 'Статус', 'Ошибка']
-        : ['ID', 'Аты-жөні', 'Тіл', 'Кез1(1)', 'Кез1(2)', 'Кез2(1)', 'Кез2(2)', 'Кез2(3)', 'Кез3(1)', 'Кез3(2)', 'Кез3(3)', 'Кез3(4)', 'Кез4(1)', 'Кез4(2)', 'Кез4(3)', 'Кез4(4)', 'Кез5(1)', 'Кез5(2)', 'Кез5(3)', 'Кез5(4)', 'Кез5(5)', 'ҚОРЫТЫНДЫ', 'Мәртебе', 'Қате'];
+      const ru = currentLang === 'ru';
+      headers = [ 'ID', ru ? 'ФИО' : 'Аты-жөні', ru ? 'Яз' : 'Тіл' ]
+        .concat(TASK_KEYS.map(k => (ru ? 'Эт' : 'Кез') + k[1] + '(' + k[4] + ')'))
+        .concat([ru ? 'ИТОГ (авто)' : 'ҚОРЫТЫНДЫ (авто)', ru ? 'Статус' : 'Мәртебе', ru ? 'Ошибка' : 'Қате']);
       dataToShow = pracs.sort((a, b) => (parseInt(b.total_score) || 0) - (parseInt(a.total_score) || 0));
     }
 
-    headers.forEach(h => {
-      const th = document.createElement('th'); th.textContent = h; hRow.append(th);
-    });
+    headers.forEach(h => { const th = document.createElement('th'); th.textContent = h; hRow.append(th); });
     thead.append(hRow); tbody.append(thead);
 
     const tb = document.createElement('tbody');
     dataToShow.forEach(r => {
-      const tr = document.createElement('tr');
+      const tr2 = document.createElement('tr');
       let cells = [];
 
       if (currentAdminTab === 'test') {
         let variantName = r.variant || '-';
-        if (variantName.includes('Направление')) {
-          variantName = variantName.replace('Направление ', 'Напр. ').replace(' - Вариант', ' (в.)');
-        }
+        if (variantName.includes('Направление')) variantName = variantName.replace('Направление ', 'Напр. ').replace(' - Вариант', ' (в.)');
         cells = [r.id, r.name, variantName, r.score, r.score_points, r.correct, r.incorrect, r.time, r.status];
       } else {
-        cells = [
-          r.id, r.name, r.language || '-',
-          `${r.s1_q1_ans || '-'} (${r.s1_q1_pts || 0})`, `${r.s1_q2_ans || '-'} (${r.s1_q2_pts || 0})`,
-          `${r.s2_q1_ans || '-'} (${r.s2_q1_pts || 0})`, `${r.s2_q2_ans || '-'} (${r.s2_q2_pts || 0})`, `${r.s2_q3_ans || '-'} (${r.s2_q3_pts || 0})`,
-          `${r.s3_q1_ans || '-'} (${r.s3_q1_pts || 0})`, `${r.s3_q2_ans || '-'} (${r.s3_q2_pts || 0})`, `${r.s3_q3_ans || '-'} (${r.s3_q3_pts || 0})`, `${r.s3_q4_ans || '-'} (${r.s3_q4_pts || 0})`,
-          `${r.s4_q1_ans || '-'} (${r.s4_q1_pts || 0})`, `${r.s4_q2_ans || '-'} (${r.s4_q2_pts || 0})`, `${r.s4_q3_ans || '-'} (${r.s4_q3_pts || 0})`, `${r.s4_q4_ans || '-'} (${r.s4_q4_pts || 0})`,
-          `${r.s5_q1_ans || '-'} (${r.s5_q1_pts || 0})`, `${r.s5_q2_ans || '-'} (${r.s5_q2_pts || 0})`, `${r.s5_q3_ans || '-'} (${r.s5_q3_pts || 0})`, `${r.s5_q4_ans || '-'} (${r.s5_q4_pts || 0})`, `${r.s5_q5_ans || '-'} (${r.s5_q5_pts || 0})`,
-          r.total_score || '0', r.status, r.error || '-'
-        ];
+        cells = [r.id, r.name, r.language || '-'].concat(TASK_KEYS.map(k => pcell(r, k))).concat([r.total_score || '0', r.status, r.error || '-']);
       }
 
+      const iStatus = currentAdminTab === 'test' ? 8 : 22, iScore = currentAdminTab === 'test' ? 4 : 21, iErr = 23;
       cells.forEach((val, i) => {
         const td = document.createElement('td');
         td.textContent = val;
-
-        if ((currentAdminTab === 'test' && i === 8 && (val === 'Аннулировано' || val === 'Время вышло')) ||
-            (currentAdminTab === 'prac' && i === 22 && (val === 'Аннулировано' || val === 'Время вышло'))) {
-          td.style.color = 'var(--bad)';
-          td.style.fontWeight = 'bold';
-        }
-        if (currentAdminTab === 'prac' && i === 23 && val !== '-') td.style.color = 'var(--bad)';
-        if ((currentAdminTab === 'test' && i === 4) || (currentAdminTab === 'prac' && i === 21)) {
-          td.style.fontWeight = 'bold';
-          td.style.color = 'var(--accent)';
-        }
-        tr.append(td);
+        if (i === iStatus && (val === 'Аннулировано' || val === 'Время вышло')) { td.style.color = 'var(--bad)'; td.style.fontWeight = 'bold'; }
+        if (currentAdminTab === 'prac' && i === iErr && val !== '-') td.style.color = 'var(--bad)';
+        if (i === iScore) { td.style.fontWeight = 'bold'; td.style.color = 'var(--accent)'; }
+        tr2.append(td);
       });
-      tb.append(tr);
+      tb.append(tr2);
     });
     tbody.append(tb);
 
   } catch (e) {
-    $('a-msg').textContent = 'Ошибка / Қате';
+    $('a-msg').textContent = tr('Ошибка загрузки', 'Жүктеу қатесі');
     console.error(e);
   }
 }
 
-// ================= ПРОКТОРИНГ (ОБЩИЙ) =================
+// ================= ПРОКТОРИНГ (ТЕСТ И ПРАКТИКА) =================
 function violation(reason) {
-  // Для теста
-  if (armed && Date.now() > grace) {
-    armed = false; clearInterval(tick);
-    try { document.fullscreenElement && document.exitFullscreen() } catch (e) { }
-    mem.test = { score: 0, annulled: true, reason: reason }; saveProgress();
+  if (!PR.mode || Date.now() < PR.grace) return;
+  const mode = PR.mode; PR.mode = null;
+  clearInterval(mode === 'test' ? tick : pracTimer);
+  try { document.fullscreenElement && document.exitFullscreen() } catch (e) { }
+  const H = { 'Accept': 'application/json', 'Content-Type': 'application/json' };
+
+  if (mode === 'test') {
+    mem.test = { score: 0, annulled: true, reason: reason };
+    S.del('progress_test_' + PID); saveProgress();
     fetch(API_TEST, {
-      method: 'POST',
-      headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+      method: 'POST', headers: H,
       body: JSON.stringify({ data: [{ id: PID, name: user.name, variant: activeVariantName, score: 'Аннулировано', score_points: 0, correct: 0, incorrect: 0, time: '-', status: reason }] })
     }).catch(e => console.log(e));
-
-    $('viol-r').textContent = reason;
-    $('viol').classList.add('on');
-    show('v-menu'); refreshMenu();
+  } else {
+    mem.prac = { score: 0, annulled: true };
+    S.del('progress_prac_' + PID); saveProgress();
+    const row = { id: PID, name: user.name, language: currentLang.toUpperCase(), total_score: 0, status: 'Аннулировано', error: reason, time: '-', date: new Date().toLocaleDateString('ru-RU') };
+    TASK_KEYS.forEach(k => { row[k + '_ans'] = 0; row[k + '_pts'] = 0; });
+    fetch(API_PRACTICE, { method: 'POST', headers: H, body: JSON.stringify({ data: [row] }) }).catch(e => console.log(e));
   }
 
-  // Для практики
-  if (pracArmed && Date.now() > pracGrace) {
-    pracArmed = false; clearInterval(pracTimer);
-    try { document.fullscreenElement && document.exitFullscreen() } catch (e) { }
-    mem.prac = { score: 0, annulled: true }; saveProgress();
-    fetch(API_PRACTICE, {
-      method: 'POST',
-      headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        data: [{
-          id: PID, name: user.name, language: currentLang.toUpperCase(),
-          s1_q1_ans: 0, s1_q1_pts: 0, s1_q2_ans: 0, s1_q2_pts: 0, s2_q1_ans: 0, s2_q1_pts: 0, s2_q2_ans: 0, s2_q2_pts: 0, s2_q3_ans: 0, s2_q3_pts: 0, s3_q1_ans: 0, s3_q1_pts: 0, s3_q2_ans: 0, s3_q2_pts: 0, s3_q3_ans: 0, s3_q3_pts: 0, s3_q4_ans: 0, s3_q4_pts: 0, s4_q1_ans: 0, s4_q1_pts: 0, s4_q2_ans: 0, s4_q2_pts: 0, s4_q3_ans: 0, s4_q3_pts: 0, s4_q4_ans: 0, s4_q4_pts: 0, s5_q1_ans: 0, s5_q1_pts: 0, s5_q2_ans: 0, s5_q2_pts: 0, s5_q3_ans: 0, s5_q3_pts: 0, s5_q4_ans: 0, s5_q4_pts: 0, s5_q5_ans: 0, s5_q5_pts: 0,
-          total_score: 0, status: 'Аннулировано', error: reason, time: '-', date: new Date().toLocaleDateString('ru-RU')
-        }]
-      })
-    }).catch(e => console.log(e));
-
-    $('viol-r').textContent = reason;
-    $('viol').classList.add('on');
-    show('v-menu'); refreshMenu();
-  }
+  $('ov').classList.remove('on'); $('ovp').classList.remove('on');
+  $('viol-r').textContent = reason;
+  $('viol').classList.add('on');
+  show('v-menu'); refreshMenu();
 }
 
-document.addEventListener('visibilitychange', () => { if (document.hidden) violation(currentLang === 'ru' ? 'переключение на другую вкладку' : 'қойындыны ауыстыру'); });
-window.addEventListener('blur', () => violation(currentLang === 'ru' ? 'потеря фокуса' : 'фокусты жоғалту'));
-document.addEventListener('fullscreenchange', () => { if (!document.fullscreenElement) violation(currentLang === 'ru' ? 'выход из полноэкранного режима' : 'толық экраннан шығу'); });
+// Вкладки, окна, полноэкранный режим
+document.addEventListener('visibilitychange', () => { if (document.hidden) violation(tr('переключение на другую вкладку', 'қойындыны ауыстыру')); });
+window.addEventListener('blur', () => violation(tr('потеря фокуса окна (другое окно или приложение)', 'терезе фокусын жоғалту (басқа терезе немесе қолданба)')));
+document.addEventListener('fullscreenchange', () => { if (!document.fullscreenElement) violation(tr('выход из полноэкранного режима', 'толық экраннан шығу')); });
+
+// Копирование, контекстное меню, выделение
+['copy', 'cut'].forEach(t => document.addEventListener(t, e => { if (PR.mode) { e.preventDefault(); violation(tr('попытка копирования', 'көшіру әрекеті')); } }));
+document.addEventListener('paste', e => { if (PR.mode) e.preventDefault(); });
+document.addEventListener('contextmenu', e => { if (PR.mode) { e.preventDefault(); violation(tr('попытка открыть контекстное меню', 'контекстік мәзірді ашу әрекеті')); } });
+['selectstart', 'dragstart'].forEach(t => document.addEventListener(t, e => {
+  if (!PR.mode) return;
+  const el = e.target && e.target.nodeType === 1 ? e.target : (e.target && e.target.parentElement);
+  if (el && el.closest && el.closest('input,textarea')) return;
+  e.preventDefault();
+}));
+
+// Горячие клавиши: консоль разработчика, копирование, печать
+document.addEventListener('keydown', e => {
+  if (!PR.mode) return;
+  const c = e.ctrlKey || e.metaKey, k = e.code;
+  if (e.key === 'F12' || (c && e.shiftKey && ['KeyI', 'KeyJ', 'KeyC', 'KeyK'].includes(k)) || (c && k === 'KeyU') || (e.metaKey && e.altKey && ['KeyI', 'KeyJ', 'KeyC'].includes(k))) {
+    e.preventDefault(); violation(tr('попытка открыть консоль разработчика', 'әзірлеуші консолін ашу әрекеті'));
+  } else if (c && ['KeyC', 'KeyX', 'KeyS', 'KeyP'].includes(k)) {
+    e.preventDefault(); violation(tr('попытка копирования / печати', 'көшіру / басып шығару әрекеті'));
+  }
+});
+document.addEventListener('keyup', e => {
+  if (PR.mode && e.key === 'PrintScreen') { try { navigator.clipboard.writeText(''); } catch (x) { } violation(tr('попытка сделать снимок экрана', 'скриншот жасау әрекеті')); }
+});
+
+// Консоль, открытая через меню браузера (только компьютер, не во встроенном окне)
+setInterval(() => {
+  if (!PR.mode || window.top !== window.self || /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent)) return;
+  if (window.outerWidth - window.innerWidth > 200 || window.outerHeight - window.innerHeight > 200) violation(tr('открыта консоль разработчика (DevTools)', 'әзірлеуші консолі ашық (DevTools)'));
+}, 1000);
 
 // Фоновые монеты
 (function () { const bg = $('bg'); for (let i = 0; i < 12; i++) { const c = document.createElement('div'), s = 24 + Math.random() * 28; c.className = 'coin'; c.textContent = '₸'; c.style.cssText = 'left:' + Math.random() * 96 + '%;width:' + s + 'px;height:' + s + 'px;font-size:' + s * .5 + 'px;animation-duration:' + (14 + Math.random() * 14) + 's;animation-delay:-' + Math.random() * 20 + 's'; bg.appendChild(c) } })();
