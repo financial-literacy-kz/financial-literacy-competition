@@ -341,6 +341,10 @@ const $ = id => document.getElementById(id);
 const S = { get(k, d) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d } catch (e) { return d } }, set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)) } catch (e) { } }, del(k) { try { localStorage.removeItem(k) } catch (e) { } } };
 const tr = (ru, kz) => currentLang === 'ru' ? ru : kz;
 
+// --- НАСТРОЙКА ДАТ И ВРЕМЕНИ ДОСТУПА ---
+const TEST_START_TIME = new Date('2026-11-10T13:00:00').getTime();
+const PRAC_START_TIME = new Date('2026-11-10T16:00:00').getTime();
+
 let currentLang = 'ru';
 let Q = [];
 let activeVariantName = "", variantIdx = 0, perm = null;
@@ -595,6 +599,11 @@ function refreshMenu() { $('a-test').classList.toggle('done', !!mem.test); $('a-
 // ================= ТЕСТ =================
 function startTest() {
   if (mem.test) { alert(tr("Вы уже прошли тест!", "Сіз тесттен өттіңіз!")); return; }
+  // ПРОВЕРКА ВРЕМЕНИ ДЛЯ ТЕСТА
+  if (Date.now() < TEST_START_TIME) {
+    alert(tr("Тестирование откроется 10.11.2026 в 13:00.", "Тестілеу 10.11.2026 жылы сағат 13:00-де ашылады."));
+    return;
+  }
   $('rules').classList.add('on');
 }
 
@@ -742,6 +751,11 @@ let PA = {}, pStep = 0;   // PA — введённые ответы (id зада
 
 function startPrac() {
   if (mem.prac) { alert(tr("Вы уже прошли практику!", "Сіз практикадан өттіңіз!")); return; }
+  // ПРОВЕРКА ВРЕМЕНИ ДЛЯ ПРАКТИКИ
+  if (Date.now() < PRAC_START_TIME) {
+    alert(tr("Практика откроется 10.11.2026 в 16:00.", "Практика 10.11.2026 жылы сағат 16:00-де ашылады."));
+    return;
+  }
   $('rules-prac').classList.add('on');
 }
 
@@ -1060,7 +1074,6 @@ function violation(reason) {
 // Вкладки, окна, полноэкранный режим
 document.addEventListener('visibilitychange', () => { if (document.hidden) violation(tr('переключение на другую вкладку', 'қойындыны ауыстыру')); });
 window.addEventListener('blur', () => violation(tr('потеря фокуса окна (другое окно или приложение)', 'терезе фокусын жоғалту (басқа терезе немесе қолданба)')));
-document.addEventListener('fullscreenchange', () => { if (!document.fullscreenElement) violation(tr('выход из полноэкранного режима', 'толық экраннан шығу')); });
 
 // Копирование, контекстное меню, выделение
 ['copy', 'cut'].forEach(t => document.addEventListener(t, e => { if (PR.mode) { e.preventDefault(); violation(tr('попытка копирования', 'көшіру әрекеті')); } }));
